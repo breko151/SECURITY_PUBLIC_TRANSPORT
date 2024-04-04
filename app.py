@@ -40,11 +40,27 @@ def metro():
 
 
 def metrobus():
-    st.title("Metrobus")
+    st.title("METROBÚS")
+    # First container.
+    with st.container():
+        st.title("TENDENCIAS")
+        st.selectbox("ESCOGE UNA ZONA", ["CIUDAD DE MÉXICO", "NORTE", "SUR", "ORIENTE", "PONIENTE"])
+        col1, col2 = st.columns(2)
+        col1.write("TOP AFLUENCIAS")
+        col2.write("TOP DELECTIVAS")
+    with st.container():
+        st.title("ESTACIONES")
+        col1, col2 = st.columns(2)
+        col1.image("./images/MapaCDMX.png")
+        col2.title("NOMBRE ESTACIÓN")
+        col2.write("TOP DELITOS")
+        col2.write("COMPARACIÓN DE GÉNEROS")
+        col2.write("EDAD")
+        col2.write("DISTANCIAS DE LOS DELITOS")
 
 
 def predictions():
-    st.title("Predicciones")
+    st.title("PREDICCIONES")
 
 
 # Sidebar elements.
