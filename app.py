@@ -7,12 +7,36 @@ selection = "INICIO"
 
 # Different Views.
 def home():
+    # Style config.
+    st.markdown("""
+    <style>
+        [data-testid=stSidebar] {
+            background-color: #2B2A25;
+        }
+    </style>
+    """, unsafe_allow_html=True)
     st.title("BIENVENIDO A TU ESPACIO SEGURO")
     st.image("./images/MapaCDMX.png")
     
 
 def metro():
-    st.title("Metro")
+    st.title("METRO")
+    # First container.
+    with st.container():
+        st.title("TENDENCIAS")
+        st.selectbox("ESCOGE UNA ZONA", ["CIUDAD DE MÉXICO", "NORTE", "SUR", "ORIENTE", "PONIENTE"])
+        col1, col2 = st.columns(2)
+        col1.write("TOP AFLUENCIAS")
+        col2.write("TOP DELECTIVAS")
+    with st.container():
+        st.title("ESTACIONES")
+        col1, col2 = st.columns(2)
+        col1.image("./images/MapaCDMX.png")
+        col2.title("NOMBRE ESTACIÓN")
+        col2.write("TOP DELITOS")
+        col2.write("COMPARACIÓN DE GÉNEROS")
+        col2.write("EDAD")
+        col2.write("DISTANCIAS DE LOS DELITOS")
 
 
 def metrobus():
@@ -46,40 +70,3 @@ if selection == "METROBÚS":
     metrobus()
 if selection == "PREDICCIONES":
     predictions()
-
-# st.markdown("""
-# <style>
-#     [data-testid=stSidebar] {
-#         background-color: #ff000050;
-#     }
-# </style>
-# """, unsafe_allow_html=True)
-
-
-# streamlit_style = """
-# 			<style>
-# 			@import url('https://fonts.googleapis.com/css2?family=Metrophobic&display=swap');
-
-# 			html, body, [class*="css"]  {
-# 			font-family: 'Metrophobic', sans-serif;
-# 			}
-# 			</style>
-# 			"""
-# st.markdown(streamlit_style, unsafe_allow_html=True)
-
-# # # Pages of the app (sidebar)
-# # show_pages(
-# #             [
-# #                 Page("app.py", "Inicio"),
-# #                 Page("sections/sociodemografico.py", "Sociodemográfico"),
-# #                 Page("sections/socioelectoral.py", "Socioelectoral"),
-# #                 Page("sections/upload_files.py", "Archivos"),
-# #                 Page("sections/register.py", "Registro"),
-# #                 Page("sections/forms.py", "Formulario"),
-# #                 Page("sections/vis_forms.py", "VISUALIZACIÓN")
-# #             ]
-# #         )
-
-# # Main contain.
-# st.title("BIENVENIDO A TU ESPACIO SEGURO")
-# st.image("./images/MapaCDMX.png")
