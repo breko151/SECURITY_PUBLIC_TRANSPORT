@@ -1,0 +1,462 @@
+cve_est,id_espacio,sistema,tipo,linea,anio_apertura,num_estacion,nombre,cantidad_transbordos_metro,cantidad_transbordos_metrobus
+MB0102,1,Metrobús,Transbordo,L1,2005,2,Deportivo 18 de Marzo,2,2
+MB0103,2,Metrobús,Intermedia,L1,2005,3,Euzkaro,0,0
+MB0104,3,Metrobús,Intermedia,L1,2005,4,Potrero,1,0
+MB0105,4,Metrobús,Transbordo,L1,2005,5,La Raza,2,1
+MB0106,5,Metrobús,Transbordo,L1,2005,6,Circuito,0,0
+MB0107,6,Metrobús,Intermedia,L1,2005,7,San Simón,0,0
+MB0108,7,Metrobús,Intermedia,L1,2005,8,Manuel González,0,0
+MB0109,8,Metrobús,Transbordo,L1,2005,9,Buenavista,1,2
+MB0110,9,Metrobús,Intermedia,L1,2005,10,El Chopo,0,0
+MB0111,10,Metrobús,Intermedia,L1,2005,11,Revolución,1,0
+MB0112,11,Metrobús,Transbordo,L1,2005,12,Plaza de la República,0,0
+MB0113,12,Metrobús,Transbordo,L1,2005,13,Reforma,0,0
+MB0114,13,Metrobús,Transbordo,L1,2005,14,Hamburgo,0,0
+MB0115,14,Metrobús,Terminal,L1,2005,15,Glorieta Insurgentes,1,0
+MB0116,15,Metrobús,Intermedia,L1,2005,16,Durango,0,0
+MB0117,16,Metrobús,Intermedia,L1,2005,17,Álvaro Obregón,0,0
+MB0118,17,Metrobús,Intermedia,L1,2005,18,Sonora,0,0
+MB0119,18,Metrobús,Intermedia,L1,2005,19,Campeche,0,0
+MB0120,19,Metrobús,Intermedia,L1,2005,20,Chilpancingo,1,0
+MB0121,20,Metrobús,Transbordo,L1,2005,21,Nuevo León,0,0
+MB0122,21,Metrobús,Transbordo,L1,2005,22,La Piedad,0,0
+MB0123,22,Metrobús,Transbordo,L1,2005,23,Polifórum,0,0
+MB0124,23,Metrobús,Transbordo,L1,2005,24,Nápoles,0,0
+MB0125,24,Metrobús,Transbordo,L1,2005,25,Colonia del Valle,0,0
+MB0126,25,Metrobús,Intermedia,L1,2005,26,Ciudad de los Deportes,0,0
+MB0127,26,Metrobús,Intermedia,L1,2005,27,Parque Hundido,0,0
+MB0128,27,Metrobús,Intermedia,L1,2005,28,Félix Cuevas,1,0
+MB0129,28,Metrobús,Intermedia,L1,2005,29,Río Churubusco,0,0
+MB0130,29,Metrobús,Intermedia,L1,2005,30,Teatro de los Insurgentes,0,0
+MB0131,30,Metrobús,Intermedia,L1,2005,31,José María Velasco,0,0
+MB0132,31,Metrobús,Intermedia,L1,2005,32,Francia,0,0
+MB0133,32,Metrobús,Intermedia,L1,2005,33,Olivo,0,0
+MB0134,33,Metrobús,Intermedia,L1,2005,34,Altavista,0,0
+MB0135,34,Metrobús,Intermedia,L1,2005,35,La Bombilla,0,0
+MB0136,35,Metrobús,Terminal,L1,2005,36,Doctor Gálvez,0,0
+MB0137,36,Metrobús,Intermedia,L1,2008,37,Ciudad Universitaria,0,0
+MB0138,37,Metrobús,Intermedia,L1,2008,38,Centro Cultural Universitario,0,0
+MB0139,38,Metrobús,Intermedia,L1,2008,39,Perisur,0,0
+MB0140,39,Metrobús,Intermedia,L1,2008,40,Villa Olímpica,0,0
+MB0141,40,Metrobús,Intermedia,L1,2008,41,Corregidora,0,0
+MB0142,41,Metrobús,Intermedia,L1,2008,42,Ayuntamiento,0,0
+MB0143,42,Metrobús,Intermedia,L1,2008,43,Fuentes Brotantes,0,0
+MB0144,43,Metrobús,Intermedia,L1,2008,44,Santa Úrsula,0,0
+MB0145,44,Metrobús,Intermedia,L1,2008,45,La Joya,0,0
+MB0146,45,Metrobús,Terminal,L1,2008,46,El Caminero,0,0
+MB0201,46,Metrobús,Terminal,L2,2008,1,Tacubaya,3,0
+MB0202,47,Metrobús,Intermedia,L2,2008,2,Parque Lira,0,0
+MB0203,48,Metrobús,Intermedia,L2,2008,3,Antonio Maceo,0,0
+MB0204,49,Metrobús,Intermedia,L2,2008,4,De la Salle,0,0
+MB0205,50,Metrobús,Intermedia,L2,2008,5,Patriotismo,1,0
+MB0206,51,Metrobús,Intermedia,L2,2008,6,Escandón,0,0
+MB0207,52,Metrobús,Transbordo,L2,2008,7,Nuevo León,0,0
+MB0208,53,Metrobús,Intermedia,L2,2008,8,Viaducto,0,0
+MB0209,54,Metrobús,Intermedia,L2,2008,9,Amores,0,0
+MB0210,55,Metrobús,Terminal / Transbordo,L2,2008,10,Etiopía,1,1
+MB0211,56,Metrobús,Intermedia,L2,2008,11,Doctor Vértiz,0,0
+MB0212,57,Metrobús,Intermedia,L2,2008,12,Centro SCOP,0,0
+MB0213,58,Metrobús,Intermedia,L2,2008,13,Álamos,0,0
+MB0214,59,Metrobús,Intermedia,L2,2008,14,Xola,1,0
+MB0215,60,Metrobús,Intermedia,L2,2008,15,Las Américas,0,0
+MB0216,61,Metrobús,Intermedia,L2,2008,16,Andrés Molina,0,0
+MB0217,62,Metrobús,Intermedia,L2,2008,17,La Viga,0,0
+MB0218,63,Metrobús,Intermedia,L2,2008,18,Coyuya,0,0
+MB0219,64,Metrobús,Transbordo,L2,2008,19,Metro Coyuya,1,1
+MB0220,65,Metrobús,Intermedia,L2,2008,20,Canela,0,0
+MB0221,66,Metrobús,Intermedia,L2,2008,21,Tlacotal,0,0
+MB0222,67,Metrobús,Intermedia,L2,2008,22,Goma,0,0
+MB0223,68,Metrobús,Intermedia,L2,2008,23,Iztacalco,0,0
+MB0224,69,Metrobús,Intermedia,L2,2008,24,UPIICSA,0,0
+MB0225,70,Metrobús,Intermedia,L2,2008,25,El Rodeo,0,0
+MB0226,71,Metrobús,Intermedia,L2,2008,26,Río Tecolutla,0,0
+MB0227,72,Metrobús,Intermedia,L2,2008,27,Río Mayo,0,0
+MB0228,73,Metrobús,Intermedia,L2,2008,28,Rojo Gómez,0,0
+MB0229,74,Metrobús,Intermedia,L2,2008,29,Río Frío,0,0
+MB0230,75,Metrobús,Intermedia,L2,2008,30,Del Moral,0,0
+MB0231,76,Metrobús,Intermedia,L2,2008,31,Leyes de Reforma,0,0
+MB0232,77,Metrobús,Intermedia,L2,2008,32,CCH Oriente,0,0
+MB0233,78,Metrobús,Intermedia,L2,2008,33,Constitución de Apatzingán,0,0
+MB0234,79,Metrobús,Intermedia,L2,2008,34,Canal de San Juan,0,0
+MB0235,80,Metrobús,Intermedia,L2,2008,35,General Antonio de León,0,0
+MB0236,81,Metrobús,Intermedia,L2,2008,36,Nicolás Bravo,0,0
+MB0237,82,Metrobús,Terminal,L2,2008,37,Tepalcates,1,0
+MB0301,83,Metrobús,Terminal,L3,2011,1,Tenayuca,0,0
+MB0302,84,Metrobús,Intermedia,L3,2011,2,San José de la Escalera,0,0
+MB0303,85,Metrobús,Intermedia,L3,2011,3,Progreso Nacional,0,0
+MB0304,86,Metrobús,Intermedia,L3,2011,4,Tres Anegas,0,0
+MB0305,87,Metrobús,Intermedia,L3,2011,5,Júpiter,0,0
+MB0306,88,Metrobús,Intermedia,L3,2011,6,La Patera,0,0
+MB0307,89,Metrobús,Intermedia,L3,2011,7,Poniente 146,0,0
+MB0308,90,Metrobús,Transbordo,L3,2011,8,Montevideo,0,0
+MB0309,91,Metrobús,Intermedia,L3,2011,9,Poniente 134,0,0
+MB0310,92,Metrobús,Intermedia,L3,2011,10,Poniente 128,0,0
+MB0311,93,Metrobús,Intermedia,L3,2011,11,Magdalena de las Salinas,0,0
+MB0312,94,Metrobús,Intermedia,L3,2011,12,Coltongo,0,0
+MB0313,95,Metrobús,Intermedia,L3,2011,13,Cuitláhuac,0,0
+MB0314,96,Metrobús,Intermedia,L3,2011,14,Héroe de Nacozari,0,0
+MB0315,97,Metrobús,Intermedia,L3,2011,15,Hospital La Raza,0,0
+MB0316,98,Metrobús,Terminal / Transbordo,L3,2011,16,La Raza,2,1
+MB0317,99,Metrobús,Transbordo,L3,2011,17,Circuito,0,0
+MB0318,100,Metrobús,Intermedia,L3,2011,18,Tolnáhuac,0,0
+MB0319,101,Metrobús,Intermedia,L3,2011,19,Tlatelolco,0,0
+MB0320,102,Metrobús,Intermedia,L3,2011,20,Ricardo Flores Magón,0,0
+MB0321,103,Metrobús,Intermedia,L3,2011,21,Guerrero,2,0
+MB0322,104,Metrobús,Terminal,L3,2011,22,Buenavista,1,2
+MB0323,105,Metrobús,Intermedia,L3,2011,23,Mina,0,0
+MB0324,106,Metrobús,Transbordo,L3,2011,24,Hidalgo,2,2
+MB0325,107,Metrobús,Transbordo,L3,2011,25,Juárez,1,1
+MB0326,108,Metrobús,Terminal,L3,2011,26,Balderas,2,0
+MB0327,109,Metrobús,Intermedia,L3,2011,27,Cuauhtémoc,1,0
+MB0328,110,Metrobús,Intermedia,L3,2011,28,Jardín Pushkin,0,0
+MB0329,111,Metrobús,Intermedia,L3,2011,29,Hospital General,1,0
+MB0330,112,Metrobús,Intermedia,L3,2011,30,Doctor Márquez,0,0
+MB0331,113,Metrobús,Intermedia,L3,2011,31,Centro Médico,2,0
+MB0332,114,Metrobús,Intermedia,L3,2011,32,Obrero Mundial,0,0
+MB0333,115,Metrobús,Transbordo,L3,2011,33,Etiopía,1,1
+MB0334,116,Metrobús,Intermedia,L3,2021,34,Luz Saviñón,0,0
+MB0335,117,Metrobús,Intermedia,L3,2021,35,Eugenia,1,0
+MB0336,118,Metrobús,Intermedia,L3,2021,36,División del Norte,1,0
+MB0337,119,Metrobús,Intermedia,L3,2021,37,Miguel Laurent,0,0
+MB0338,120,Metrobús,Terminal,L3,2021,38,Pueblo Santa Cruz Atoyac,0,0
+MB0401,121,Metrobús,Terminal / Transbordo,L4,2012,1,Buenavista,1,2
+MB0402,122,Metrobús,Intermedia,L4,2012,2,Delegación Cuauhtémoc,0,0
+MB0403,123,Metrobús,Intermedia,L4,0,3,México Tenochtitlan,0,0
+MB0404,124,Metrobús,Intermedia,L4,2012,4,Museo San Carlos,0,0
+MB0405,125,Metrobús,Transbordo,L4,2012,5,Hidalgo,2,2
+MB0406,126,Metrobús,Intermedia,L4,2012,6,Bellas Artes,2,0
+MB0407,127,Metrobús,Intermedia,L4,2012,7,Teatro Blanquita,0,0
+MB0408,128,Metrobús,Intermedia,L4,2012,8,República de Chile,0,0
+MB0409,129,Metrobús,Intermedia,L4,2012,9,República de Argentina,0,0
+MB0410,130,Metrobús,Intermedia,L4,2012,10,Teatro del Pueblo,0,0
+MB0411,131,Metrobús,Intermedia,L4,2012,11,Mixcalco,0,0
+MB0412,132,Metrobús,Intermedia,L4,2012,12,Ferrocarril de Cintura,0,0
+MB0413,133,Metrobús,Intermedia,L4,2012,13,Morelos,0,0
+MB0414,134,Metrobús,Transbordo,L4,2012,14,Archivo General de la Nación,0,0
+MB0418,135,Metrobús,Intermedia,L4,2012,18,Plaza de la República,0,0
+MB0419,136,Metrobús,Transbordo,L4,2012,19,Glorieta de Colón,0,0
+MB0420,137,Metrobús,Intermedia,L4,0,20,Defensoría Pública,0,0
+MB0421,138,Metrobús,Intermedia,L4,2012,21,Vocacional 5,0,0
+MB0422,139,Metrobús,Transbordo,L4,2012,22,Juárez,1,1
+MB0423,140,Metrobús,Intermedia,L4,0,23,Mercados San Juan,0,0
+MB0424,141,Metrobús,Intermedia,L4,0,24,Eje Central,0,0
+MB0425,142,Metrobús,Intermedia,L4,2012,25,El Salvador,0,0
+MB0426,143,Metrobús,Intermedia,L4,2012,26,Isabel la Católica,0,0
+MB0427,144,Metrobús,Intermedia,L4,2012,27,Museo de la Ciudad,0,0
+MB0428,145,Metrobús,Intermedia,L4,2012,28,Pino Suárez,2,0
+MB0430,146,Metrobús,Intermedia,L4,2012,30,Las Cruces Sur,0,0
+MB0432,147,Metrobús,Intermedia,L4,0,32,La Merced,1,0
+MB0433,148,Metrobús,Intermedia,L4,2012,33,Mercado de Sonora,0,0
+MB0434,149,Metrobús,Intermedia,L4,2012,34,Cecilio Robelo,0,0
+MB0435,150,Metrobús,Intermedia,L4,2012,35,Eduardo Molina,0,0
+MB0436,151,Metrobús,Intermedia,L4,2012,36,Hospital Balbuena,0,0
+MB0437,152,Metrobús,Transbordo,L4,2012,37,Moctezuma,1,1
+MB0438,153,Metrobús,Terminal,L4,2021,38,Pantitlán,4,0
+MB0439,154,Metrobús,Intermedia,L4,2022,39,Calle 6,0,0
+MB0440,155,Metrobús,Terminal,L4,2022,40,Alameda Oriente,0,0
+MB0441,156,Metrobús,Terminal,L4,0,41,Terminal 1 - Aeropuerto,0,0
+MB0442,157,Metrobús,Terminal,L4,0,42,Terminal 2 - Aeropuerto,0,0
+MB0443,158,Metrobús,Terminal,L4,0,43,Terminal San Lázaro,2,1
+MB0501,159,Metrobús,Terminal,L5,2013,1,Río de Los Remedios,0,0
+MB0502,160,Metrobús,Intermedia,L5,2013,2,314 Memorial New's Divine,0,0
+MB0503,161,Metrobús,Intermedia,L5,2013,3,5 de Mayo,0,0
+MB0504,162,Metrobús,Intermedia,L5,2013,4,Vasco de Quiroga,0,0
+MB0505,163,Metrobús,Intermedia,L5,2013,5,El Coyol,0,0
+MB0506,164,Metrobús,Intermedia,L5,2013,6,Preparatoria 3,0,0
+MB0507,165,Metrobús,Transbordo,L5,2013,7,San Juan de Aragón,0,0
+MB0508,166,Metrobús,Intermedia,L5,2013,8,Río de Guadalupe,0,0
+MB0509,167,Metrobús,Intermedia,L5,2013,9,Talismán,0,0
+MB0510,168,Metrobús,Intermedia,L5,2013,10,Victoria,0,0
+MB0511,169,Metrobús,Intermedia,L5,2013,11,Oriente 101,0,0
+MB0512,170,Metrobús,Intermedia,L5,2013,12,Río Santa Coleta,0,0
+MB0513,171,Metrobús,Intermedia,L5,2013,13,Río Consulado,0,0
+MB0514,172,Metrobús,Intermedia,L5,2013,14,Canal del Norte,0,0
+MB0515,173,Metrobús,Intermedia,L5,2013,15,Deportivo Eduardo Molina,0,0
+MB0516,174,Metrobús,Intermedia,L5,2013,16,Mercado Morelos,0,0
+MB0518,175,Metrobús,Terminal / Transbordo,L5,2013,18,Terminal San Lázaro,2,1
+MB0519,176,Metrobús,Transbordo,L5,2020,19,Moctezuma,1,1
+MB0520,177,Metrobús,Intermedia,L5,2020,20,Venustiano Carranza,0,0
+MB0521,178,Metrobús,Intermedia,L5,2020,21,Avenida del Taller,0,0
+MB0522,179,Metrobús,Intermedia,L5,2020,22,Mixiuhca,1,0
+MB0523,180,Metrobús,Intermedia,L5,2020,23,Hospital General Troncoso,0,0
+MB0524,181,Metrobús,Transbordo,L5,2020,24,Metro Coyuya,1,1
+MB0525,182,Metrobús,Intermedia,L5,2020,25,Recreo,0,0
+MB0526,183,Metrobús,Intermedia,L5,2020,26,Oriente 116,0,0
+MB0527,184,Metrobús,Intermedia,L5,2020,27,Colegio de Bachilleres 3,0,0
+MB0528,185,Metrobús,Intermedia,L5,2020,28,Canal Apatlaco,0,0
+MB0529,186,Metrobús,Intermedia,L5,2020,29,Apatlaco,1,0
+MB0530,187,Metrobús,Intermedia,L5,2020,30,Aculco,1,0
+MB0531,188,Metrobús,Intermedia,L5,2020,31,Churubusco Oriente,0,0
+MB0532,189,Metrobús,Intermedia,L5,2020,32,Escuadrón 201,1,0
+MB0533,190,Metrobús,Intermedia,L5,2020,33,Atanasio G. Sarabia,0,0
+MB0534,191,Metrobús,Intermedia,L5,2020,34,Ermita Iztapalapa,0,0
+MB0535,192,Metrobús,Intermedia,L5,2020,35,Ganaderos,0,0
+MB0536,193,Metrobús,Intermedia,L5,2020,36,Pueblo de los Reyes,0,0
+MB0537,194,Metrobús,Intermedia,L5,2020,37,Barrio San Antonio,0,0
+MB0538,195,Metrobús,Intermedia,L5,2020,38,Calzada Taxqueña,0,0
+MB0539,196,Metrobús,Intermedia,L5,2020,39,Cafetales,0,0
+MB0540,197,Metrobús,Intermedia,L5,2020,40,ESIME Culhuacán,0,0
+MB0541,198,Metrobús,Intermedia,L5,2020,41,Manuela Sáenz,0,0
+MB0542,199,Metrobús,Intermedia,L5,2020,42,La Virgen,0,0
+MB0543,200,Metrobús,Intermedia,L5,2020,43,Tepetlapa,0,0
+MB0544,201,Metrobús,Intermedia,L5,2020,44,Las Bombas,0,0
+MB0545,202,Metrobús,Intermedia,L5,2021,45,Vista Hermosa,0,0
+MB0546,203,Metrobús,Intermedia,L5,2021,46,Calzada del Hueso,0,0
+MB0547,204,Metrobús,Intermedia,L5,2021,47,Cañaverales,0,0
+MB0548,205,Metrobús,Intermedia,L5,2021,48,Muyuguarda,0,0
+MB0549,206,Metrobús,Intermedia,L5,2021,49,Circuito Cuemanco,0,0
+MB0550,207,Metrobús,Intermedia,L5,2021,50,DIF Xochimilco,0,0
+MB0551,208,Metrobús,Terminal,L5,2021,51,Preparatoria 1,0,0
+MB0601,209,Metrobús,Terminal,L6,2016,1,El Rosario,2,0
+MB0602,210,Metrobús,Intermedia,L6,2016,2,Colegio de Bachilleres 1,0,0
+MB0603,211,Metrobús,Intermedia,L6,2016,3,De Las Culturas,0,0
+MB0604,212,Metrobús,Intermedia,L6,2016,4,Ferrocarriles Nacionales,0,0
+MB0605,213,Metrobús,Intermedia,L6,2016,5,UAM-Azcapotzalco,0,0
+MB0606,214,Metrobús,Intermedia,L6,2016,6,Tecnoparque,0,0
+MB0607,215,Metrobús,Intermedia,L6,2016,7,Norte 59,0,0
+MB0608,216,Metrobús,Intermedia,L6,2016,8,Norte 45,0,0
+MB0609,217,Metrobús,Transbordo,L6,2016,9,Montevideo,0,0
+MB0610,218,Metrobús,Intermedia,L6,2016,10,Lindavista-Vallejo,0,0
+MB0611,219,Metrobús,Intermedia,L6,2016,11,Instituto del Petróleo,2,0
+MB0612,220,Metrobús,Intermedia,L6,2016,12,San Bartolo,0,0
+MB0613,221,Metrobús,Terminal,L6,2016,13,Instituto Politécnico Nacional,0,0
+MB0614,222,Metrobús,Intermedia,L6,2016,14,Riobamba,0,0
+MB0615,223,Metrobús,Transbordo,L6,2016,15,Deportivo 18 de Marzo,2,2
+MB0616,224,Metrobús,Intermedia,L6,2016,16,La Villa,0,0
+MB0617,225,Metrobús,Transbordo,L6,2016,17,De Los Misterios,0,0
+MB0618,226,Metrobús,Transbordo,L6,2016,18,Hospital Infantil La Villa,0,0
+MB0619,227,Metrobús,Transbordo,L6,2016,19,Delegación Gustavo A. Madero,0,0
+MB0620,228,Metrobús,Intermedia,L6,2016,20,Martín Carrera,2,0
+MB0621,229,Metrobús,Intermedia,L6,2016,21,Hospital General La Villa,0,0
+MB0622,230,Metrobús,Transbordo,L6,2016,22,San Juan de Aragón,0,0
+MB0623,231,Metrobús,Intermedia,L6,2016,23,Gran Canal,0,0
+MB0624,232,Metrobús,Intermedia,L6,2016,24,Casas Alemán,0,0
+MB0625,233,Metrobús,Intermedia,L6,2016,25,Pueblo San Juan de Aragón,0,0
+MB0626,234,Metrobús,Intermedia,L6,2016,26,Loreto Fabela,0,0
+MB0627,235,Metrobús,Intermedia,L6,2016,27,482,0,0
+MB0628,236,Metrobús,Intermedia,L6,2016,28,414,0,0
+MB0629,237,Metrobús,Intermedia,L6,2016,29,416 Poniente,0,0
+MB0630,238,Metrobús,Intermedia,L6,2016,30,416 Oriente,0,0
+MB0631,239,Metrobús,Intermedia,L6,2016,31,Deportivo Los Galeana,0,0
+MB0632,240,Metrobús,Intermedia,L6,2016,32,Ampliación Providencia,0,0
+MB0633,241,Metrobús,Intermedia,L6,2016,33,Volcán de Fuego,0,0
+MB0634,242,Metrobús,Intermedia,L6,2016,34,La Pradera,0,0
+MB0635,243,Metrobús,Intermedia,L6,2016,35,Colegio de Bachilleres 9,0,0
+MB0636,244,Metrobús,Intermedia,L6,2016,36,Francisco Morazán,0,0
+MB0637,245,Metrobús,Terminal,L6,2016,37,Villa de Aragón,1,0
+MB0701,246,Metrobús,Terminal / Transbordo,L7,2018,1,Indios Verdes,1,2
+MB0702,247,Metrobús,Terminal / Transbordo,L7,2018,2,Hospital Infantil La Villa,0,0
+MB0703,248,Metrobús,Transbordo,L7,2018,3,De Los Misterios,0,0
+MB0704,249,Metrobús,Transbordo,L7,2018,4,Delegación Gustavo A. Madero,0,0
+MB0705,250,Metrobús,Intermedia,L7,2018,5,Garrido,0,0
+MB0706,251,Metrobús,Intermedia,L7,2018,6,Avenida Talismán,0,0
+MB0707,252,Metrobús,Intermedia,L7,2018,7,Necaxa,0,0
+MB0708,253,Metrobús,Intermedia,L7,2018,8,Excélsior,0,0
+MB0709,254,Metrobús,Intermedia,L7,2018,9,Robles Domínguez,0,0
+MB0710,255,Metrobús,Intermedia,L7,2018,10,Clave,0,0
+MB0711,256,Metrobús,Intermedia,L7,2018,11,Misterios,1,0
+MB0712,257,Metrobús,Intermedia,L7,2018,12,Mercado Beethoven,0,0
+MB0713,258,Metrobús,Intermedia,L7,2018,13,Peralvillo,0,0
+MB0714,259,Metrobús,Intermedia,L7,2018,14,Tres Culturas,0,0
+MB0715,260,Metrobús,Intermedia,L7,2018,15,Glorieta Cuitláhuac,0,0
+MB0716,261,Metrobús,Intermedia,L7,2018,16,Garibaldi,2,0
+MB0717,262,Metrobús,Intermedia,L7,2018,17,Glorieta Violeta,0,0
+MB0718,263,Metrobús,Transbordo,L7,2018,18,Hidalgo,2,2
+MB0719,264,Metrobús,Intermedia,L7,2018,19,El Caballito,0,0
+MB0720,265,Metrobús,Transbordo,L7,2018,20,Glorieta de Colón,0,0
+MB0721,266,Metrobús,Intermedia,L7,2018,21,París,0,0
+MB0722,267,Metrobús,Transbordo,L7,2018,22,Reforma,0,0
+MB0723,268,Metrobús,Transbordo,L7,2018,23,Hamburgo,0,0
+MB0724,269,Metrobús,Intermedia,L7,2018,24,La Palma,0,0
+MB0725,270,Metrobús,Intermedia,L7,2018,25,El Ángel,0,0
+MB0726,271,Metrobús,Intermedia,L7,2018,26,La Diana,0,0
+MB0727,272,Metrobús,Intermedia,L7,2018,27,Chapultepec,1,0
+MB0728,273,Metrobús,Intermedia,L7,2018,28,Gandhi,0,0
+MB0729,274,Metrobús,Intermedia,L7,2018,29,Antropología,0,0
+MB0730,275,Metrobús,Intermedia,L7,2018,30,Auditorio,1,0
+MB0731,276,Metrobús,Terminal,L7,2018,31,Campo Marte,0,0
+STC0101,277,STC Metro,Terminal / Transbordo,L1,1984,1,Pantitlán,3,1
+STC0102,278,STC Metro,Intermedia,L1,1969,2,Zaragoza,0,0
+STC0103,279,STC Metro,Intermedia,L1,1969,3,Gómez Farías,0,0
+STC0104,280,STC Metro,Intermedia,L1,1969,4,Boulevard Puerto Aéreo,0,0
+STC0105,281,STC Metro,Intermedia,L1,1969,5,Balbuena,0,0
+STC0106,282,STC Metro,Intermedia,L1,1969,6,Moctezuma,0,2
+STC0107,283,STC Metro,Transbordo,L1,1969,7,San Lázaro,1,2
+STC0108,284,STC Metro,Transbordo,L1,1969,8,Candelaria,0,0
+STC0109,285,STC Metro,Intermedia,L1,1969,9,Merced,0,1
+STC0110,286,STC Metro,Transbordo,L1,1969,10,Pino Suárez,1,1
+STC0111,287,STC Metro,Intermedia,L1,1969,11,Isabel la Católica,0,0
+STC0112,288,STC Metro,Transbordo,L1,1969,12,Salto del Agua,0,0
+STC0113,289,STC Metro,Transbordo,L1,1969,13,Balderas,1,1
+STC0114,290,STC Metro,Intermedia,L1,1969,14,Cuauhtémoc,0,1
+STC0115,291,STC Metro,Intermedia,L1,1969,15,Insurgentes,0,1
+STC0116,292,STC Metro,Intermedia,L1,1969,16,Sevilla,0,0
+STC0117,293,STC Metro,Intermedia,L1,1969,17,Chapultepec,0,1
+STC0118,294,STC Metro,Intermedia,L1,1970,18,Juanacatlán,0,0
+STC0119,295,STC Metro,Transbordo,L1,1970,19,Tacubaya,2,1
+STC0120,296,STC Metro,Terminal,L1,1972,20,Observatorio,0,0
+STC0201,297,STC Metro,Terminal,L2,1984,1,Cuatro Caminos,0,0
+STC0202,298,STC Metro,Intermedia,L2,1984,2,Panteones,0,0
+STC0203,299,STC Metro,Transbordo,L2,1970,3,Tacuba,0,0
+STC0204,300,STC Metro,Intermedia,L2,1970,4,Cuitláhuac,0,0
+STC0205,301,STC Metro,Intermedia,L2,1970,5,Popotla,0,0
+STC0206,302,STC Metro,Intermedia,L2,1970,6,Colegio Militar,0,0
+STC0207,303,STC Metro,Intermedia,L2,1970,7,Normal,0,0
+STC0208,304,STC Metro,Intermedia,L2,1970,8,San Cosme,0,0
+STC0209,305,STC Metro,Intermedia,L2,1970,9,Revolución,0,1
+STC0210,306,STC Metro,Transbordo,L2,1970,10,Hidalgo,1,3
+STC0211,307,STC Metro,Transbordo,L2,1970,11,Bellas Artes,1,1
+STC0212,308,STC Metro,Intermedia,L2,1970,12,Allende,0,0
+STC0213,309,STC Metro,Intermedia,L2,1970,13,Zócalo/Tenochtitlan,0,0
+STC0214,310,STC Metro,Transbordo,L2,1970,14,Pino Suárez,1,1
+STC0215,311,STC Metro,Intermedia,L2,1970,15,San Antonio Abad,0,0
+STC0216,312,STC Metro,Transbordo,L2,1970,16,Chabacano,0,0
+STC0217,313,STC Metro,Intermedia,L2,1970,17,Viaducto,0,0
+STC0218,314,STC Metro,Intermedia,L2,1970,18,Xola,0,1
+STC0219,315,STC Metro,Intermedia,L2,1970,19,Villa de Cortés,0,0
+STC0220,316,STC Metro,Intermedia,L2,1970,20,Nativitas,0,0
+STC0221,317,STC Metro,Intermedia,L2,1970,21,Portales,0,0
+STC0222,318,STC Metro,Transbordo,L2,1970,22,Ermita,0,0
+STC0223,319,STC Metro,Intermedia,L2,1970,23,General Anaya,0,0
+STC0224,320,STC Metro,Terminal,L2,1970,24,Tasqueña,0,0
+STC0301,321,STC Metro,Terminal,L3,1979,1,Indios Verdes,0,3
+STC0302,322,STC Metro,Transbordo,L3,1979,2,Deportivo 18 de Marzo,1,3
+STC0303,323,STC Metro,Intermedia,L3,1979,3,Potrero,0,1
+STC0304,324,STC Metro,Transbordo,L3,1978,4,La Raza,1,2
+STC0305,325,STC Metro,Intermedia,L3,1970,5,Tlatelolco,0,0
+STC0306,326,STC Metro,Transbordo,L3,1970,6,Guerrero,1,1
+STC0307,327,STC Metro,Transbordo,L3,1970,7,Hidalgo,1,3
+STC0308,328,STC Metro,Intermedia,L3,1970,8,Juárez,0,2
+STC0309,329,STC Metro,Transbordo,L3,1970,9,Balderas,1,1
+STC0310,330,STC Metro,Intermedia,L3,1970,10,Niños Héroes/Poder Judicial CDMX,0,0
+STC0311,331,STC Metro,Intermedia,L3,1970,11,Hospital General,0,1
+STC0312,332,STC Metro,Transbordo,L3,1980,12,Centro Médico,1,1
+STC0313,333,STC Metro,Intermedia,L3,1980,13,Etiopía/Plaza de la Transparencia,0,2
+STC0314,334,STC Metro,Intermedia,L3,1980,14,Eugenia,0,1
+STC0315,335,STC Metro,Intermedia,L3,1980,15,División del Norte,0,1
+STC0316,336,STC Metro,Transbordo,L3,1980,16,Zapata,0,0
+STC0317,337,STC Metro,Intermedia,L3,1983,17,Coyoacán,0,0
+STC0318,338,STC Metro,Intermedia,L3,1983,18,Viveros/Derechos Humanos,0,0
+STC0319,339,STC Metro,Intermedia,L3,1983,19,Miguel Ángel de Quevedo,0,0
+STC0320,340,STC Metro,Intermedia,L3,1983,20,Copilco,0,0
+STC0321,341,STC Metro,Terminal,L3,1983,21,Universidad,0,0
+STC0401,342,STC Metro,Terminal / Transbordo,L4,1982,1,Santa Anita,0,0
+STC0402,343,STC Metro,Transbordo,L4,1982,2,Jamaica,0,0
+STC0403,344,STC Metro,Intermedia,L4,1982,3,Fray Servando,0,0
+STC0404,345,STC Metro,Transbordo,L4,1981,4,Candelaria,0,0
+STC0405,346,STC Metro,Transbordo,L4,1981,5,Morelos,0,0
+STC0406,347,STC Metro,Intermedia,L4,1981,6,Canal del Norte,0,0
+STC0407,348,STC Metro,Transbordo,L4,1981,7,Consulado,0,0
+STC0408,349,STC Metro,Intermedia,L4,1981,8,Bondojito,0,0
+STC0409,350,STC Metro,Intermedia,L4,1981,9,Talismán,0,0
+STC0410,351,STC Metro,Terminal / Transbordo,L4,1981,10,Martín Carrera,1,1
+STC0501,352,STC Metro,Terminal,L5,1982,1,Politécnico,0,0
+STC0502,353,STC Metro,Transbordo,L5,1982,2,Instituto del Petróleo,1,1
+STC0503,354,STC Metro,Intermedia,L5,1982,3,Autobuses del Norte,0,0
+STC0504,355,STC Metro,Transbordo,L5,1982,4,La Raza,1,2
+STC0505,356,STC Metro,Intermedia,L5,1982,5,Misterios,0,1
+STC0506,357,STC Metro,Intermedia,L5,1982,6,Valle Gómez,0,0
+STC0507,358,STC Metro,Transbordo,L5,1981,7,Consulado,0,0
+STC0508,359,STC Metro,Intermedia,L5,1981,8,Eduardo Molina,0,0
+STC0509,360,STC Metro,Intermedia,L5,1981,9,Aragón,0,0
+STC0510,361,STC Metro,Transbordo,L5,1981,10,Oceanía,0,0
+STC0511,362,STC Metro,Intermedia,L5,1981,11,Terminal Aérea,0,0
+STC0512,363,STC Metro,Intermedia,L5,1981,12,Hangares,0,0
+STC0513,364,STC Metro,Terminal / Transbordo,L5,1981,13,Pantitlán,3,1
+STC0601,365,STC Metro,Terminal / Transbordo,L6,1983,1,El Rosario,1,1
+STC0602,366,STC Metro,Intermedia,L6,1983,2,Tezozómoc,0,0
+STC0603,367,STC Metro,Intermedia,L6,1983,3,UAM-Azcapotzalco,0,0
+STC0604,368,STC Metro,Intermedia,L6,1983,4,Ferrería/Arena Ciudad de México,0,0
+STC0605,369,STC Metro,Intermedia,L6,1983,5,Norte 45,0,0
+STC0606,370,STC Metro,Intermedia,L6,1983,6,Vallejo,0,0
+STC0607,371,STC Metro,Transbordo,L6,1983,7,Instituto del Petróleo,1,1
+STC0608,372,STC Metro,Intermedia,L6,1986,8,Lindavista,0,0
+STC0609,373,STC Metro,Transbordo,L6,1986,9,Deportivo 18 de Marzo,1,3
+STC0610,374,STC Metro,Intermedia,L6,1986,10,La Villa/Basílica,0,0
+STC0611,375,STC Metro,Terminal / Transbordo,L6,1986,11,Martín Carrera,1,1
+STC0701,376,STC Metro,Terminal / Transbordo,L7,1988,1,El Rosario,1,1
+STC0702,377,STC Metro,Intermedia,L7,1988,2,Aquiles Serdán,0,0
+STC0703,378,STC Metro,Intermedia,L7,1988,3,Camarones,0,0
+STC0704,379,STC Metro,Intermedia,L7,1988,4,Refinería,0,0
+STC0705,380,STC Metro,Transbordo,L7,1984,5,Tacuba,0,0
+STC0706,381,STC Metro,Intermedia,L7,1984,6,San Joaquín,0,0
+STC0707,382,STC Metro,Intermedia,L7,1984,7,Polanco,0,0
+STC0708,383,STC Metro,Intermedia,L7,1984,8,Auditorio,0,1
+STC0709,384,STC Metro,Intermedia,L7,1985,9,Constituyentes,0,0
+STC0710,385,STC Metro,Transbordo,L7,1985,10,Tacubaya,2,1
+STC0711,386,STC Metro,Intermedia,L7,1985,11,San Pedro de los Pinos,0,0
+STC0712,387,STC Metro,Intermedia,L7,1985,12,San Antonio,0,0
+STC0713,388,STC Metro,Transbordo,L7,1985,13,Mixcoac,0,0
+STC0714,389,STC Metro,Terminal,L7,1985,14,Barranca del Muerto,0,0
+STC0801,390,STC Metro,Terminal / Transbordo,L8,1994,1,Garibaldi/Lagunilla,1,1
+STC0802,391,STC Metro,Transbordo,L8,1994,2,Bellas Artes,1,1
+STC0803,392,STC Metro,Intermedia,L8,1994,3,San Juan de Letrán,0,0
+STC0804,393,STC Metro,Transbordo,L8,1994,4,Salto del Agua,0,0
+STC0805,394,STC Metro,Intermedia,L8,1994,5,Doctores,0,0
+STC0806,395,STC Metro,Intermedia,L8,1994,6,Obrera,0,0
+STC0807,396,STC Metro,Transbordo,L8,1994,7,Chabacano,0,0
+STC0808,397,STC Metro,Intermedia,L8,1994,8,La Viga,0,0
+STC0809,398,STC Metro,Transbordo,L8,1994,9,Santa Anita,0,0
+STC0810,399,STC Metro,Intermedia,L8,1994,10,Coyuya,0,2
+STC0811,400,STC Metro,Intermedia,L8,1994,11,Iztacalco,0,0
+STC0812,401,STC Metro,Intermedia,L8,1994,12,Apatlaco,0,1
+STC0813,402,STC Metro,Intermedia,L8,1994,13,Aculco,0,1
+STC0814,403,STC Metro,Intermedia,L8,1994,14,Escuadrón 201,0,1
+STC0815,404,STC Metro,Transbordo,L8,1994,15,Atlalilco,0,0
+STC0816,405,STC Metro,Intermedia,L8,1994,16,Iztapalapa,0,0
+STC0817,406,STC Metro,Intermedia,L8,1994,17,Cerro de la Estrella,0,0
+STC0818,407,STC Metro,Intermedia,L8,1994,18,UAM-I,0,0
+STC0819,408,STC Metro,Terminal,L8,1994,19,Constitución de 1917,0,0
+STC0901,409,STC Metro,Terminal / Transbordo,L9,1987,1,Pantitlán,3,1
+STC0902,410,STC Metro,Intermedia,L9,1987,2,Puebla,0,0
+STC0903,411,STC Metro,Intermedia,L9,1987,3,Ciudad Deportiva,0,0
+STC0904,412,STC Metro,Intermedia,L9,1987,4,Velódromo,0,0
+STC0905,413,STC Metro,Intermedia,L9,1987,5,Mixiuhca,0,1
+STC0906,414,STC Metro,Transbordo,L9,1987,6,Jamaica,0,0
+STC0907,415,STC Metro,Transbordo,L9,1987,7,Chabacano,0,0
+STC0908,416,STC Metro,Intermedia,L9,1987,8,Lázaro Cárdenas,0,0
+STC0909,417,STC Metro,Transbordo,L9,1987,9,Centro Médico,1,1
+STC0910,418,STC Metro,Intermedia,L9,1988,10,Chilpancingo,0,1
+STC0911,419,STC Metro,Intermedia,L9,1988,11,Patriotismo,0,1
+STC0912,420,STC Metro,Terminal / Transbordo,L9,1988,12,Tacubaya,2,1
+STC1201,421,STC Metro,Terminal,L12,2012,1,Tláhuac,0,0
+STC1202,422,STC Metro,Intermedia,L12,2012,2,Tlaltenco,0,0
+STC1203,423,STC Metro,Intermedia,L12,2012,3,Zapotitlán,0,0
+STC1204,424,STC Metro,Intermedia,L12,2012,4,Nopalera,0,0
+STC1205,425,STC Metro,Intermedia,L12,2012,5,Olivos,0,0
+STC1206,426,STC Metro,Intermedia,L12,2012,6,Tezonco,0,0
+STC1207,427,STC Metro,Intermedia,L12,2012,7,Periférico Oriente,0,0
+STC1208,428,STC Metro,Intermedia,L12,2012,8,Calle 11,0,0
+STC1209,429,STC Metro,Intermedia,L12,2012,9,Lomas Estrella,0,0
+STC1210,430,STC Metro,Intermedia,L12,2012,10,San Andrés Tomatlán,0,0
+STC1211,431,STC Metro,Intermedia,L12,2012,11,Culhuacán,0,0
+STC1212,432,STC Metro,Transbordo,L12,2012,12,Atlalilco,0,0
+STC1213,433,STC Metro,Intermedia,L12,2012,13,Mexicaltzingo,0,0
+STC1214,434,STC Metro,Transbordo,L12,2012,14,Ermita,0,0
+STC1215,435,STC Metro,Intermedia,L12,2012,15,Eje Central,0,0
+STC1216,436,STC Metro,Intermedia,L12,2012,16,Parque de los Venados,0,0
+STC1217,437,STC Metro,Transbordo,L12,2012,17,Zapata,0,0
+STC1218,438,STC Metro,Intermedia,L12,2012,18,Hospital 20 de Noviembre,0,0
+STC1219,439,STC Metro,Intermedia,L12,2012,19,Insurgentes Sur,0,1
+STC1220,440,STC Metro,Terminal / Transbordo,L12,2012,20,Mixcoac,0,0
+STCLA01,441,STC Metro,Terminal / Transbordo,LA,1991,1,Pantitlán,3,1
+STCLA02,442,STC Metro,Intermedia,LA,1991,2,Agrícola Oriental,0,0
+STCLA03,443,STC Metro,Intermedia,LA,1991,3,Canal de San Juan,0,0
+STCLA04,444,STC Metro,Intermedia,LA,1991,4,Tepalcates,0,1
+STCLA05,445,STC Metro,Intermedia,LA,1991,5,Guelatao,0,0
+STCLA06,446,STC Metro,Intermedia,LA,1991,6,Peñón Viejo,0,0
+STCLA07,447,STC Metro,Intermedia,LA,1991,7,Acatitla,0,0
+STCLA08,448,STC Metro,Intermedia,LA,1991,8,Santa Marta,0,0
+STCLB01,449,STC Metro,Terminal,LB,1999,1,Buenavista,0,3
+STCLB02,450,STC Metro,Transbordo,LB,1999,2,Guerrero,1,1
+STCLB03,451,STC Metro,Transbordo,LB,1999,3,Garibaldi/Lagunilla,1,1
+STCLB04,452,STC Metro,Intermedia,LB,1999,4,Lagunilla,0,0
+STCLB05,453,STC Metro,Intermedia,LB,1999,5,Tepito,0,0
+STCLB06,454,STC Metro,Transbordo,LB,1999,6,Morelos,0,0
+STCLB07,455,STC Metro,Transbordo,LB,1999,7,San Lázaro,1,2
+STCLB08,456,STC Metro,Intermedia,LB,1999,8,Ricardo Flores Magón,0,0
+STCLB09,457,STC Metro,Intermedia,LB,1999,9,Romero Rubio,0,0
+STCLB10,458,STC Metro,Transbordo,LB,1999,10,Oceanía,0,0
+STCLB11,459,STC Metro,Intermedia,LB,1999,11,Deportivo Oceanía,0,0
+STCLB12,460,STC Metro,Intermedia,LB,1999,12,Bosque de Aragón,0,0
+STCLB13,461,STC Metro,Intermedia,LB,1999,13,Villa de Aragón,0,1

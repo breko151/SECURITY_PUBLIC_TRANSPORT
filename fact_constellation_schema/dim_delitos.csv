@@ -1,0 +1,132 @@
+id_delito,violencia,categoria_cndfe_snieg_2018,variable_cndfe_snieg_2018,categoria_fgj,clase_cndfe_snieg_2018,codificacion_cndfe_snieg_2018,delito_fgj
+1,Con violencia,La vida y la integridad corporal,Homicidio,Homicidio doloso,Homicidio,01.01,Homicidio por arma de fuego
+2,Con violencia,La vida y la integridad corporal,Homicidio,Delito de bajo impacto,Homicidio,01.01,Tentativa de homicidio
+3,Con violencia,La vida y la integridad corporal,Homicidio,Delito de bajo impacto,Homicidio,01.01,Homicidio culposo por tránsito vehicular (colisión)
+4,Con violencia,La vida y la integridad corporal,Homicidio,Homicidio doloso,Homicidio,01.01,Homicidios intencionales (otros)
+5,Con violencia,La vida y la integridad corporal,Homicidio,Homicidio doloso,Homicidio,01.01,Homicidio por arma blanca
+6,Con violencia,La vida y la integridad corporal,Homicidio,Homicidio doloso,Homicidio,01.01,Homicidio por golpes
+7,Con violencia,La vida y la integridad corporal,Homicidio,Delito de bajo impacto,Homicidio,01.01,Homicidio culposo por tránsito vehicular (atropellado)
+8,Con violencia,La vida y la integridad corporal,Homicidio,Delito de bajo impacto,Homicidio,01.01,Homicidio culposo por arma de fuego
+9,Con violencia,La vida y la integridad corporal,Homicidio,Homicidio doloso,Homicidio,01.01,Homicidio por ahorcamiento
+10,Con violencia,La vida y la integridad corporal,Homicidio,Delito de bajo impacto,Homicidio,01.01,Homicidio culposo por tránsito vehicular
+11,Con violencia,La vida y la integridad corporal,Homicidio,Delito de bajo impacto,Homicidio,01.01,Homicidio culposo
+12,Con violencia,La vida y la integridad corporal,Homicidio,Delito de bajo impacto,Homicidio,01.01,Homicidio culposo por instrumento punzo cortante
+13,Con violencia,La vida y la integridad corporal,Homicidio,Homicidio doloso,Homicidio,01.01,Homicidio por inmersión
+14,Con violencia,La vida y la integridad corporal,Homicidio,Delito de bajo impacto,Feminicidio,01.02,Tentativa de feminicidio
+15,Con violencia,La vida y la integridad corporal,Homicidio,Homicidio doloso,Feminicidio,01.02,Feminicidio por golpes
+16,Con violencia,La vida y la integridad corporal,Homicidio,Homicidio doloso,Feminicidio,01.02,Feminicidio por disparo de arma de fuego
+17,Con violencia,La vida y la integridad corporal,Homicidio,Homicidio doloso,Feminicidio,01.02,Feminicidio
+18,Con violencia,La vida y la integridad corporal,Homicidio,Homicidio doloso,Feminicidio,01.02,Feminicidio por arma blanca
+19,Con violencia,La vida y la integridad corporal,Lesiones,Delito de bajo impacto,Lesiones,01.04,Lesiones culposas por tránsito vehicular en colisión
+20,Con violencia,La vida y la integridad corporal,Lesiones,Delito de bajo impacto,Lesiones,01.04,Lesiones culposas por tránsito vehicular
+21,Con violencia,La vida y la integridad corporal,Lesiones,Delito de bajo impacto,Lesiones,01.04,Lesiones intencionales por golpes
+22,Con violencia,La vida y la integridad corporal,Lesiones,Delito de bajo impacto,Lesiones,01.04,Lesiones intencionales por arma blanca
+23,Con violencia,La vida y la integridad corporal,Lesiones,Delito de bajo impacto,Lesiones,01.04,Lesiones culposas
+24,Con violencia,La vida y la integridad corporal,Lesiones,Delito de bajo impacto,Lesiones,01.04,Lesiones culposas por caida
+25,Sin violencia,La libertad personal,Privación de la libertad,Delito de bajo impacto,Privación de la libertad,02.01,Privación de la libertad personal
+26,Con violencia,La libertad personal,Tráfico de menores,Delito de bajo impacto,Tráfico de menores,02.02,Robo de infante
+27,No especifica,La libertad personal,Tráfico de menores,Delito de bajo impacto,Tráfico de menores,02.02,Entrega ilegítima de un menor
+28,Con violencia,La libertad personal,Tráfico de menores,Delito de bajo impacto,Tráfico de menores,02.02,Tráfico de infantes
+29,No especifica,La libertad personal,Retención o sustracción de menores incapaces,Delito de bajo impacto,Retención o sustracción de menores incapaces,02.03,Retención de menores
+30,No especifica,La libertad personal,Retención o sustracción de menores incapaces,Delito de bajo impacto,Retención o sustracción de menores incapaces,02.03,Sustracción de menores
+31,Con violencia,La libertad personal,Secuestro,Secuestro,Secuestro,02.06,Secuestro
+32,Con violencia,La libertad personal,Secuestro,Delito de bajo impacto,Secuestro exprés,02.06.04,Secuestro express (para cometer robo o extorsión)
+33,Con violencia,La libertad y la seguridad sexual,Abuso sexual,Delito de bajo impacto,Abuso sexual,03.01,Abuso sexual
+34,Con violencia,La libertad y la seguridad sexual,Acoso sexual,Delito de bajo impacto,Acoso sexual,03.02,Acoso sexual agravado en contra de menores
+35,Con violencia,La libertad y la seguridad sexual,Acoso sexual,Delito de bajo impacto,Acoso sexual,03.02,Acoso sexual
+36,Con violencia,La libertad y la seguridad sexual,Violación,Violación,Violación simple,03.04.01,Violación
+37,Con violencia,La libertad y la seguridad sexual,Violación,Delito de bajo impacto,Violación simple,03.04.01,Tentativa de violación
+38,Con violencia,La libertad y la seguridad sexual,Violación,Violación,Violación equiparada,03.04.02,Violación equiparada
+39,Con violencia,La libertad y la seguridad sexual,Violación,Violación,Violación equiparada,03.04.02,Violación equiparada por conocido
+40,Con violencia,La libertad y la seguridad sexual,Violación,Violación,Otro tipo de violación,03.04.99,Violación tumultuaria
+41,Con violencia,La libertad y la seguridad sexual,Violación,Violación,Otro tipo de violación,03.04.99,Violación tumultuaria equiparada
+42,Con violencia,La libertad y la seguridad sexual,Violación,Violación,Otro tipo de violación,03.04.99,Violación tumultuaria equiparada por conocido
+43,Con violencia,La libertad y la seguridad sexual,Violación,Violación,Otro tipo de violación,03.04.99,Violación y robo de vehículo
+44,Con violencia,La libertad y la seguridad sexual,Estupro,Delito de bajo impacto,Estupro,03.05,Estupro
+45,Con violencia,La libertad y la seguridad sexual,Otros delitos que atentan contra la libertad y la seguridad sexual,Delito de bajo impacto,Otros delitos que atentan contra la libertad y la seguridad sexual,03.99,Contra la intimidad sexual
+46,Con violencia,La libertad y la seguridad sexual,Otros delitos que atentan contra la libertad y la seguridad sexual,Delito de bajo impacto,Otros delitos que atentan contra la libertad y la seguridad sexual,03.99,Privación de la libertad personal (realizar acto sexual)
+47,No especifica,El patrimonio,Robo,Delito de bajo impacto,Robo simple,04.01.01,Robo de alhajas
+48,No especifica,El patrimonio,Robo,Delito de bajo impacto,Robo simple,04.01.01,Robo de vehículo de pedales
+49,No especifica,El patrimonio,Robo,Delito de bajo impacto,Robo simple,04.01.01,Tentativa de robo
+50,No especifica,El patrimonio,Robo,Delito de bajo impacto,Robo simple,04.01.01,Robo de objetos
+51,No especifica,El patrimonio,Robo,Delito de bajo impacto,Robo simple,04.01.01,Robo de dinero
+52,Con violencia,El patrimonio,Robo,Delito de bajo impacto,Robo de vehículo,04.01.03,Robo a transeúnte y vehículo con violencia
+53,No especifica,El patrimonio,Robo,Delito de bajo impacto,Robo de vehículo,04.01.03,Robo de vehículo eléctrico motopatín
+54,Con violencia,El patrimonio,Violación,Violación,Robo de vehículo,04.01.03,Violación equiparada y robo de vehículo
+55,Con violencia,El patrimonio,Robo,Robo de vehículo con y sin violencia,Robo de vehículo,04.01.03,Robo de vehículo de servicio de transporte con violencia
+56,Con violencia,El patrimonio,Robo,Delito de bajo impacto,Robo de vehículo,04.01.03,Lesiones intencionales y robo de vehículo
+57,Sin violencia,El patrimonio,Robo,Robo de vehículo con y sin violencia,Robo de vehículo,04.01.03,Robo de vehículo de servicio de transporte sin violencia
+58,No especifica,El patrimonio,Robo,Delito de bajo impacto,Robo de vehículo,04.01.03,Tentativa de robo de vehículo
+59,Sin violencia,El patrimonio,Robo,Robo de vehículo con y sin violencia,Robo de vehículo,04.01.03,Robo de vehículo de servicio público sin violencia
+60,Con violencia,El patrimonio,Robo,Robo de vehículo con y sin violencia,Robo de vehículo,04.01.03,Robo de vehículo de servicio público con violencia
+61,Con violencia,El patrimonio,Robo,Robo de vehículo con y sin violencia,Robo de vehículo,04.01.03,Robo de vehículo de servicio particular con violencia
+62,Sin violencia,El patrimonio,Robo,Robo de vehículo con y sin violencia,Robo de vehículo,04.01.03,Robo de motocicleta sin violencia
+63,Sin violencia,El patrimonio,Robo,Robo de vehículo con y sin violencia,Robo de vehículo,04.01.03,Robo de vehículo de servicio particular sin violencia
+64,Con violencia,El patrimonio,Robo,Robo de vehículo con y sin violencia,Robo de vehículo,04.01.03,Robo de motocicleta con violencia
+65,No especifica,El patrimonio,Robo,Delito de bajo impacto,Robo de autopartes,04.01.04,Robo de accesorios de auto
+66,Sin violencia,El patrimonio,Robo,Robo a transeúnte en vía pública con y sin violencia,Robo a transeúnte en vía pública,04.01.05,Robo a transeúnte en vía pública (nómina) sin violencia
+67,Con violencia,El patrimonio,Robo,Robo a transeúnte en vía pública con y sin violencia,Robo a transeúnte en vía pública,04.01.05,Robo a transeúnte en vía pública (nómina) con violencia
+68,Sin violencia,El patrimonio,Robo,Robo a transeúnte en vía pública con y sin violencia,Robo a transeúnte en vía pública,04.01.05,Robo a transeúnte en vía pública sin violencia
+69,Con violencia,El patrimonio,Robo,Robo a transeúnte en vía pública con y sin violencia,Robo a transeúnte en vía pública,04.01.05,Robo a transeúnte en vía pública con violencia
+70,Con violencia,El patrimonio,Robo,Delito de bajo impacto,Robo a transeúnte en espacio abierto al público,04.01.06,Robo a transeúnte de celular con violencia
+71,Sin violencia,El patrimonio,Robo,Delito de bajo impacto,Robo a transeúnte en espacio abierto al público,04.01.06,Robo a transeúnte de celular sin violencia
+72,Con violencia,El patrimonio,Robo,Robo a cuentahabiente saliendo del cajero con violencia,Robo a transeúnte en espacio abierto al público,04.01.06,Robo a transeúnte saliendo del banco con violencia
+73,Con violencia,El patrimonio,Robo,Delito de bajo impacto,Robo a transeúnte en espacio abierto al público,04.01.06,Robo a transeúnte en parques y mercados con violencia
+74,Con violencia,El patrimonio,Robo,Delito de bajo impacto,Robo a transeúnte en espacio abierto al público,04.01.06,Robo a transeúnte en negocio con violencia
+75,Con violencia,El patrimonio,Robo,Robo a cuentahabiente saliendo del cajero con violencia,Robo a transeúnte en espacio abierto al público,04.01.06,Robo a transeúnte saliendo del cajero con violencia
+76,Con violencia,El patrimonio,Robo,Delito de bajo impacto,Robo a transeúnte en espacio abierto al público,04.01.06,Robo a transeúnte en terminal de pasajeros con violencia
+77,Sin violencia,El patrimonio,Robo,Delito de bajo impacto,Robo a persona en un lugar privado,04.01.07,"Robo en eventos masivos (deportivos, culturales, religiosos y artísticos) s/v"
+78,Con violencia,El patrimonio,Robo,Delito de bajo impacto,Robo a persona en un lugar privado,04.01.07,Robo a transeúnte en restaurant con violencia
+79,Con violencia,El patrimonio,Robo,Delito de bajo impacto,Robo a persona en un lugar privado,04.01.07,Robo a transeúnte en hotel con violencia
+80,Con violencia,El patrimonio,Robo,Robo a pasajero a bordo de taxi con violencia,Robo en transporte público individual,04.01.09,Robo a transeúnte a bordo de taxi público y privado con violencia
+81,Sin violencia,El patrimonio,Robo,Delito de bajo impacto,Robo en transporte público individual,04.01.09,Robo a transeúnte a bordo de taxi publico y privado sin violencia
+82,Sin violencia,El patrimonio,Robo,Delito de bajo impacto,Robo en transporte público colectivo,04.01.10,Robo a pasajero en tren suburbano sin violencia
+83,Con violencia,El patrimonio,Robo,Delito de bajo impacto,Robo en transporte público colectivo,04.01.10,Robo a pasajero en trolebús con violencia
+84,Con violencia,El patrimonio,Robo,Delito de bajo impacto,Robo en transporte público colectivo,04.01.10,Robo a pasajero en ecobús con violencia
+85,Sin violencia,El patrimonio,Robo,Delito de bajo impacto,Robo en transporte público colectivo,04.01.10,Robo a pasajero en autobús foraneo sin violencia
+86,Con violencia,El patrimonio,Robo,Delito de bajo impacto,Robo en transporte público colectivo,04.01.10,Robo a pasajero en tren ligero con violencia
+87,Con violencia,El patrimonio,Robo,Delito de bajo impacto,Robo en transporte público colectivo,04.01.10,Robo a pasajero a bordo de pesero y vehículo con violencia
+88,Con violencia,El patrimonio,Robo,Delito de bajo impacto,Robo en transporte público colectivo,04.01.10,Robo a pasajero a bordo de cablebús con violencia
+89,Sin violencia,El patrimonio,Robo,Delito de bajo impacto,Robo en transporte público colectivo,04.01.10,Robo a pasajero a bordo de cablebús sin violencia
+90,Sin violencia,El patrimonio,Robo,Delito de bajo impacto,Robo en transporte público colectivo,04.01.10,Robo a pasajero en trolebús sin violencia
+91,Con violencia,El patrimonio,Robo,Delito de bajo impacto,Robo en transporte público colectivo,04.01.10,Robo a pasajero en tren suburbano con violencia
+92,Con violencia,El patrimonio,Robo,Delito de bajo impacto,Robo en transporte público colectivo,04.01.10,Robo a pasajero en autobús foráneo con violencia
+93,Sin violencia,El patrimonio,Robo,Delito de bajo impacto,Robo en transporte público colectivo,04.01.10,Robo a pasajero en rtp sin violencia
+94,Sin violencia,El patrimonio,Robo,Delito de bajo impacto,Robo en transporte público colectivo,04.01.10,Robo a pasajero en tren ligero sin violencia
+95,Con violencia,El patrimonio,Robo,Delito de bajo impacto,Robo en transporte público colectivo,04.01.10,Robo a pasajero en rtp con violencia
+96,Sin violencia,El patrimonio,Robo,Delito de bajo impacto,Robo en transporte público colectivo,04.01.10,Robo a pasajero en ecobús sin violencia
+97,Con violencia,El patrimonio,Robo,Robo a pasajero a bordo del metro con y sin violencia,Robo en transporte público colectivo,04.01.10,Robo a pasajero a bordo de metro con violencia
+98,Sin violencia,El patrimonio,Robo,Delito de bajo impacto,Robo en transporte público colectivo,04.01.10,Robo a pasajero a bordo de transporte público sin violencia
+99,Con violencia,El patrimonio,Robo,Robo a pasajero a bordo de microbús con y sin violencia,Robo en transporte público colectivo,04.01.10,Robo a pasajero a bordo de pesero colectivo con violencia
+100,Sin violencia,El patrimonio,Robo,Delito de bajo impacto,Robo en transporte público colectivo,04.01.10,Robo a pasajero a bordo de metrobús sin violencia
+101,Sin violencia,El patrimonio,Robo,Robo a pasajero a bordo de microbús con y sin violencia,Robo en transporte público colectivo,04.01.10,Robo a pasajero a bordo de pesero colectivo sin violencia
+102,Con violencia,El patrimonio,Robo,Delito de bajo impacto,Robo en transporte público colectivo,04.01.10,Robo a pasajero a bordo de transporte público con violencia
+103,Sin violencia,El patrimonio,Robo,Robo a pasajero a bordo del metro con y sin violencia,Robo en transporte público colectivo,04.01.10,Robo a pasajero a bordo de metro sin violencia
+104,Con violencia,El patrimonio,Robo,Delito de bajo impacto,Robo en transporte público colectivo,04.01.10,Robo a pasajero a bordo de metrobús con violencia
+105,No especifica,El patrimonio,Robo,Delito de bajo impacto,Robo en transporte individual,04.01.11,Robo de objetos del interior de un vehículo
+106,Con violencia,El patrimonio,Robo,Delito de bajo impacto,Robo en transporte individual,04.01.11,Robo a pasajero / conductor de vehículo con violencia
+107,Con violencia,El patrimonio,Robo,Delito de bajo impacto,Robo en transporte individual,04.01.11,Robo a transeúnte conductor de taxi publico y privado con violencia
+108,Sin violencia,El patrimonio,Robo,Delito de bajo impacto,Robo a institución bancaria,04.01.12,Robo a sucursal bancaria sin violencia
+109,Sin violencia,El patrimonio,Robo,Delito de bajo impacto,Robo a negocio,04.01.13,"Robo s/v dentro de negocios, autoservicios, conveniencia"
+110,Sin violencia,El patrimonio,Robo,Delito de bajo impacto,Robo a negocio,04.01.13,Robo a negocio sin violencia por farderos (tiendas de autoservicio)
+111,Sin violencia,El patrimonio,Robo,Delito de bajo impacto,Robo a negocio,04.01.13,Robo a negocio sin violencia
+112,Sin violencia,El patrimonio,Robo,Delito de bajo impacto,Robo a negocio,04.01.13,Robo a negocio sin violencia por farderos (tiendas de conveniencia)
+113,No especifica,El patrimonio,Fraude,Delito de bajo impacto,Fraude,04.03,Fraude
+114,No especifica,El patrimonio,Fraude,Delito de bajo impacto,Fraude,04.03,Tentativa de fraude
+115,Con violencia,El patrimonio,Extorsión,Delito de bajo impacto,Extorsión,04.05,Extorsión
+116,Con violencia,El patrimonio,Extorsión,Delito de bajo impacto,Extorsión,04.05,Tentativa de extorsión
+117,Con violencia,La sociedad,Delitos contra el libre desarrollo de la personalidad,Delito de bajo impacto,Corrupción de menores e incapaces,06.01.01,Corrupción de menores e incapaces
+118,Con violencia,La sociedad,Trata de personas,Delito de bajo impacto,Trata de personas,06.02,Trata de personas
+119,No especifica,La seguridad pública y la seguridad del estado,Delitos contra la salud relacionados con narcóticos en su modalidad de narcomenudeo,Delito de bajo impacto,Posesión simple de narcóticos,07.01.01,Narcomenudeo posesión simple
+120,No especifica,La seguridad pública y la seguridad del estado,Delitos contra la salud relacionados con narcóticos en su modalidad de narcomenudeo,Delito de bajo impacto,Posesión con fines de comercio o suministro de narcóticos,07.01.02,"Narcomenudeo posesión con fines de venta, comercio y suministro"
+121,No especifica,La seguridad pública y la seguridad del estado,Delitos en materia de armas y objetos prohibidos,Delito de bajo impacto,Delitos en materia de armas y objetos prohibidos,07.04,"Portación, fabricación e importación de objetos aptos para agredir"
+122,Con violencia,La seguridad pública y la seguridad del estado,Delitos en materia de armas y objetos prohibidos,Delito de bajo impacto,Delitos en materia de armas y objetos prohibidos,07.04,Disparos de arma de fuego
+123,No especifica,La seguridad pública y la seguridad del estado,Delitos en materia de armas y objetos prohibidos,Delito de bajo impacto,Delitos en materia de armas y objetos prohibidos,07.04,Portación de arma de fuego
+124,No especifica,La seguridad pública y la seguridad del estado,Delitos de delincuencia organizada,Delito de bajo impacto,Delitos de delincuencia organizada,07.05,"Pandilla, asociación delictuosa y delincuencia organizada"
+125,No especifica,La seguridad pública y la seguridad del estado,"Delitos en materia de armas, explosivos y otros materiales destructivos",Delito de bajo impacto,"Delitos en materia de armas, explosivos y otros materiales destructivos",07.06,Ley federal de armas de fuego y explosivos
+126,Con violencia,La administración del estado,Delitos por hechos de corrupción,Delito de bajo impacto,Abuso de autoridad,08.01.02,Abuso de autoridad y uso ilegal de la fuerza pública
+127,No especifica,La administración del estado,Delitos por hechos de corrupción,Delito de bajo impacto,Ejercicio abusivo de funciones,08.01.06,Ejercicio abusivo de funciones
+128,Con violencia,Otros ( bienes jurídicos ),Amenazas,Delito de bajo impacto,Amenazas,09.01,Amenazas
+129,No especifica,Otros ( bienes jurídicos ),Encubrimiento,Delito de bajo impacto,Encubrimiento,09.12,Encubrimiento por favorecimiento y receptación
+130,No especifica,Otros ( bienes jurídicos ),Encubrimiento,Delito de bajo impacto,Encubrimiento,09.12,Encubrimiento
+131,No especifica,Otros ( bienes jurídicos ),Encubrimiento,Delito de bajo impacto,Encubrimiento,09.12,Encubrimiento por favorecimiento
