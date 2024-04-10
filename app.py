@@ -3,9 +3,21 @@ import streamlit as st
 import pandas as pd
 import geopandas
 import folium
+import seaborn as sns
+import matplotlib.pyplot as plt
+import numpy as np
 from shapely.geometry import Point
+from shapely.geometry import LineString
 from streamlit_folium import st_folium
 
+
+# Global variables.
+df_stations = pd.read_csv("./fact_constellation_schema/coordanadas_estaciones.csv")
+df_stations_metro = df_stations[df_stations['sistema'] == 'STC Metro']
+df_stations_metrobus = df_stations[df_stations['sistema'] == 'Metrobús']
+lineas_metro = geopandas.read_file('./shapefiles_metro/STC_Metro_lineas_utm14n_repr.shp', index=False)
+lineas_cdmx = geopandas.read_file('./images/cdmx.json', encoding='utf-8')
+lineas_cdmx_json = lineas_cdmx.to_json()
 
 # Map initialization.
 def init_map(center=(19.4325019109759, -99.1322510732777), zoom_start=10, map_type="cartodbpositron"):
@@ -40,6 +52,22 @@ POINTSMB = {
 }
 
 
+LINESM = {
+    '1': '#e55f91',
+    '2': '#0071d0',
+    '3': '#c1b405',
+    '4': '#8fc0ba',
+    '5': '#f0d405',
+    '6': '#a81b1e',
+    '7': '#e48310',
+    '8': '#008d4d',
+    '9': '#522400',
+    'A': '#652782',
+    'B': '#d7d7d7',
+    '12': '#b89038',
+}
+
+
 # Plot map.
 def plot_from_df(df, folium_map, DICT_COLORS):
     for i, row in df.iterrows():
@@ -50,6 +78,18 @@ def plot_from_df(df, folium_map, DICT_COLORS):
         folium.Marker([row.latitud, row.longitud],
                       icon=icon,
                     tooltip=f'{row.cve_est}: {row.nombre}, Línea: {row.linea[1:]}').add_to(folium_map)
+        
+    lineas_metro['geometry_yx'] = lineas_metro['geometry'].apply(lambda line: LineString([(point[1], point[0]) for point in line.coords]))
+
+    for index, row in lineas_metro.iterrows():
+        coords_pts = [list(coord) for coord in row['geometry_yx'].coords]
+        folium.PolyLine(coords_pts, color=LINESM[row['LINEA']]).add_to(folium_map)
+
+    
+    folium.GeoJson(lineas_cdmx_json, 
+               name=None, 
+               style_function=lambda x: {'color': 'black', 'weight': 2, 'fillColor': 'transparent'}).add_to(folium_map) 
+
     return folium_map
 
 
@@ -76,9 +116,6 @@ hide_streamlit_style = """
             </style>
             """
 st.markdown(hide_streamlit_style, unsafe_allow_html=True)
-df_stations = pd.read_csv("./fact_constellation_schema/coordanadas_estaciones.csv")
-df_stations_metro = df_stations[df_stations['sistema'] == 'STC Metro']
-df_stations_metrobus = df_stations[df_stations['sistema'] == 'Metrobús']
 
 
 # Different Views.
@@ -99,13 +136,35 @@ def metro():
     st.title("METRO")
     # First container.
     with st.container():
-        st.title("TENDENCIAS")
+        st.header("TENDENCIAS")
         st.selectbox("ESCOGE UNA ZONA", ["CIUDAD DE MÉXICO", "NORTE", "SUR", "ORIENTE", "PONIENTE"])
         col1, col2 = st.columns(2)
-        col1.write("TOP AFLUENCIAS")
-        col2.write("TOP DELECTIVAS")
+        col1.write("##### TOP AFLUENCIAS")
+        data = {
+            'Estación': ['Hidalgo', 'Juárez', 'Centro Médico'],
+            'Frecuencia': [20, 15, 5]  # Ejemplo de frecuencia de delitos
+        }
+        df = pd.DataFrame(data)
+        plt.barh(df['Estación'], df['Frecuencia'], color='skyblue', edgecolor='black')
+        plt.xlabel('Estación')
+        plt.ylabel('Frecuencia de Afluencias')
+        plt.title('Histograma de Frecuencia de Afluencias')
+        plt.grid(True)
+        col1.pyplot(plt)
+        col2.write("##### TOP DELECTIVAS")
+        data = {
+            'Estación': ['Hidalgo', 'Juárez', 'Centro Médico'],
+            'Frecuencia': [20, 15, 5]  # Ejemplo de frecuencia de delitos
+        }
+        df = pd.DataFrame(data)
+        plt.barh(df['Estación'], df['Frecuencia'], color='skyblue', edgecolor='black')
+        plt.xlabel('Estación')
+        plt.ylabel('Frecuencia de Afluencias')
+        plt.title('Histograma de Frecuencia de Délitos')
+        plt.grid(True)
+        col2.pyplot(plt)
     with st.container():
-        st.title("ESTACIONES")
+        st.header("ESTACIONES")
         col1, col2 = st.columns(2)
         with col1:
             m = init_map()
@@ -123,18 +182,64 @@ def metro():
             if st.session_state.selected_id is not None:
                 cve_est = st.session_state.selected_id.split(":")[0]
                 name_est = get_station(df_stations_metro, cve_est, "nombre")
-                col2.title(f'{name_est}')
-                col2.write("TOP DELITOS")
-                col2.write("COMPARACIÓN DE GÉNEROS")
-                col2.write("EDAD")
-                col2.write("DISTANCIAS DE LOS DELITOS")
+                tipo_est = get_station(df_stations_metro, cve_est, "tipo")
+                linea_est = get_station(df_stations_metro, cve_est, "linea")
+                col2.subheader(f'{name_est.upper()}')
+                col2.write(f'LÍNEA: {linea_est[1:]}')
+                col2.write(f'ESTACIÓN TIPO: {tipo_est.upper()}')
+                col2.write("##### TOP DELITOS")
+                data = {
+                    'Tipo de Delito': ['Robo', 'Asalto', 'Homicidio'],
+                    'Frecuencia': [20, 15, 5]  # Ejemplo de frecuencia de delitos
+                }
+                df = pd.DataFrame(data)
+                plt.barh(df['Tipo de Delito'], df['Frecuencia'], color='skyblue', edgecolor='black')
+                plt.xlabel('Tipo de Delitos')
+                plt.ylabel('Frecuencia de Delitos')
+                plt.title('Histograma de Frecuencia de Delitos')
+                plt.grid(True)
+                col2.pyplot(plt)
+                col2.write("##### COMPARACIÓN DE GÉNEROS")
+                # Datos de ejemplo
+                labels = ['HOMBRE', 'MUJER']
+                sizes = [45, 55]
+                # Configuración de colores
+                colors = sns.color_palette('pastel')
+                # Crear gráfico de pastel
+                fig, ax = plt.subplots()
+                ax.pie(sizes, labels=labels, colors=colors, autopct='%1.1f%%', startangle=140)
+                ax.axis('equal')  # Equal aspect ratio para asegurar que es un círculo
+                ax.set_title('Ejemplo de Gráfico de Pastel con Seaborn', fontsize=16)
+                col2.pyplot(fig)
+                col2.write("###### EDAD")
+                data2 = {
+                    'Edad': ['[10-20]', '[40-50]', '[90-100]'],
+                    'Frecuencia': [20, 15, 5]  # Ejemplo de frecuencia de delitos
+                }
+                df2 = pd.DataFrame(data2)
+                fig2, ax2 = plt.subplots()
+                ax2.bar(df2['Edad'], df2['Frecuencia'], color='skyblue', edgecolor='black')
+                col2.pyplot(fig2)
+                col2.divider()
+                col2.write("###### DISTANCIAS DE LOS DELITOS")
+                # Generar datos aleatorios para el histograma
+                np.random.seed(0)
+                data = np.random.randn(1000)
+                # Definir el número de bins para el histograma
+                plt.figure(figsize=(8, 6))
+                plt.hist(data, bins=100, orientation='horizontal', color='skyblue')
+                plt.xlabel('Frecuencia')
+                plt.ylabel('xlabel')
+                plt.title('Histograma Horizontal')
+                plt.grid(True)
+                col2.pyplot(plt)
             else:
-                col2.title("ES NECESARIO SELECCIONAR UNA ESTACIÓN")
+                col2.subheader("ES NECESARIO SELECCIONAR UNA ESTACIÓN")
                 col2.subheader("AL SELECCIONAR APARECERÁ LA SIGUIENTE INFORMACIÓN:")
-                col2.write("TOP DELITOS")
-                col2.write("COMPARACIÓN DE GÉNEROS")
-                col2.write("EDAD")
-                col2.write("DISTANCIAS DE LOS DELITOS")
+                col2.write("##### TOP DELITOS")
+                col2.write("##### COMPARACIÓN DE GÉNEROS")
+                col2.write("##### EDAD")
+                col2.write("##### DISTANCIAS DE LOS DELITOS")
                 
 
 
