@@ -1,17 +1,59 @@
 # Libraries needed.
+
 # Web.
 import streamlit as st
 from streamlit_folium import st_folium
+import base64
+
 # Data.
 import numpy as np
 import pandas as pd
 import geopandas
 from shapely.geometry import LineString
 import folium
+
 # Data visualization.
 import seaborn as sns
 import matplotlib.pyplot as plt
 
+# Datetime
+from datetime import datetime, timedelta
+
+# Constants
+from colors import LINESM, LINESMB
+
+# Auxiliar proper modules
+from plots import plot_top_stations_affluence_trends, plot_top_stations_crime_trends
+
+# Page config.
+st.set_page_config(page_title="Metro y Metrobús Seguro",
+    initial_sidebar_state="expanded",
+    layout="wide",
+    page_icon="🚈")
+
+# Hide the legend of "Made with streamlit" and hamburger menu.
+hide_streamlit_style = """
+            <style>
+            #MainMenu {visibility: hidden;}
+            footer {visibility: hidden;}
+            </style>
+            """
+st.markdown(hide_streamlit_style, unsafe_allow_html=True)
+
+#Successful trial to remove top blankspace
+st.markdown(
+        """
+            <style>
+                .appview-container .main .block-container {{
+                    padding-top: {padding_top}rem;
+                    padding-bottom: {padding_bottom}rem;
+                    }}
+
+            </style>""".format(
+            padding_top=0, padding_bottom=1
+        ),
+        unsafe_allow_html=True,
+    )
 
 # Global variables.
 df_stations = pd.read_csv("./fact_constellation_schema/coordanadas_estaciones.csv")
@@ -23,6 +65,21 @@ lineas_cdmx_json = lineas_cdmx.to_json()
 
 df_stations_metro = df_stations[df_stations['sistema'] == 'STC Metro']
 df_stations_metrobus = df_stations[df_stations['sistema'] == 'Metrobús']
+
+dict_weekday = {
+    0: 'Lunes',
+    1: 'Martes',
+    2: 'Miércoles',
+    3: 'Jueves',
+    4: 'Viernes',
+    5: 'Sábado',
+    6: 'Domingo',
+}
+
+today_ = datetime.now()
+weekday = dict_weekday[today_.weekday()]
+week_year = today_.strftime("%W")
+month = today_.month
 
 
 # Map initialization.
@@ -46,7 +103,6 @@ POINTSM = {
     'L12': './images/circulos/STCMetro_L12.png',
 }
 
-
 POINTSMB = {
     'L1': './images/circulos/MB_L1.png',
     'L2': './images/circulos/MB_L2.png',
@@ -55,35 +111,6 @@ POINTSMB = {
     'L5': './images/circulos/MB_L5.png',
     'L6': './images/circulos/MB_L6.png',
     'L7': './images/circulos/MB_L7.png',
-}
-
-
-# DataColors for stations.
-LINESM = {
-    '1': '#e55f91',
-    '2': '#0071d0',
-    '3': '#c1b405',
-    '4': '#8fc0ba',
-    '5': '#f0d405',
-    '6': '#a81b1e',
-    '7': '#e48310',
-    '8': '#008d4d',
-    '9': '#522400',
-    'A': '#652782',
-    'B': '#d7d7d7',
-    '12': '#b89038',
-}
-
-
-LINESMB = {
-    '01': '#a9343a',
-    '01 y 02': '#FFFFFF',
-    '02': '#862b92',
-    '03': '#799b3d',
-    '04': '#ff9400',
-    '05': '#05367d',
-    '06': '#e2188e',
-    '07': '#01642d'
 }
 
 
@@ -100,7 +127,7 @@ def plot_from_df(df, folium_map, type):
             )
             folium.Marker([row.latitud, row.longitud],
                         icon=icon,
-                        tooltip=f'{row.cve_est}: {row.nombre}, Línea: {row.linea[1:]}').add_to(folium_map)
+                        tooltip=f'{row.cve_est}: {row.nombre} Línea: {row.linea[1:]}').add_to(folium_map)
             # 
         # Add every line.
         metro_lines['geometry_yx'] = metro_lines['geometry'].apply(lambda line: LineString([(point[1], point[0]) for point in line.coords]))
@@ -117,7 +144,7 @@ def plot_from_df(df, folium_map, type):
             )
             folium.Marker([row.latitud, row.longitud],
                         icon=icon,
-                        tooltip=f'{row.cve_est}: {row.nombre}, Línea: {row.linea[1:]}').add_to(folium_map)
+                        tooltip=f'{row.cve_est}: {row.nombre} Línea {row.linea[1:]}').add_to(folium_map)
             # 
         # Add every line.
         mb_lines['geometry_yx'] = mb_lines['geometry'].apply(lambda line: LineString([(point[1], point[0]) for point in line.coords])) 
@@ -142,21 +169,39 @@ def get_station(df, cve_est, column=None):
         result = filter[column].to_list()[0]
     return result
 
+# Load of images to display at dashboard without st.image()
+image_home_logo_url = "./images/MapaCDMX.png"
+file_image_home = open(image_home_logo_url, "rb")
+contents = file_image_home.read()
+data_url_image_home = base64.b64encode(contents).decode("utf-8")
+file_image_home.close()
 
-# Page config.
-st.set_page_config(page_title="Página Principal",
-    initial_sidebar_state="expanded",
-    layout="wide",
-    page_icon="🚈")
-# Hide the legend of "Made with streamlit" and hamburger menu.
-hide_streamlit_style = """
-            <style>
-            #MainMenu {visibility: hidden;}
-            footer {visibility: hidden;}
-            </style>
-            """
-st.markdown(hide_streamlit_style, unsafe_allow_html=True)
+image_home_logo_url = "./images/MapaCDMX.png"
+file_image_home = open(image_home_logo_url, "rb")
+contents = file_image_home.read()
+data_url_image_home = base64.b64encode(contents).decode("utf-8")
+file_image_home.close()
 
+metro_logo_url = "./images/logo_metro.png"
+file_metro_logo = open(metro_logo_url, "rb")
+contents = file_metro_logo.read()
+data_url_metro_logo = base64.b64encode(contents).decode("utf-8")
+file_metro_logo.close()
+
+metrobus_logo_url = "./images/logo_metrobus.png"
+file_metrobus_logo = open(metrobus_logo_url, "rb")
+contents = file_metrobus_logo.read()
+data_url_metrobus_logo = base64.b64encode(contents).decode("utf-8")
+file_metrobus_logo.close()
+
+#Aux center CSS for columns
+#CSS style to center horizontally and vertically
+center_css = """
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+"""
 
 # Different Views.
 # home view.
@@ -165,52 +210,96 @@ def home():
     st.markdown("""
     <style>
         [data-testid=stSidebar] {
-            background-color: #2B2A25;
+            background-color: #3c6f90;
+        }
+        [data-testid=stSidebar] h1 {
+            color: white;
         }
     </style>
     """, unsafe_allow_html=True)
-    st.title("BIENVENIDO A TU TRANSPORTE SEGURO")
-    st.image("./images/MapaCDMX.png")
+    st.title("¡Bienvenido a tu transporte seguro!\n")
+    #st.image("./images/MapaCDMX.png", width=300)
+    st.markdown(
+        r'<div style="{}"><img src="data:image/gif;base64,{}" alt="Imagen home" width=500 ></div>'.format(center_css, data_url_image_home),
+        unsafe_allow_html=True,
+    )
+    
     
 
 # metro view.
 def metro():
-    st.title("METRO")
+    st.markdown("""
+    <style>
+        [data-testid=stSidebar] {
+            background-color: #e8540c;
+        }
+        [data-testid=stSidebar] h1 {
+            color: white;
+        }
+    </style>
+    """, unsafe_allow_html=True)
+    
+    col1, col2 = st.columns([1, 5])
+    with col1:
+        st.markdown("<div style='{}'><img src='data:image/gif;base64,{}' width='90' style='margin-right:0px;'></div>".format(center_css, data_url_metro_logo), unsafe_allow_html=True)
+    with col2:
+        st.title('STC Metro')
+        #st.markdown("<div style='display: flex; justify-content: left; align-items: center;'><h1 style='text-align: left;'>STC Metro</h1></div>", unsafe_allow_html=True)
+    st.markdown("<br>", unsafe_allow_html=True)
+    
     # First container.
     with st.container():
-        st.header("TENDENCIAS")
-        opt = st.selectbox("ESCOGE UNA ZONA", ["CIUDAD DE MÉXICO", "NORTE", "SUR", "ORIENTE", "PONIENTE"])
+        st.header("🔥 Tendencias")
+        st.write("🗓️ Datos históricos para <b>{}</b> de la <b>semana {}</b> de años pasados.".format(weekday.lower(), week_year), unsafe_allow_html=True)
+        opt = st.selectbox("Escoge una zona", ["Ciudad de México", "Centro", "Norte", "Sur", "Oriente", "Poniente"])
         st.write(opt)
         col1, col2 = st.columns(2)
         # Column 1.
-        col1.write("##### TOP AFLUENCIAS")
-        data = {
-            'Estación': ['Hidalgo', 'Juárez', 'Centro Médico'],
-            'Frecuencia': [20, 15, 5]  # Ejemplo de frecuencia de delitos
-        }
-        df = pd.DataFrame(data)
-        plt.barh(df['Estación'], df['Frecuencia'], color='skyblue', edgecolor='black')
-        plt.xlabel('Estación')
-        plt.ylabel('Frecuencia de Afluencias')
-        plt.title('Histograma de Frecuencia de Afluencias')
-        plt.grid(True)
-        col1.pyplot(plt)
+        
+        col1.write("##### Top 10 estaciones con más afluencia")
+        #data = {
+        #    'Estación': ['Hidalgo', 'Juárez', 'Centro Médico'],
+        #    'Frecuencia': [20, 15, 5]  # Ejemplo de frecuencia de delitos
+        #}
+        #df = pd.DataFrame(data)
+        #plt.barh(df['Estación'], df['Frecuencia'], color='skyblue', edgecolor='black')
+        #plt.xlabel('Estación')
+        #plt.ylabel('Frecuencia de Afluencias')
+        #plt.title('Histograma de Frecuencia de Afluencias')
+        #plt.grid(True)
+        #col1.pyplot(plt)
+        
+        data_df = {'nombre': ['Politécnico', 'Constitución de 1917', 'Indios Verdes', 'Pantitlán'],
+                'línea': ['L5', 'L8', 'L3', 'L1'],
+                'afluencia_promedio': [10.2, 9.3, 8.2, 7.3],}
+        df_top_stations_affluence_trends = pd.DataFrame(data_df).sort_values(by=['afluencia_promedio'], ascending=True)
+        
+        col1.plotly_chart(plot_top_stations_affluence_trends(df_top_stations_affluence_trends, 'STC Metro'), use_container_width=True)
+        
         # Column 2.
-        col2.write("##### TOP DELECTIVAS")
-        data = {
-            'Estación': ['Hidalgo', 'Juárez', 'Centro Médico'],
-            'Frecuencia': [20, 15, 5]  # Ejemplo de frecuencia de delitos
-        }
-        df = pd.DataFrame(data)
-        plt.barh(df['Estación'], df['Frecuencia'], color='skyblue', edgecolor='black')
-        plt.xlabel('Estación')
-        plt.ylabel('Frecuencia de Afluencias')
-        plt.title('Histograma de Frecuencia de Délitos')
-        plt.grid(True)
-        col2.pyplot(plt)
+        col2.write("##### Top 10 estaciones más delictivas")
+        #data = {
+        #    'Estación': ['Hidalgo', 'Juárez', 'Centro Médico'],
+        #    'Frecuencia': [20, 15, 5]  # Ejemplo de frecuencia de delitos
+        #}
+        #df = pd.DataFrame(data)
+        #plt.barh(df['Estación'], df['Frecuencia'], color='skyblue', edgecolor='black')
+        #plt.xlabel('Estación')
+        #plt.ylabel('Frecuencia de Afluencias')
+        #plt.title('Histograma de Frecuencia de Délitos')
+        #plt.grid(True)
+        #col2.pyplot(plt)
+        
+        data_df = {'nombre': ['Politécnico', 'Constitución de 1917', 'Indios Verdes', 'Pantitlán'],
+                'línea': ['L5', 'L8', 'L3', 'L1'],
+                'conteo_delitos': [5, 3, 6, 8],}
+        df_top_stations_crime_trends = pd.DataFrame(data_df).sort_values(by=['conteo_delitos'], ascending=True)
+        
+        col2.plotly_chart(plot_top_stations_crime_trends(df_top_stations_crime_trends, 'STC Metro'), use_container_width=True)
+        
     # Second container.
     with st.container():
-        st.header("ESTACIONES")
+        st.header("🔍 Explora las estaciones")
         col1, col2 = st.columns(2)
         # Map column.
         with col1:
@@ -220,12 +309,13 @@ def metro():
             st.session_state.selected_id = level1_map_data['last_object_clicked_tooltip']
         # Second column validation.
         if 'selected_id' not in st.session_state:
-            col2.subheader("ES NECESARIO SELECCIONAR UNA ESTACIÓN")
-            col2.subheader("AL SELECCIONAR APARECERÁ LA SIGUIENTE INFORMACIÓN:")
-            col2.write("##### TOP DELITOS")
-            col2.write("##### COMPARACIÓN DE GÉNEROS")
-            col2.write("##### EDAD")
-            col2.write("##### DISTANCIAS DE LOS DELITOS")
+            col2.subheader("Es necesario seleccionar una estación")
+            col2.write("Al seleccionar alguna aparecerá la siguiente información sobre los hechos delictivos ocurridos dentro un radio de 540 metros alrededor de las estaciones:")
+            col2.write(" - Top delitos más frecuentes")
+            col2.write(" - Comparación de géneros de víctimas")
+            col2.write(" - Rangos de edad más vulnerables")
+            col2.write(" - Comportamiento de la distancia delito-estación")
+            col2.write(" - Partes del día más delictivas")
         else:
             if st.session_state.selected_id is not None:
                 cve_est = st.session_state.selected_id.split(":")[0]
@@ -282,16 +372,28 @@ def metro():
                 plt.grid(True)
                 col2.pyplot(plt)
             else:
-                col2.subheader("ES NECESARIO SELECCIONAR UNA ESTACIÓN")
-                col2.subheader("AL SELECCIONAR APARECERÁ LA SIGUIENTE INFORMACIÓN:")
-                col2.write("##### TOP DELITOS")
-                col2.write("##### COMPARACIÓN DE GÉNEROS")
-                col2.write("##### EDAD")
-                col2.write("##### DISTANCIAS DE LOS DELITOS")
+                col2.subheader("Es necesario seleccionar una estación")
+                col2.write("Al seleccionar alguna aparecerá la siguiente información sobre los hechos delictivos ocurridos dentro un radio de 540 metros alrededor de las estaciones:")
+                col2.write(" - Top delitos más frecuentes")
+                col2.write(" - Comparación de géneros de víctimas")
+                col2.write(" - Rangos de edad más vulnerables")
+                col2.write(" - Comportamiento de la distancia delito-estación")
+                col2.write(" - Partes del día más delictivas")
                 
 
 def metrobus():
-    st.title("METROBÚS")
+    st.markdown("""
+    <style>
+        [data-testid=stSidebar] {
+            background-color: #c80f2e;
+        }
+        [data-testid=stSidebar] h1 {
+            color: white;
+        }
+    </style>
+    """, unsafe_allow_html=True)
+    
+    st.title("Metrobús")
     # First container.
     with st.container():
         st.header("TENDENCIAS")
@@ -407,22 +509,96 @@ def metrobus():
 
 
 def predictions():
-    st.title("PREDICCIONES")
+    st.markdown("""
+    <style>
+        [data-testid=stSidebar] {
+            background-color: #5751a9;
+        }
+        [data-testid=stSidebar] h1 {
+            color: white;
+        }
+    </style>
+    """, unsafe_allow_html=True)
+    
+    st.title("Predicciones")
 
+
+st.markdown(
+    """
+    <style>
+        /* Estilo para los botones del sidebar */
+        section[data-testid="stSidebar"] div.stButton button {
+            background-color: transparent;
+            border: none;
+            width: 200px;
+            color: black;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* Estilo para el botón seleccionado */
+        section[data-testid="stSidebar"] div.stButton button:active {
+            background-color: #f0f0f080;
+            color: black;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        section[data-testid="stSidebar"] div.stButton button:focus {
+            background-color: #f0f0f080;
+            color: black;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        section[data-testid="stSidebar"] div.stButton button:hover {
+            /* background-color: #f0f0f0; */
+            color: white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Alineación horizontal de los elementos del div con data-testid="stVerticalBlock" */
+        section[data-testid="stSidebar"] div[data-testid="stVerticalBlock"] {
+            text-align: center;
+        }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
+# Script JavaScript para manejar el estado activo de los botones
+st.markdown(
+    """
+    <script>
+        const buttons = document.querySelectorAll('section[data-testid="stSidebar"] div.stButton button');
+
+        buttons.forEach(button => {
+            button.addEventListener('click', () => {
+                buttons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+            });
+        });
+
+        // Evitar que los botones pierdan el estado activo al hacer clic en otro lugar de la página
+        document.addEventListener('click', (event) => {
+            if (!event.target.closest('section[data-testid="stSidebar"]')) {
+                buttons.forEach(btn => btn.classList.remove('active'));
+            }
+        });
+    </script>
+    """,
+    unsafe_allow_html=True
+)
 
 # Sidebar elements.
 with st.sidebar:
     # Sidebar title.
-    st.title("ESCOGE UNA OPCIÓN")
+    st.title("Menú")
     # Sidebar buttons.
-    if st.button("INICIO"):
+    if st.button("Inicio"):
         st.session_state.selection = "INICIO"
-    if st.button("METRO"):
+    if st.button("STC Metro"):
         st.session_state.selection = "METRO"
-    if st.button("METROBÚS"):
+    if st.button("Metrobús"):
         st.session_state.selection = "METROBÚS"
-    if st.button("PREDICCIONES"):
+    if st.button("Predicciones"):
         st.session_state.selection = "PREDICCIONES"
+
 
 # Options.
 if "selection" not in st.session_state:
@@ -436,3 +612,9 @@ else:
         metrobus()
     if st.session_state.selection == "PREDICCIONES":
         predictions()
+        
+        
+# LINKS AUXILIARES CSS EN STREAMLIT
+# https://discuss.streamlit.io/t/button-css-for-streamlit/45888/3
+# https://discuss.streamlit.io/t/button-size-in-sidebar/36132/2
+# https://discuss.streamlit.io/t/image-and-text-next-to-each-other/7627/7
