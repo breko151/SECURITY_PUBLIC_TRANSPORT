@@ -24,6 +24,7 @@ from colors import LINESM, LINESMB
 
 # Auxiliar proper modules
 from plots import plot_top_stations_affluence_trends, plot_top_stations_crime_trends
+from querys import query_top_stations_affluence_trends, query_top_stations_crime_trends
 
 # Page config.
 st.set_page_config(page_title="Metro y Metrobús Seguro",
@@ -127,7 +128,7 @@ def plot_from_df(df, folium_map, type):
             )
             folium.Marker([row.latitud, row.longitud],
                         icon=icon,
-                        tooltip=f'{row.cve_est}: {row.nombre} Línea: {row.linea[1:]}').add_to(folium_map)
+                        tooltip=f'{row.cve_est}: {row.nombre} Línea {row.linea[1:]}').add_to(folium_map)
             # 
         # Add every line.
         metro_lines['geometry_yx'] = metro_lines['geometry'].apply(lambda line: LineString([(point[1], point[0]) for point in line.coords]))
@@ -250,53 +251,24 @@ def metro():
     # First container.
     with st.container():
         st.header("🔥 Tendencias")
-        st.write("🗓️ Datos históricos para <b>{}</b> de la <b>semana {}</b> de años pasados.".format(weekday.lower(), week_year), unsafe_allow_html=True)
-        opt = st.selectbox("Escoge una zona", ["Ciudad de México", "Centro", "Norte", "Sur", "Oriente", "Poniente"])
-        st.write(opt)
+        zone = st.selectbox("Escoge una zona", ["Ciudad de México", "Centro", "Norte", "Sur", "Oriente", "Poniente"])
+        df_top_stations_affluence_trends = query_top_stations_affluence_trends('STC Metro', zone, weekday, week_year, 10)
+        df_top_stations_crime_trends = query_top_stations_crime_trends('STC Metro', zone, weekday, week_year, 540, 10)
+        
+        
         col1, col2 = st.columns(2)
         # Column 1.
-        
         col1.write("##### Top 10 estaciones con más afluencia")
-        #data = {
-        #    'Estación': ['Hidalgo', 'Juárez', 'Centro Médico'],
-        #    'Frecuencia': [20, 15, 5]  # Ejemplo de frecuencia de delitos
-        #}
-        #df = pd.DataFrame(data)
-        #plt.barh(df['Estación'], df['Frecuencia'], color='skyblue', edgecolor='black')
-        #plt.xlabel('Estación')
-        #plt.ylabel('Frecuencia de Afluencias')
-        #plt.title('Histograma de Frecuencia de Afluencias')
-        #plt.grid(True)
-        #col1.pyplot(plt)
-        
-        data_df = {'nombre': ['Politécnico', 'Constitución de 1917', 'Indios Verdes', 'Pantitlán'],
-                'línea': ['L5', 'L8', 'L3', 'L1'],
-                'afluencia_promedio': [10.2, 9.3, 8.2, 7.3],}
-        df_top_stations_affluence_trends = pd.DataFrame(data_df).sort_values(by=['afluencia_promedio'], ascending=True)
-        
+        col1.write("🗓️ Datos históricos para <b>{}</b> de la <b>semana {}</b> de años pasados.".format(weekday.lower(), week_year), unsafe_allow_html=True)
         col1.plotly_chart(plot_top_stations_affluence_trends(df_top_stations_affluence_trends, 'STC Metro'), use_container_width=True)
         
         # Column 2.
         col2.write("##### Top 10 estaciones más delictivas")
-        #data = {
-        #    'Estación': ['Hidalgo', 'Juárez', 'Centro Médico'],
-        #    'Frecuencia': [20, 15, 5]  # Ejemplo de frecuencia de delitos
-        #}
-        #df = pd.DataFrame(data)
-        #plt.barh(df['Estación'], df['Frecuencia'], color='skyblue', edgecolor='black')
-        #plt.xlabel('Estación')
-        #plt.ylabel('Frecuencia de Afluencias')
-        #plt.title('Histograma de Frecuencia de Délitos')
-        #plt.grid(True)
-        #col2.pyplot(plt)
-        
-        data_df = {'nombre': ['Politécnico', 'Constitución de 1917', 'Indios Verdes', 'Pantitlán'],
-                'línea': ['L5', 'L8', 'L3', 'L1'],
-                'conteo_delitos': [5, 3, 6, 8],}
-        df_top_stations_crime_trends = pd.DataFrame(data_df).sort_values(by=['conteo_delitos'], ascending=True)
-        
+        col2.write("🗓️ Datos históricos para <b>{}</b> de la <b>semana {}</b> de años pasados.".format(weekday.lower(), week_year), unsafe_allow_html=True)
         col2.plotly_chart(plot_top_stations_crime_trends(df_top_stations_crime_trends, 'STC Metro'), use_container_width=True)
         
+    st.write('poner selector de tipo desglose: zona, alcaldía, línea y en otro selector los posibles valores')
+    
     # Second container.
     with st.container():
         st.header("🔍 Explora las estaciones")
