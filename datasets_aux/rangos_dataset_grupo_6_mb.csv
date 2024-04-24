@@ -1,0 +1,11 @@
+group_dataset,categ_delito,percentil_50,minimo,maximo
+6,"Acoso, abuso, violación y otros delitos sexuales",0.0,0.0,30.0
+6,Fraude,0.0,0.0,86.0
+6,Lesiones,0.0,0.0,36.0
+6,Robo a transeúnte,0.0,0.0,110.0
+6,"Robo de vehículo, autopartes y en transporte individual",2.0,0.0,40.0
+6,Amenazas,0.0,0.0,98.0
+6,Robo a negocio,0.0,0.0,70.0
+6,Robo en transporte público individual o colectivo,0.0,0.0,42.0
+6,Robo simple,0.0,0.0,50.0
+6,Homicidio,0.0,0.0,22.0

@@ -1,0 +1,21 @@
+group_dataset,categ_delito,sexo,percentil_50,minimo,maximo
+4,Amenazas,0,0.0,0.0,58.0
+4,Amenazas,1,0.0,0.0,100.0
+4,Lesiones,0,0.0,0.0,58.0
+4,Lesiones,1,0.0,0.0,28.0
+4,Robo a negocio,0,2.0,0.0,134.0
+4,Robo a negocio,1,0.0,0.0,22.0
+4,Robo a transeúnte,0,2.0,0.0,118.0
+4,Robo a transeúnte,1,0.0,0.0,100.0
+4,"Robo de vehículo, autopartes y en transporte individual",0,4.0,0.0,80.0
+4,"Robo de vehículo, autopartes y en transporte individual",1,0.0,0.0,40.0
+4,Robo en transporte público individual o colectivo,0,0.0,0.0,118.0
+4,Robo en transporte público individual o colectivo,1,0.0,0.0,46.0
+4,Robo simple,0,2.0,0.0,118.0
+4,Robo simple,1,0.0,0.0,62.0
+4,Fraude,0,2.0,0.0,90.0
+4,Fraude,1,2.0,0.0,80.0
+4,"Acoso, abuso, violación y otros delitos sexuales",0,0.0,0.0,18.0
+4,"Acoso, abuso, violación y otros delitos sexuales",1,0.0,0.0,50.0
+4,Homicidio,0,0.0,0.0,22.0
+4,Homicidio,1,0.0,0.0,14.0
