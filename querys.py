@@ -19,62 +19,49 @@ PASSWORD = 'Holas3312#'
 connectionString = 'DRIVER={ODBC Driver 17 for SQL Server};SERVER=' + SERVER + ';DATABASE=' + DATABASE + ';UID=' + USERNAME + ';PWD=' + PASSWORD
 conn = pyodbc.connect(connectionString)
 
-def query_top_stations_affluence_trends(transport: str, zone_city: str, weekday: str, week_year: str, n: int):
+def query_top_stations_affluence_trends(transport: str, level_div: str, filter_div: list, weekday: str, week_year: str, n: int):
     conn = pyodbc.connect(connectionString)
     
-    if zone_city == 'Ciudad de México':
+    if filter_div == []:
         Query = f"""
-            WITH AfluenciaFiltrada AS (
-                SELECT TOP {n} est.nombre, est.linea , AVG(afl.id_afluencia) AS afluencia
-                From [crimen_equip_urbano_afluencia_metro_metrobus_cdmx].[dbo].[dim_estaciones] AS est
-                JOIN
-                [crimen_equip_urbano_afluencia_metro_metrobus_cdmx].[dbo].[dim_espacio] AS esp ON esp.id_espacio = est.id_espacio
-                JOIN
-                [crimen_equip_urbano_afluencia_metro_metrobus_cdmx].[dbo].[ftb_afluencia_estaciones] AS afl ON afl.cve_est = est.cve_est
-                JOIN
-                [crimen_equip_urbano_afluencia_metro_metrobus_cdmx].[dbo].[dim_tiempo] AS tiem ON tiem.id_tiempo = afl.id_tiempo
-                WHERE est.sistema = '{transport}' and tiem.dia_semana = '{weekday}' and tiem.semana_anio = '{week_year}'
-                GROUP BY est.nombre, est.linea
-                ORDER BY afluencia DESC
-            )
-            SELECT
-                nombre,
-                linea,
-                AVG(afluencia) AS afluencia_promedio
-            FROM
-                AfluenciaFiltrada
-            GROUP BY
-                nombre,
-                linea
-            ORDER BY
-                afluencia_promedio DESC
+                SELECT TOP {n} view_aflu.nombre, view_aflu.linea, AVG(view_aflu.afluencia) as afluencia_promedio
+                FROM (
+                    SELECT est.nombre, est.linea, tiem.anio, tiem.semana_anio, afl.afluencia
+                    FROM [crimen_equip_urbano_afluencia_metro_metrobus_cdmx].[dbo].[ftb_afluencia_estaciones] AS afl
+                    JOIN [crimen_equip_urbano_afluencia_metro_metrobus_cdmx].[dbo].[dim_estaciones] AS est ON afl.cve_est = est.cve_est
+                    JOIN [crimen_equip_urbano_afluencia_metro_metrobus_cdmx].[dbo].[dim_espacio] AS esp ON esp.id_espacio = est.id_espacio
+                    JOIN [crimen_equip_urbano_afluencia_metro_metrobus_cdmx].[dbo].[dim_tiempo] AS tiem ON tiem.id_tiempo = afl.id_tiempo
+                    WHERE est.sistema = '{transport}' AND tiem.dia_semana = '{weekday}' and tiem.semana_anio = '{week_year}'
+                ) as view_aflu
+                GROUP BY view_aflu.nombre, view_aflu.linea
+                ORDER BY afluencia_promedio DESC;
                 """
     else:
+        if level_div == 'Línea':
+            filter_div = ['L' + elem.split()[-1] for elem in filter_div]
+        filter_div = [f"\'{elem}\'" for elem in filter_div]
+        filter_values_in = ", ".join(filter_div)
+        if level_div == 'Zona':
+            filter_div_in_str = f"esp.zona IN ({filter_values_in})"
+        elif level_div == 'Alcaldía':
+            filter_div_in_str = f'esp.alcaldia IN ({filter_values_in})'
+        elif level_div == 'Línea':
+            filter_div_in_str = f'est.linea IN ({filter_values_in})'
+        print('\n\n\nFILTRO')
+        print(filter_div_in_str)
+        
         Query = f"""
-            WITH AfluenciaFiltrada AS (
-                SELECT TOP {n} est.nombre, est.linea, AVG(afl.id_afluencia) AS afluencia
-                From [crimen_equip_urbano_afluencia_metro_metrobus_cdmx].[dbo].[dim_estaciones] AS est
-                JOIN
-                [crimen_equip_urbano_afluencia_metro_metrobus_cdmx].[dbo].[dim_espacio] AS esp ON esp.id_espacio = est.id_espacio
-                JOIN
-                [crimen_equip_urbano_afluencia_metro_metrobus_cdmx].[dbo].[ftb_afluencia_estaciones] AS afl ON afl.cve_est = est.cve_est
-                JOIN
-                [crimen_equip_urbano_afluencia_metro_metrobus_cdmx].[dbo].[dim_tiempo] AS tiem ON tiem.id_tiempo = afl.id_tiempo
-                WHERE est.sistema = '{transport}' and esp.zona = '{zone_city}' and tiem.dia_semana = '{weekday}' and tiem.semana_anio = '{week_year}'
-                GROUP BY est.nombre, est.linea
-                ORDER BY afluencia DESC
-            )
-            SELECT
-                nombre,
-                linea,
-                AVG(afluencia) AS afluencia_promedio
-            FROM
-                AfluenciaFiltrada
-            GROUP BY
-                nombre,
-                linea
-            ORDER BY
-                afluencia_promedio DESC
+                SELECT TOP {n} view_aflu.nombre, view_aflu.linea, AVG(view_aflu.afluencia) as afluencia_promedio
+                FROM (
+                    SELECT est.nombre, est.linea, tiem.anio, tiem.semana_anio, afl.afluencia
+                    FROM [crimen_equip_urbano_afluencia_metro_metrobus_cdmx].[dbo].[ftb_afluencia_estaciones] AS afl
+                    JOIN [crimen_equip_urbano_afluencia_metro_metrobus_cdmx].[dbo].[dim_estaciones] AS est ON afl.cve_est = est.cve_est
+                    JOIN [crimen_equip_urbano_afluencia_metro_metrobus_cdmx].[dbo].[dim_espacio] AS esp ON esp.id_espacio = est.id_espacio
+                    JOIN [crimen_equip_urbano_afluencia_metro_metrobus_cdmx].[dbo].[dim_tiempo] AS tiem ON tiem.id_tiempo = afl.id_tiempo
+                    WHERE est.sistema = '{transport}' AND {filter_div_in_str} AND tiem.dia_semana = '{weekday}' and tiem.semana_anio = '{week_year}'
+                ) as view_aflu
+                GROUP BY view_aflu.nombre, view_aflu.linea
+                ORDER BY afluencia_promedio DESC;
                 """
     cursor = conn.cursor()
     cursor.execute(Query)
@@ -91,10 +78,10 @@ def query_top_stations_affluence_trends(transport: str, zone_city: str, weekday:
     return df
 
 
-def query_top_stations_crime_trends(transport: str, zone_city: str, weekday: str, week_year: str, radio: float, n: int):
+def query_top_stations_crime_trends(transport: str, level_div: str, filter_div: list, weekday: str, week_year: str, radio: float, n: int):
     conn = pyodbc.connect(connectionString)
     
-    if zone_city == 'Ciudad de México':
+    if filter_div == []:
         Query = f"""
                 SELECT 
                     TOP {n} final.linea, 
@@ -139,6 +126,19 @@ def query_top_stations_crime_trends(transport: str, zone_city: str, weekday: str
                     promedio_delitos DESC
                 """
     else:
+        if level_div == 'Línea':
+            filter_div = ['L' + elem.split()[-1] for elem in filter_div]
+        filter_div = [f"\'{elem}\'" for elem in filter_div]
+        filter_values_in = ", ".join(filter_div)
+        if level_div == 'Zona':
+            filter_div_in_str = f"esp.zona IN ({filter_values_in})"
+        elif level_div == 'Alcaldía':
+            filter_div_in_str = f'esp.alcaldia IN ({filter_values_in})'
+        elif level_div == 'Línea':
+            filter_div_in_str = f'est.linea IN ({filter_values_in})'
+        print('\n\n\nFILTRO')
+        print(filter_div_in_str)
+        
         Query = f"""
                 SELECT 
                     TOP {n} final.linea, 
@@ -155,8 +155,9 @@ def query_top_stations_crime_trends(transport: str, zone_city: str, weekday: str
                         (SELECT DISTINCT unique_stations.linea, unique_stations.nombre, tiem.anio
                         FROM
                             (SELECT linea, nombre
-                            FROM [crimen_equip_urbano_afluencia_metro_metrobus_cdmx].[dbo].[dim_estaciones]
-                            WHERE sistema = '{transport}') AS unique_stations
+                            FROM [crimen_equip_urbano_afluencia_metro_metrobus_cdmx].[dbo].[dim_estaciones] AS est
+                            JOIN [crimen_equip_urbano_afluencia_metro_metrobus_cdmx].[dbo].[dim_espacio] AS esp ON esp.id_espacio = est.id_espacio
+                            WHERE est.sistema = '{transport}' AND {filter_div_in_str}) AS unique_stations
                         CROSS JOIN 
                             (SELECT anio
                             FROM [crimen_equip_urbano_afluencia_metro_metrobus_cdmx].[dbo].[dim_tiempo]
@@ -172,7 +173,7 @@ def query_top_stations_crime_trends(transport: str, zone_city: str, weekday: str
                         JOIN [crimen_equip_urbano_afluencia_metro_metrobus_cdmx].[dbo].[dim_estaciones] AS est ON est.cve_est = carpetas.cve_est_mas_cercana
                         JOIN [crimen_equip_urbano_afluencia_metro_metrobus_cdmx].[dbo].[dim_espacio] AS esp ON esp.id_espacio = est.id_espacio
                         JOIN [crimen_equip_urbano_afluencia_metro_metrobus_cdmx].[dbo].[dim_tiempo] AS tiem ON tiem.id_tiempo = carpetas.id_tiempo
-                        WHERE est.sistema = '{transport}' AND esp.zona = '{zone_city}' AND tiem.dia_semana = '{weekday}' AND tiem.semana_anio = '{week_year}' AND carpetas.dist_delito_estacion <= {radio}
+                        WHERE est.sistema = '{transport}' AND {filter_div_in_str} AND tiem.dia_semana = '{weekday}' AND tiem.semana_anio = '{week_year}' AND carpetas.dist_delito_estacion <= {radio}
                         GROUP BY tiem.anio, est.nombre, est.linea) AS delitos
                     ON main.anio = delitos.anio AND main.nombre = delitos.nombre AND main.linea = delitos.linea
                 ) AS final

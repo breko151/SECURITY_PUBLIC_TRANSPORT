@@ -129,7 +129,7 @@ def get_station(df, cve_est, column=None):
 # INITIALIZATION OF VARIABLES
 
 # List of default regions and lines
-zones_ls = ["Ciudad de México", "Centro", "Norte", "Sur", "Oriente", "Poniente"]
+zones_ls = ["Centro", "Norte", "Sur", "Oriente", "Poniente"]
 munics_ls = {
     'STC Metro': ['Álvaro Obregón', 'Azcapotzalco', 'Benito Juárez', 'Coyoacán', 'Cuauhtémoc',
        'Gustavo A. Madero', 'Iztacalco', 'Iztapalapa', 'Miguel Hidalgo',
@@ -565,6 +565,223 @@ def plot_predictive_map(datageom, transport: str, unique_values_metric):
         mapbox=dict(center=dict(lat=center_geom.y, lon=center_geom.x),zoom=9.0),
     )
 
+    return fig
+
+# Normalize crime counts to 4-8 scatter point size
+def normalize_size(value, min_value, max_value, min_size=4, max_size=8):
+    return ((value - min_value) / (max_value - min_value)) * (max_size - min_size) + min_size
+
+# Plot the stations showing criminal trends
+def plot_crime_trend_stations(datageom, df: pd.DataFrame, transport: str):
+    region_gdf_cp = datageom.copy(deep=True)
+    center_geom = region_gdf_cp['geometry'].to_list()[0].centroid
+    
+    fig = go.Figure()
+    
+    fig.update_layout(
+        mapbox=dict(center=dict(lat=center_geom.y, lon=center_geom.x),zoom=9.8),
+    )
+    df['promedio_delitos'] = df['promedio_delitos'].astype(float)
+    print(len(df))
+    
+    # Mostrar estaciones y líneas
+    if transport == 'STC Metro':
+        df_stations_metro_complete = df_stations_metro.merge(df[['linea', 'nombre', 'promedio_delitos']], on=['linea', 'nombre'])
+        min_value = df_stations_metro_complete['promedio_delitos'].min()
+        max_value = df_stations_metro_complete['promedio_delitos'].max()
+        lines_unique = df_stations_metro_complete['linea'].unique()
+        
+        # Mapeamos todas las líneas
+        for line in lines_unique:
+            metro_lines_aux = metro_lines[metro_lines['LINEA'] == line[1:]]
+            metro_lines_aux['geometry_yx'] = metro_lines_aux['geometry'].apply(lambda line: LineString([(point[0], point[1]) for point in line.coords])) 
+            lines_ = metro_lines_aux['geometry_yx'].iloc[0]
+            coords_pts = [[coord[0], coord[1]] for coord in lines_.coords]
+            line_trace = go.Scattermapbox(
+                mode='lines',
+                lon = [coord[0] for coord in coords_pts],
+                lat = [coord[1] for coord in coords_pts],
+                line=dict(color=LINESM[metro_lines_aux['LINEA'].to_list()[0]], width=4),
+                hoverinfo='none',
+            )
+            
+            fig.add_trace(line_trace)      
+        
+        # Se filtran las estaciones que caen dentro de la región seleccionada para pintarlas de cierto color, y las demás de otro
+        for line in lines_unique:
+            df_stations_metro_aux = df_stations_metro_complete[df_stations_metro_complete['linea'] == line]
+            lats = df_stations_metro_aux['latitud']
+            lons = df_stations_metro_aux['longitud']
+            ids = df_stations_metro_aux['cve_est']
+            lines = df_stations_metro_aux['linea']
+            names = df_stations_metro_aux['nombre']
+            values_ = df_stations_metro_aux['promedio_delitos']
+            marker_sizes_red = [normalize_size(value, min_value, max_value, min_size=10, max_size=16) for value in values_]
+            marker_sizes_white = [normalize_size(value, min_value, max_value, min_size=4, max_size=9) for value in values_]
+            marker_sizes_color_st = [normalize_size(value, min_value, max_value, min_size=2, max_size=3) for value in values_]
+            
+            scatter_trace = go.Scattermapbox(
+                    lat=lats,
+                    lon=lons,
+                    mode='markers',
+                    customdata=[[i, l, n] for i, l, n in zip(ids, lines, names)],
+                    textposition='top center',
+                    marker=dict(
+                        size=marker_sizes_red,
+                        color='red',
+                        opacity = 1.0,
+                    ),
+                    hoverinfo='none',
+            )
+            scatter_trace_2 = go.Scattermapbox(
+                    lat=lats,
+                    lon=lons,
+                    mode='markers',
+                    customdata=[[i, l, n] for i, l, n in zip(ids, lines, names)],
+                    textposition='top center',
+                    marker=dict(
+                        size=marker_sizes_white,
+                        color='white',
+                        opacity = 1.0,
+                    ),
+                    hovertext=ids,
+                    hoverlabel=dict(namelength=0),
+                    hovertemplate='%{customdata[2]} (%{customdata[1]})<br>',
+            )
+            scatter_trace_3 = go.Scattermapbox(
+                    lat=lats,
+                    lon=lons,
+                    mode='markers',
+                    customdata=[[i, l, n] for i, l, n in zip(ids, lines, names)],
+                    textposition='top center',
+                    marker=dict(
+                        size=marker_sizes_color_st,
+                        color=LINESM_aux[line],
+                        opacity = 1.0,
+                    ),
+                    hoverinfo='none',
+            )
+            fig.add_trace(scatter_trace)
+            fig.add_trace(scatter_trace_2)
+            #fig.add_trace(scatter_trace_3)
+
+    else:
+        df_stations_metrobus_complete = df_stations_metrobus.merge(df[['linea', 'nombre', 'promedio_delitos']], on=['linea', 'nombre'])
+        min_value = df_stations_metrobus_complete['promedio_delitos'].min()
+        max_value = df_stations_metrobus_complete['promedio_delitos'].max()
+        lines_unique = df_stations_metrobus_complete['linea'].unique()
+        
+        # Mapeamos todas las líneas
+        for line in lines_unique:
+            metrobus_lines_aux = mb_lines[mb_lines['LINEA'].str[-1] == line[1:]]
+            metrobus_lines_aux['geometry_yx'] = metrobus_lines_aux['geometry'].apply(lambda line: LineString([(point[0], point[1]) for point in line.coords])) 
+            lines_ = metrobus_lines_aux['geometry_yx']
+            
+            for i in range(len(lines_)):
+                line_ = lines_.iloc[i]
+                coords_pts = [[coord[0], coord[1]] for coord in line_.coords]
+                line_trace = go.Scattermapbox(
+                    mode='lines',
+                    lon = [coord[0] for coord in coords_pts],
+                    lat = [coord[1] for coord in coords_pts],
+                    line=dict(color=LINESMB[metrobus_lines_aux['LINEA'].to_list()[0]], width=4),
+                    hoverinfo='none',
+                )
+                
+                fig.add_trace(line_trace) 
+        
+        # Se filtran las estaciones que caen dentro de la región seleccionada para pintarlas de cierto color, y las demás de otro
+        for line in lines_unique:
+            # Estaciones dentro de la región
+            df_stations_metrobus_aux = df_stations_metrobus_complete[df_stations_metrobus_complete['linea'] == line]
+            lats = df_stations_metrobus_aux['latitud']
+            lons = df_stations_metrobus_aux['longitud']
+            ids = df_stations_metrobus_aux['cve_est']
+            lines = df_stations_metrobus_aux['linea']
+            names = df_stations_metrobus_aux['nombre']
+            values_ = df_stations_metrobus_aux['promedio_delitos']
+            marker_sizes_red = [normalize_size(value, min_value, max_value, min_size=8, max_size=16) for value in values_]
+            marker_sizes_white = [normalize_size(value, min_value, max_value, min_size=4, max_size=7) for value in values_]
+            marker_sizes_color_st = [normalize_size(value, min_value, max_value, min_size=2, max_size=3) for value in values_]
+            
+            scatter_trace = go.Scattermapbox(
+                    lat=lats,
+                    lon=lons,
+                    mode='markers',
+                    customdata=[[i, l, n] for i, l, n in zip(ids, lines, names)],
+                    textposition='top center',
+                    marker=dict(
+                        size=marker_sizes_red,
+                        color='red',
+                        opacity = 1.0,
+                    ),
+                    hoverinfo='none',
+            )
+            scatter_trace_2 = go.Scattermapbox(
+                    lat=lats,
+                    lon=lons,
+                    mode='markers',
+                    customdata=[[i, l, n] for i, l, n in zip(ids, lines, names)],
+                    textposition='top center',
+                    marker=dict(
+                        size=marker_sizes_white,
+                        color='white',
+                        opacity = 1.0,
+                    ),
+                    hovertext=ids,
+                    hoverlabel=dict(namelength=0),
+                    hovertemplate='%{customdata[2]} (%{customdata[1]})<br>',
+            )
+            scatter_trace_3 = go.Scattermapbox(
+                    lat=lats,
+                    lon=lons,
+                    mode='markers',
+                    customdata=[[i, l, n] for i, l, n in zip(ids, lines, names)],
+                    textposition='top center',
+                    marker=dict(
+                        size=marker_sizes_color_st,
+                        color=LINESM_aux[line],
+                        opacity = 1.0,
+                    ),
+                    hoverinfo='none',
+            )
+            fig.add_trace(scatter_trace)
+            fig.add_trace(scatter_trace_2)
+            #fig.add_trace(scatter_trace_3)
+    
+    fig.update_layout(
+        title_text='',
+        margin=dict(t=0, l=0, r=21, b=0),
+        title=dict(
+            y=0.95,
+            x=0.5,
+            xanchor='center',
+            yanchor='top',
+        ),
+        legend=dict(
+            title='',
+            traceorder='normal',
+            orientation='h',
+            y=0.5,
+            x=0.5,
+            xanchor='center',
+            yanchor='top',
+            itemsizing='constant',
+            itemwidth=30,
+            bgcolor='rgba(255, 255, 255, 0)'
+        ),
+        legend_title=dict(side='top right'),
+        showlegend=False,
+
+        mapbox_style="carto-positron",
+        mapbox=dict(
+            pitch=0,
+        ),
+        height = 480,
+        autosize=True,
+        dragmode=False,
+    )
+    
     return fig
 
 # Plot the view of the region selected with its stations inside
@@ -1016,8 +1233,6 @@ def plot_complementary_predictive_map(datageom, transport: str, region_gdf_aux: 
     return fig
 
 
-
-
 # DASHBOARD 
 
 # Loose styles with CSS
@@ -1055,7 +1270,7 @@ def home():
     
 
 # Metro view.
-def metro():
+def trends():
     st.markdown("""
         <style>
             [data-testid=stSidebar] {
@@ -1111,33 +1326,56 @@ def metro():
         
         with col2:
             level_div = st.selectbox("Nivel de filtrado", ["Zona", "Alcaldía", "Línea"])
-            
+        
+        filter_div = []
         with col3:
             if level_div == 'Zona':
-                zone = st.selectbox("Escoge una zona", zones_ls)
+                filter_div = st.multiselect("Escoge una zona", zones_ls)
             elif level_div == 'Alcaldía':
-                zone = st.selectbox("Escoge una alcaldía", munics_ls[st.session_state.transport])
+                filter_div = st.multiselect("Escoge una alcaldía", munics_ls[st.session_state.transport])
             elif level_div == 'Línea':
-                zone = st.selectbox("Escoge una línea", lines_ls[st.session_state.transport])
+                filter_div = st.multiselect("Escoge una línea", lines_ls[st.session_state.transport])
+                
+        st.write("🗓️ Las siguientes tendencias se toman a partir de los datos históricos en los días <b>{}</b> de la <b>semana {}</b> de años pasados.".format(weekday.lower(), week_year), unsafe_allow_html=True)
         
-        df_top_stations_affluence_trends = query_top_stations_affluence_trends('STC Metro', zone, weekday, week_year, 10)
-        df_top_stations_crime_trends = query_top_stations_crime_trends('STC Metro', zone, weekday, week_year, 540, 10)
+        # Make SQL queries
+        n = 10
+        df_top_stations_affluence_trends = query_top_stations_affluence_trends(transport, level_div, filter_div, weekday, week_year, n)
+        df_top_stations_crime_trends = query_top_stations_crime_trends(transport, level_div, filter_div, weekday, week_year, 540, 1000)
+        df_top_stations_crime_trends_aux = df_top_stations_crime_trends.head(n)
         
+        col3, col4 = st.columns([2, 2])
+        with col3:
+            st.write(f"##### Mapa de puntos calientes delictivos")
+            fig = plot_crime_trend_stations(munics_gdf, df_top_stations_crime_trends, transport)
+            fig.update_layout({"uirevision": "foo"}, overwrite=True)
+            
+            st.plotly_chart(fig, use_container_width=True, config={'displayModeBar': False,})
+            
+        with col4:
+            # n = col4.slider(f'No. de estaciones a mostrar', 0, 20, 10)
+            
+            st.write(f"##### Top {n} estaciones más peligrosas")
+            st.plotly_chart(plot_top_stations_crime_trends(df_top_stations_crime_trends_aux, transport), use_container_width=True, config={'displayModeBar': False,})
         
-        col3, col4 = st.columns(2)
-        # Column 1.
-        col3.write("##### Top 10 estaciones con más afluencia")
-        col3.write("🗓️ Datos históricos para <b>{}</b> de la <b>semana {}</b> de años pasados.".format(weekday.lower(), week_year), unsafe_allow_html=True)
-        col3.plotly_chart(plot_top_stations_affluence_trends(df_top_stations_affluence_trends, 'STC Metro'), use_container_width=True)
-        
-        # Column 2.
-        col4.write("##### Top 10 estaciones más delictivas")
-        col4.write("🗓️ Datos históricos para <b>{}</b> de la <b>semana {}</b> de años pasados.".format(weekday.lower(), week_year), unsafe_allow_html=True)
-        col4.plotly_chart(plot_top_stations_crime_trends(df_top_stations_crime_trends, 'STC Metro'), use_container_width=True)
-        
-    #st.write('poner selector de tipo desglose: zona, alcaldía, línea y en otro selector los posibles valores')
+            st.write(f"##### Top {n} estaciones con mayor afluencia")
+            st.plotly_chart(plot_top_stations_affluence_trends(df_top_stations_affluence_trends, transport), use_container_width=True, config={'displayModeBar': False,})
+
+            
+# Metrobus view
+def exploration():
+    st.markdown("""
+    <style>
+        [data-testid=stSidebar] {
+            background-color: #c80f2e;
+        }
+        [data-testid=stSidebar] h1 {
+            color: white;
+        }
+    </style>
+    """, unsafe_allow_html=True)
     
-    # Second container.
+    st.title("Metrobús")
     with st.container():
         st.header("🔍 Explora las estaciones")
         col1, col2 = st.columns(2)
@@ -1219,134 +1457,6 @@ def metro():
                 col2.write(" - Rangos de edad más vulnerables")
                 col2.write(" - Comportamiento de la distancia delito-estación")
                 col2.write(" - Partes del día más delictivas")
-
-            
-# Metrobus view
-def metrobus():
-    st.markdown("""
-    <style>
-        [data-testid=stSidebar] {
-            background-color: #c80f2e;
-        }
-        [data-testid=stSidebar] h1 {
-            color: white;
-        }
-    </style>
-    """, unsafe_allow_html=True)
-    
-    st.title("Metrobús")
-    # First container.
-    with st.container():
-        st.header("TENDENCIAS")
-        opt = st.selectbox("ESCOGE UNA ZONA", ["CIUDAD DE MÉXICO", "NORTE", "SUR", "ORIENTE", "PONIENTE"])
-        st.write(opt)
-        col1, col2 = st.columns(2)
-        # Column 1.
-        col1.write("##### TOP AFLUENCIAS")
-        data = {
-            'Estación': ['Hidalgo', 'Juárez', 'Centro Médico'],
-            'Frecuencia': [20, 15, 5]  # Ejemplo de frecuencia de delitos
-        }
-        df = pd.DataFrame(data)
-        plt.barh(df['Estación'], df['Frecuencia'], color='skyblue', edgecolor='black')
-        plt.xlabel('Estación')
-        plt.ylabel('Frecuencia de Afluencias')
-        plt.title('Histograma de Frecuencia de Afluencias')
-        plt.grid(True)
-        col1.pyplot(plt)
-        # Column 2.
-        col2.write("##### TOP DELECTIVAS")
-        data = {
-            'Estación': ['Hidalgo', 'Juárez', 'Centro Médico'],
-            'Frecuencia': [20, 15, 5]  # Ejemplo de frecuencia de delitos
-        }
-        df = pd.DataFrame(data)
-        plt.barh(df['Estación'], df['Frecuencia'], color='skyblue', edgecolor='black')
-        plt.xlabel('Estación')
-        plt.ylabel('Frecuencia de Afluencias')
-        plt.title('Histograma de Frecuencia de Délitos')
-        plt.grid(True)
-        col2.pyplot(plt)
-    # Second container.
-    with st.container():
-        st.header("ESTACIONES")
-        col1, col2 = st.columns(2)
-        # Map column.
-        with col1:
-            m = init_map()
-            m = plot_stations(df_stations_metrobus, m, 'METROBUS')
-            level1_map_data = st_folium(m)
-            st.session_state.selected_id = level1_map_data['last_object_clicked_tooltip']
-        # Second column validation.
-        if 'selected_id' not in st.session_state:
-            col2.subheader("ES NECESARIO SELECCIONAR UNA ESTACIÓN")
-            col2.subheader("AL SELECCIONAR APARECERÁ LA SIGUIENTE INFORMACIÓN:")
-            col2.write("##### TOP DELITOS")
-            col2.write("##### COMPARACIÓN DE GÉNEROS")
-            col2.write("##### EDAD")
-            col2.write("##### DISTANCIAS DE LOS DELITOS")
-        else:
-            if st.session_state.selected_id is not None:
-                cve_est = st.session_state.selected_id.split(":")[0]
-                name_est = get_station(df_stations_metrobus, cve_est, "nombre")
-                tipo_est = get_station(df_stations_metrobus, cve_est, "tipo")
-                linea_est = get_station(df_stations_metrobus, cve_est, "linea")
-                col2.subheader(f'{name_est.upper()}')
-                col2.write(f'LÍNEA: {linea_est[1:]}')
-                col2.write(f'ESTACIÓN TIPO: {tipo_est.upper()}')
-                col2.write("##### TOP DELITOS")
-                data = {
-                    'Tipo de Delito': ['Robo', 'Asalto', 'Homicidio'],
-                    'Frecuencia': [20, 15, 5]  # Ejemplo de frecuencia de delitos
-                }
-                df = pd.DataFrame(data)
-                plt.barh(df['Tipo de Delito'], df['Frecuencia'], color='skyblue', edgecolor='black')
-                plt.xlabel('Tipo de Delitos')
-                plt.ylabel('Frecuencia de Delitos')
-                plt.title('Histograma de Frecuencia de Delitos')
-                plt.grid(True)
-                col2.pyplot(plt)
-                col2.write("##### COMPARACIÓN DE GÉNEROS")
-                # Datos de ejemplo
-                labels = ['HOMBRE', 'MUJER']
-                sizes = [45, 55]
-                # Configuración de colores
-                colors = sns.color_palette('pastel')
-                # Crear gráfico de pastel
-                fig, ax = plt.subplots()
-                ax.pie(sizes, labels=labels, colors=colors, autopct='%1.1f%%', startangle=140)
-                ax.axis('equal')  # Equal aspect ratio para asegurar que es un círculo
-                ax.set_title('Ejemplo de Gráfico de Pastel con Seaborn', fontsize=16)
-                col2.pyplot(fig)
-                col2.write("###### EDAD")
-                data2 = {
-                    'Edad': ['[10-20]', '[40-50]', '[90-100]'],
-                    'Frecuencia': [20, 15, 5]  # Ejemplo de frecuencia de delitos
-                }
-                df2 = pd.DataFrame(data2)
-                fig2, ax2 = plt.subplots()
-                ax2.bar(df2['Edad'], df2['Frecuencia'], color='skyblue', edgecolor='black')
-                col2.pyplot(fig2)
-                col2.divider()
-                col2.write("###### DISTANCIAS DE LOS DELITOS")
-                # Generar datos aleatorios para el histograma
-                np.random.seed(0)
-                data = np.random.randn(1000)
-                # Definir el número de bins para el histograma
-                plt.figure(figsize=(8, 6))
-                plt.hist(data, bins=100, orientation='horizontal', color='skyblue')
-                plt.xlabel('Frecuencia')
-                plt.ylabel('xlabel')
-                plt.title('Histograma Horizontal')
-                plt.grid(True)
-                col2.pyplot(plt)
-            else:
-                col2.subheader("ES NECESARIO SELECCIONAR UNA ESTACIÓN")
-                col2.subheader("AL SELECCIONAR APARECERÁ LA SIGUIENTE INFORMACIÓN:")
-                col2.write("##### TOP DELITOS")
-                col2.write("##### COMPARACIÓN DE GÉNEROS")
-                col2.write("##### EDAD")
-                col2.write("##### DISTANCIAS DE LOS DELITOS")
 
 
 # Predictions view
@@ -1582,7 +1692,7 @@ def predictions():
             # https://github.com/null-jones/streamlit-plotly-events
             # https://orosz-attila-covid-19-dashboard-streamlit-app-kmmvgj.streamlit.app/
             #https://towardsdatascience.com/highlighting-click-data-on-plotly-choropleth-map-377e721c5893
-            selected_click_aux = plotly_events(fig, click_event=True)
+            selected_click_aux = plotly_events(fig, click_event=True,)
             st.session_state.selected_click_pred_map.append(selected_click_aux)
             print('click', st.session_state.selected_click_pred_map)
            
@@ -1627,9 +1737,9 @@ def predictions():
                         fig2 = plot_complementary_predictive_map(region_gdf_merge, transport, region_gdf_aux, region_column)
                         fig2.update_layout({"uirevision": "foo"}, overwrite=True)
                         
-                        col9.plotly_chart(fig2, use_container_width=True)
+                        col9.plotly_chart(fig2, use_container_width=True, config={'displayModeBar': False,})
                     with col11:
-                        st.plotly_chart(fig3, use_container_width=True)
+                        st.plotly_chart(fig3, use_container_width=True, config={'displayModeBar': False,})
                     
                     with st.expander("Estaciones afectadas", expanded=True):
                         #st.markdown('<span style="color: black; font-size: 14px;">Estaciones afectadas:</span>', unsafe_allow_html=True)
@@ -1665,10 +1775,8 @@ def predictions():
                     
                     # col8.plotly_chart(fig3, use_container_width=True)
                             
-                    
-        
+       
     with st.container():
-        
         pass
 
 
@@ -1747,10 +1855,10 @@ with st.sidebar:
     
     if st.button("Inicio"):
         st.session_state.selection = "INICIO"
-    if st.button("STC Metro"):
+    if st.button("Tendencias"):
         st.session_state.selection = "METRO"
         st.session_state.transport = 'STC Metro'
-    if st.button("Metrobús"):
+    if st.button("Explora"):
         st.session_state.selection = "METROBÚS"
     if st.button("Predicciones"):
         st.session_state.selection = "PREDICCIONES"
@@ -1763,9 +1871,9 @@ else:
     if st.session_state.selection == "INICIO":
         home()
     if st.session_state.selection == "METRO":
-        metro()
+        trends()
     if st.session_state.selection == "METROBÚS":
-        metrobus()
+        exploration()
     if st.session_state.selection == "PREDICCIONES":
         #if len(st.session_state.selected_click_pred_map) > 0:
         #    pass

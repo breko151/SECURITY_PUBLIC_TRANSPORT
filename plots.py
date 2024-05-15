@@ -33,9 +33,9 @@ def plot_top_stations_affluence_trends(df: pd.DataFrame, transport: str):
     fig.update_layout(
         title='',
         xaxis_title='Afluencia promedio',
-        yaxis_title='Estación',
-        margin=dict(t=0), 
-        height=300,
+        #yaxis_title='Estación',
+        margin=dict(t=0, b=0, l=200), 
+        height=222,
     )
     
     fig.update_xaxes(range=x_range)
@@ -82,9 +82,9 @@ def plot_top_stations_crime_trends(df: pd.DataFrame, transport: str):
     fig.update_layout(
         title='',
         xaxis_title='Promedio de hechos delictivos',
-        yaxis_title='Estación',
-        margin=dict(t=0), 
-        height=300,
+        #yaxis_title='Estación',
+        margin=dict(t=0, b=0, l=200), 
+        height=222,
     )
     
     fig.update_xaxes(range=x_range)
