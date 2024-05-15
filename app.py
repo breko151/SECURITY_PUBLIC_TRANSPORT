@@ -19,6 +19,11 @@ from shapely.geometry import MultiPolygon, MultiPoint, Polygon, shape
 
 # Model
 import pickle
+from sklearn.linear_model import LogisticRegression
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.svm import SVC
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.ensemble import RandomForestClassifier
 
 # Data visualization.
 import seaborn as sns
@@ -32,7 +37,7 @@ from colors import LINESM, LINESMB, LINESM_aux, LINESMB_aux
 
 # Auxiliar proper modules
 from plots import plot_top_stations_affluence_trends, plot_top_stations_crime_trends
-#from querys import query_top_stations_affluence_trends, query_top_stations_crime_trends
+from querys import query_top_stations_affluence_trends, query_top_stations_crime_trends
 
 # Extras
 import warnings
@@ -122,6 +127,22 @@ def get_station(df, cve_est, column=None):
 
 
 # INITIALIZATION OF VARIABLES
+
+# List of default regions and lines
+zones_ls = ["Ciudad de México", "Centro", "Norte", "Sur", "Oriente", "Poniente"]
+munics_ls = {
+    'STC Metro': ['Álvaro Obregón', 'Azcapotzalco', 'Benito Juárez', 'Coyoacán', 'Cuauhtémoc',
+       'Gustavo A. Madero', 'Iztacalco', 'Iztapalapa', 'Miguel Hidalgo',
+       'Tláhuac', 'Venustiano Carranza'],
+    'Metrobús': ['Álvaro Obregón', 'Azcapotzalco', 'Benito Juárez', 'Coyoacán', 'Cuauhtémoc',
+       'Gustavo A. Madero', 'Iztacalco', 'Iztapalapa', 'Miguel Hidalgo',
+       'Tlalpan', 'Venustiano Carranza', ],
+}
+lines_ls = {
+    'STC Metro': ['Línea 1', 'Línea 2', 'Línea 3', 'Línea 4', 'Línea 5', 'Línea 6', 'Línea 7', 'Línea 8',
+                  'Línea 9', 'Línea 12', 'Línea A', 'Línea B',],
+    'Metrobús': ['Línea 1', 'Línea 2', 'Línea 3', 'Línea 4', 'Línea 5', 'Línea 6', 'Línea 7',],
+}
 
 # Dictionaries to fix values
 dict_weekday = {
@@ -244,10 +265,10 @@ file_metrobus_logo.close()
 @st.cache_resource
 def load_crime_model(transport: str, grouped_dataset_id: int):
     if transport == 'STC Metro':
-        with open('./models_trained/clf_crime_metro_dataset_{}_wm.pkl'.format(grouped_dataset_id), 'rb') as file:
+        with open('./models_trained/final/clf_crime_metro_dataset_{}_wm_2_mas_perc.pkl'.format(grouped_dataset_id), 'rb') as file:
             loaded_pipeline = pickle.load(file)
     else:
-        with open('./models_trained/clf_crime_metrobus_dataset_{}_wm.pkl'.format(grouped_dataset_id), 'rb') as file:
+        with open('./models_trained/final/clf_crime_metrobus_dataset_{}_wm_2_mas_perc.pkl'.format(grouped_dataset_id), 'rb') as file:
             loaded_pipeline = pickle.load(file)
     
     return loaded_pipeline
@@ -272,9 +293,9 @@ def load_afflu_forecast_values(transport: str, grouped_dataset_id: int):
 @st.cache_resource
 def load_weekly_crime_counts(transport: str, grouped_dataset_id: int):
     if transport == 'STC Metro':
-        df = pd.read_csv('./datasets_aux/carpetas_afluencia_metro_grupo_{}_wm.csv'.format(grouped_dataset_id))
+        df = pd.read_csv('./datasets_aux/test/carpetas_afluencia_metro_grupo_{}_wm_final_red.csv'.format(grouped_dataset_id))
     else:
-        df = pd.read_csv('./datasets_aux/carpetas_afluencia_metrobus_grupo_{}_wm.csv'.format(grouped_dataset_id))
+        df = pd.read_csv('./datasets_aux/test/carpetas_afluencia_metrobus_grupo_{}_wm_final_red.csv'.format(grouped_dataset_id))
     
     df['semana_anio_completa'] = df['anio'].astype(str) + ' - s' + df['semana_anio'].astype(str)
     
@@ -284,9 +305,9 @@ def load_weekly_crime_counts(transport: str, grouped_dataset_id: int):
 @st.cache_resource
 def load_thresholds_crime_model(transport: str, grouped_dataset_id: int):
     if transport == 'STC Metro':
-        df = pd.read_csv('./datasets_aux/rangos_dataset_grupo_{}.csv'.format(grouped_dataset_id))
+        df = pd.read_csv('./datasets_aux/test/rangos_dataset_grupo_{}_2_mas_perc.csv'.format(grouped_dataset_id))
     else:
-        df = pd.read_csv('./datasets_aux/rangos_dataset_grupo_{}_mb.csv'.format(grouped_dataset_id))
+        df = pd.read_csv('./datasets_aux/test/rangos_dataset_grupo_{}_2_mas_perc_mb.csv'.format(grouped_dataset_id))
     
     return df
 
@@ -358,6 +379,7 @@ def plot_stations(df, folium_map, type):
 def plot_ts_weekly_crime(df, title, threshold):
     fig = go.Figure()
     x = df['semana_anio_completa']
+    print(df)
     y = df['conteo']
     
     # Bicolor graph
@@ -792,19 +814,19 @@ def plot_complementary_predictive_map(datageom, transport: str, region_gdf_aux: 
         #print(mb_lines['LINEA'].unique())
         # Mapeamos todas las líneas
         for line in lines_unique:
-            print(line)
+            #print(line)
             metrobus_lines_aux = mb_lines[mb_lines['LINEA'].str[-1] == line[1:]]
             metrobus_lines_aux['geometry_yx'] = metrobus_lines_aux['geometry'].apply(lambda line: LineString([(point[0], point[1]) for point in line.coords])) 
             #print(metrobus_lines_aux)
             lines_ = metrobus_lines_aux['geometry_yx']
-            print(metrobus_lines_aux['geometry_yx'])
-            print(len(lines_.type))
+            #print(metrobus_lines_aux['geometry_yx'])
+            #print(len(lines_.type))
             
             for i in range(len(lines_)):
                 line_ = lines_.iloc[i]
                 coords_pts = [[coord[0], coord[1]] for coord in line_.coords]
-                print('llega')
-                print(LINESMB[metrobus_lines_aux['LINEA'].to_list()[0]])
+                #print('llega')
+                #print(LINESMB[metrobus_lines_aux['LINEA'].to_list()[0]])
                 line_trace = go.Scattermapbox(
                     mode='lines',
                     lon = [coord[0] for coord in coords_pts],
@@ -1035,44 +1057,85 @@ def home():
 # Metro view.
 def metro():
     st.markdown("""
-    <style>
-        [data-testid=stSidebar] {
-            background-color: #e8540c;
-        }
-        [data-testid=stSidebar] h1 {
-            color: white;
-        }
-    </style>
-    """, unsafe_allow_html=True)
+        <style>
+            [data-testid=stSidebar] {
+                background-color: #e8540c;
+            }
+            [data-testid=stSidebar] h1 {
+                color: white;
+            }
+        </style>
+        """, unsafe_allow_html=True)
     
-    col1, col2 = st.columns([1, 5])
-    with col1:
-        st.markdown("<div style='{}'><img src='data:image/gif;base64,{}' width='90' style='margin-right:0px;'></div>".format(center_css, data_url_metro_logo), unsafe_allow_html=True)
-    with col2:
-        st.title('STC Metro')
-        #st.markdown("<div style='display: flex; justify-content: left; align-items: center;'><h1 style='text-align: left;'>STC Metro</h1></div>", unsafe_allow_html=True)
-    st.markdown("<br>", unsafe_allow_html=True)
+    # if st.session_state.transport == 'STC Metro':
+    #     st.markdown("""
+    #     <style>
+    #         [data-testid=stSidebar] {
+    #             background-color: #e8540c;
+    #         }
+    #         [data-testid=stSidebar] h1 {
+    #             color: white;
+    #         }
+    #     </style>
+    #     """, unsafe_allow_html=True)
+        
+    #     col1, col2 = st.columns([1, 5])
+    #     with col1:
+    #         st.markdown("<div style='{}'><img src='data:image/gif;base64,{}' width='90' style='margin-right:0px;'></div>".format(center_css, data_url_metro_logo), unsafe_allow_html=True)
+    #     with col2:
+    #         st.title('STC Metro')
+    #         #st.markdown("<div style='display: flex; justify-content: left; align-items: center;'><h1 style='text-align: left;'>STC Metro</h1></div>", unsafe_allow_html=True)
+    #     st.markdown("<br>", unsafe_allow_html=True)
+    # else:
+    #     st.markdown("""
+    #     <style>
+    #         [data-testid=stSidebar] {
+    #             background-color: #c80f2e;
+    #         }
+    #         [data-testid=stSidebar] h1 {
+    #             color: white;
+    #         }
+    #     </style>
+    #     """, unsafe_allow_html=True)
+        
+    #     st.title("Metrobús")
     
     # First container.
     with st.container():
         st.header("🔥 Tendencias")
-        zone = st.selectbox("Escoge una zona", ["Ciudad de México", "Centro", "Norte", "Sur", "Oriente", "Poniente"])
-        # df_top_stations_affluence_trends = query_top_stations_affluence_trends('STC Metro', zone, weekday, week_year, 10)
-        # df_top_stations_crime_trends = query_top_stations_crime_trends('STC Metro', zone, weekday, week_year, 540, 10)
+        col1, col2, col3 = st.columns([1, 1, 3])
+        
+        with col1:
+            transport = st.selectbox("Sistema", ["STC Metro", "Metrobús"])
+            st.session_state.transport = transport
+        
+        with col2:
+            level_div = st.selectbox("Nivel de filtrado", ["Zona", "Alcaldía", "Línea"])
+            
+        with col3:
+            if level_div == 'Zona':
+                zone = st.selectbox("Escoge una zona", zones_ls)
+            elif level_div == 'Alcaldía':
+                zone = st.selectbox("Escoge una alcaldía", munics_ls[st.session_state.transport])
+            elif level_div == 'Línea':
+                zone = st.selectbox("Escoge una línea", lines_ls[st.session_state.transport])
+        
+        df_top_stations_affluence_trends = query_top_stations_affluence_trends('STC Metro', zone, weekday, week_year, 10)
+        df_top_stations_crime_trends = query_top_stations_crime_trends('STC Metro', zone, weekday, week_year, 540, 10)
         
         
-        # col1, col2 = st.columns(2)
-        # # Column 1.
-        # col1.write("##### Top 10 estaciones con más afluencia")
-        # col1.write("🗓️ Datos históricos para <b>{}</b> de la <b>semana {}</b> de años pasados.".format(weekday.lower(), week_year), unsafe_allow_html=True)
-        # col1.plotly_chart(plot_top_stations_affluence_trends(df_top_stations_affluence_trends, 'STC Metro'), use_container_width=True)
+        col3, col4 = st.columns(2)
+        # Column 1.
+        col3.write("##### Top 10 estaciones con más afluencia")
+        col3.write("🗓️ Datos históricos para <b>{}</b> de la <b>semana {}</b> de años pasados.".format(weekday.lower(), week_year), unsafe_allow_html=True)
+        col3.plotly_chart(plot_top_stations_affluence_trends(df_top_stations_affluence_trends, 'STC Metro'), use_container_width=True)
         
-        # # Column 2.
-        # col2.write("##### Top 10 estaciones más delictivas")
-        # col2.write("🗓️ Datos históricos para <b>{}</b> de la <b>semana {}</b> de años pasados.".format(weekday.lower(), week_year), unsafe_allow_html=True)
-        # col2.plotly_chart(plot_top_stations_crime_trends(df_top_stations_crime_trends, 'STC Metro'), use_container_width=True)
+        # Column 2.
+        col4.write("##### Top 10 estaciones más delictivas")
+        col4.write("🗓️ Datos históricos para <b>{}</b> de la <b>semana {}</b> de años pasados.".format(weekday.lower(), week_year), unsafe_allow_html=True)
+        col4.plotly_chart(plot_top_stations_crime_trends(df_top_stations_crime_trends, 'STC Metro'), use_container_width=True)
         
-    st.write('poner selector de tipo desglose: zona, alcaldía, línea y en otro selector los posibles valores')
+    #st.write('poner selector de tipo desglose: zona, alcaldía, línea y en otro selector los posibles valores')
     
     # Second container.
     with st.container():
@@ -1308,7 +1371,7 @@ def predictions():
     # First container.
     with st.container():
         #st.markdown('<b>Parámetros para la predicción</b>', unsafe_allow_html=True)
-        col1, col2, col3 = st.columns([1, 1, 3])
+        col1, col2, col3 = st.columns([1, 3, 1])
         
         list_categ_crimes = {
             'Robo simple': 'Robo simple',
@@ -1323,17 +1386,32 @@ def predictions():
             'Amenazas': 'Amenazas',
         }
         
+        list_categ_crimes_ = {
+            'Robo a transeúnte y pasajero en transporte público': 'Robo a transeúnte y pasajero en transporte público',
+            'Robo de vehículo y autopartes': 'Robo de vehículo y autopartes',
+            'Delitos sexuales': 'Delitos sexuales',
+            'Lesiones': 'Lesiones',
+            'Amenazas': 'Amenazas',
+            'Fraude': 'Fraude',
+        }
+        
         transport = col1.selectbox("Sistema", [
             "STC Metro",
             "Metrobús",
         ])
-        level_div = col2.selectbox("Nivel de división", [
-            "Alcaldía",
-            #"Sector policial"
-        ])
+        level_div = 'Alcaldía'
+        # level_div = col2.selectbox("Nivel de división", [
+        #     "Alcaldía",
+        #     #"Sector policial"
+        # ])
         
-        categ_crime = col3.selectbox("Categoría delictiva", list_categ_crimes.keys())
-        categ_crime_ok = list_categ_crimes[categ_crime]
+        categ_crime = col2.selectbox("Categoría delictiva", list_categ_crimes_.keys())
+        categ_crime_ok = list_categ_crimes_[categ_crime]
+        
+        sex = col3.selectbox("Sexo a considerar en la predicción", ["Ambos", "Femenino", "Masculino"])
+        id_sex = 0
+        if sex == 'Femenino':
+            id_sex = 1
         
         col4, col5, col6 = st.columns([4, 1, 2])
         weeks_forward = col4.slider(f'No. de semanas futuras a predecir', 0, last_week_of_year - int(week_year), 0)
@@ -1345,10 +1423,7 @@ def predictions():
         else:
             text_num_week_forward += str(weeks_forward + int(week_year))
         
-        sex = col6.selectbox("Sexo a considerar en la predicción", ["Ambos", "Femenino", "Masculino"])
-        id_sex = 0
-        if sex == 'Femenino':
-            id_sex = 1
+        
         
         # Validar a que agrupamiento corresponde determinado modelo predictivo
         grouped_dataset_id = 0
@@ -1376,13 +1451,15 @@ def predictions():
             
             weekly_crime_counts = load_weekly_crime_counts(transport, grouped_dataset_id)[columns_weekly_count]
             weekly_crime_counts = weekly_crime_counts.groupby(columns_weekly_count[:-1])['conteo'].sum().reset_index(name='conteo')
+            print(weekly_crime_counts)
             weekly_crime_counts_filtered = weekly_crime_counts[(weekly_crime_counts['categoria_delito_adaptada'] == categ_crime_ok)].sort_values(by=['anio', 'semana_anio'])
-
+            print('\n')
+            print(weekly_crime_counts_filtered)
             thresholds_pred = load_thresholds_crime_model(transport, grouped_dataset_id)
             
             print('Thresholds')
             print(thresholds_pred)
-            threshold_grouped_dataset = thresholds_pred[(thresholds_pred['categ_delito'] == categ_crime_ok)]['percentil_50'].to_list()[0]
+            threshold_grouped_dataset = thresholds_pred[(thresholds_pred['categ_delito'] == categ_crime_ok)]['percentil'].to_list()[0]
             print(threshold_grouped_dataset)
             
         
@@ -1408,13 +1485,14 @@ def predictions():
             
             weekly_crime_counts = load_weekly_crime_counts(transport, grouped_dataset_id)[columns_weekly_count]
             weekly_crime_counts = weekly_crime_counts.groupby(columns_weekly_count[:-1])['conteo'].sum().reset_index(name='conteo')
+            print(weekly_crime_counts)
             weekly_crime_counts_filtered = weekly_crime_counts[(weekly_crime_counts['categoria_delito_adaptada'] == categ_crime_ok)
                                                                & (weekly_crime_counts['id_sexo'] == id_sex)].sort_values(by=['anio', 'semana_anio'])
             
             thresholds_pred = load_thresholds_crime_model(transport, grouped_dataset_id)
             print('Thresholds')
             print(thresholds_pred)
-            threshold_grouped_dataset = thresholds_pred[(thresholds_pred['categ_delito'] == categ_crime_ok) & (thresholds_pred['sexo'] == id_sex)]['percentil_50'].to_list()[0]
+            threshold_grouped_dataset = thresholds_pred[(thresholds_pred['categ_delito'] == categ_crime_ok) & (thresholds_pred['sexo'] == id_sex)]['percentil'].to_list()[0]
             print(threshold_grouped_dataset)
             
         if level_div == 'Sector policial' and sex == 'Ambos':
@@ -1466,6 +1544,8 @@ def predictions():
         input_model_df = input_model_df_partial.merge(afflu_fc_values_filtered, left_on=columns_input_model[1], right_on=['region'])
         input_model_df.rename(columns={'afluencia': 'semana_1'}, inplace=True)
         input_model_df = input_model_df[columns_input_model]
+        #print(crime_model)
+        print(input_model_df)
         preds = crime_model.predict(input_model_df)
         #print(input_model_df)
         print('Predicciones para semana {}:'.format(weeks_forward + int(week_year)))
@@ -1536,7 +1616,9 @@ def predictions():
                     
                     #col8.markdown(f'<span style="color: black; font-size: 14px;">para las estaciones de <b>{region_name}</b> durante la <b>{text_num_week_forward}</b></span> <span style="color: #a5a5a5; font-size: 14px;">({get_week_date_range(weeks_forward + int(week_year), year)})</span>', unsafe_allow_html=True)
                     
+                    print(weekly_crime_counts_filtered)
                     weekly_crime_counts_filtered = weekly_crime_counts_filtered[weekly_crime_counts_filtered[region_column_name_2] == region_name]
+                    print(weekly_crime_counts_filtered)
                     #fig3 = plot_ts_weekly_crime(weekly_crime_counts_filtered, f'Conteo semanal de {categ_crime_ok.lower()} (2019-2023)', threshold_grouped_dataset)
                     fig3 = plot_ts_weekly_crime(weekly_crime_counts_filtered, f'Conteo semanal delictivo (2019-2023)', threshold_grouped_dataset)
                     
@@ -1667,6 +1749,7 @@ with st.sidebar:
         st.session_state.selection = "INICIO"
     if st.button("STC Metro"):
         st.session_state.selection = "METRO"
+        st.session_state.transport = 'STC Metro'
     if st.button("Metrobús"):
         st.session_state.selection = "METROBÚS"
     if st.button("Predicciones"):

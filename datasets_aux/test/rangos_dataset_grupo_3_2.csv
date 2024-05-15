@@ -1,0 +1,6 @@
+group_dataset,categ_delito,percentil_50,minimo,maximo
+3,Amenazas,5.0,0.0,56.0
+3,Lesiones,2.0,0.0,33.0
+3,Robo a transeúnte y en transporte público,17.0,0.0,202.0
+3,"Acoso, abuso, violación y otros delitos sexuales",2.0,0.0,29.0
+3,Fraude,4.0,0.0,89.0

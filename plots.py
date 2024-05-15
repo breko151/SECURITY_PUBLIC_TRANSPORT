@@ -4,7 +4,7 @@ import plotly.graph_objects as go
 from colors import LINESM_aux, LINESMB_aux
 
 def plot_top_stations_affluence_trends(df: pd.DataFrame, transport: str):
-    df['estacion'] = df['nombre'] + ' ' + df['linea']
+    df['estacion'] = df['linea'] + ' - ' + df['nombre']
     df.reset_index(inplace=True, drop=True)
     df.set_index('estacion', inplace=True)
     # Quien sabe porque al graficar las pone en otro orden los valores, por eso ajustamos
@@ -49,9 +49,13 @@ def plot_top_stations_affluence_trends(df: pd.DataFrame, transport: str):
 
 
 def plot_top_stations_crime_trends(df: pd.DataFrame, transport: str):
-    df['estacion'] = df['nombre'] + ' ' + df['linea']
+    df = df[df['promedio_delitos'] > 0]
+    
+    df['estacion'] = df['linea'] + ' - ' + df['nombre']
     df.reset_index(inplace=True, drop=True)
     df.set_index('estacion', inplace=True)
+    df['promedio_delitos'] = df['promedio_delitos'].apply(float)
+    
     # Quien sabe porque al graficar las pone en otro orden los valores, por eso ajustamos
     df = df.sort_values(by=['promedio_delitos'])
     
