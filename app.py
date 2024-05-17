@@ -11,7 +11,8 @@ import numpy as np
 import pandas as pd
 import json
 from math import ceil
-import geopandas
+import geopandas as gpd
+from shapely.ops import unary_union
 from shapely.geometry import LineString
 import folium
 import plotly.graph_objects as go
@@ -36,8 +37,8 @@ from datetime import datetime, timedelta
 from colors import LINESM, LINESMB, LINESM_aux, LINESMB_aux
 
 # Auxiliar proper modules
-from plots import plot_top_stations_affluence_trends, plot_top_stations_crime_trends
-from querys import query_top_stations_affluence_trends, query_top_stations_crime_trends
+from plots import plot_top_stations_affluence_trends, plot_top_stations_crime_trends, plot_top_crime_station, plot_crime_exploration_gender, plot_crime_exploration_age_group, plot_crime_exploration_distances, plot_crime_exploration_day_parts
+from querys import query_top_stations_affluence_trends, query_top_stations_crime_trends, query_top_crimes_historical, query_crimes_exploration_gender, query_crimes_exploration_age_group, query_crimes_exploration_distances, query_crimes_part_of_day
 
 # Extras
 import warnings
@@ -136,13 +137,68 @@ munics_ls = {
        'Tláhuac', 'Venustiano Carranza'],
     'Metrobús': ['Álvaro Obregón', 'Azcapotzalco', 'Benito Juárez', 'Coyoacán', 'Cuauhtémoc',
        'Gustavo A. Madero', 'Iztacalco', 'Iztapalapa', 'Miguel Hidalgo',
-       'Tlalpan', 'Venustiano Carranza', ],
+       'Tlalpan', 'Venustiano Carranza', 'Xochimilco'],
 }
 lines_ls = {
     'STC Metro': ['Línea 1', 'Línea 2', 'Línea 3', 'Línea 4', 'Línea 5', 'Línea 6', 'Línea 7', 'Línea 8',
                   'Línea 9', 'Línea 12', 'Línea A', 'Línea B',],
     'Metrobús': ['Línea 1', 'Línea 2', 'Línea 3', 'Línea 4', 'Línea 5', 'Línea 6', 'Línea 7',],
 }
+
+years_queries_ls = [2019, 2020, 2021, 2022, 2023]
+months_queries_ls = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre']
+weekdays_queries_ls = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo']
+crime_classes_queries_ls = [
+    'Robo a transeúnte en vía pública',
+    'Robo a transeúnte en espacio abierto al público',
+    'Robo en transporte público individual',
+    'Robo en transporte público colectivo',
+    'Robo en transporte individual',
+    'Robo a persona en un lugar privado',
+    'Robo simple',
+    'Robo de vehículo',
+    'Robo de autopartes',
+    'Robo a institución bancaria',
+    'Robo a negocio', 
+    'Amenazas',
+    'Fraude',
+    'Extorsión',
+    'Abuso sexual',
+    'Acoso sexual',
+    'Violación simple',
+    'Violación equiparada',
+    'Otro tipo de violación',
+    'Estupro',
+    'Otros delitos que atentan contra la libertad y la seguridad sexual',
+    'Homicidio',
+    'Feminicidio',
+    'Lesiones',
+    
+    # 'Secuestro',
+    # 'Secuestro exprés',
+    
+    # 'Posesión simple de narcóticos',
+    # 'Posesión con fines de comercio o suministro de narcóticos',
+    # 'Delitos en materia de armas y objetos prohibidos',
+    # 'Delitos en materia de armas, explosivos y otros materiales destructivos', 
+]
+
+crime_vars_queries_ls = [
+    'Robo',
+    'Amenazas',
+    'Fraude',
+    'Extorsión',
+    'Abuso sexual',
+    'Acoso sexual',
+    'Violación',
+    'Homicidio',
+    'Lesiones',
+    #    'Secuestro',
+    #    'Delitos contra la salud relacionados con narcóticos en su modalidad de narcomenudeo',
+    #    'Delitos en materia de armas y objetos prohibidos',
+    #    'Delitos de delincuencia organizada',
+    #    'Delitos en materia de armas, explosivos y otros materiales destructivos',
+]
 
 # Dictionaries to fix values
 dict_weekday = {
@@ -214,11 +270,12 @@ if 'selected_click_pred_map' not in st.session_state:
 # Geodata
 df_stations = pd.read_csv("./fact_constellation_schema/dim_estaciones_espacio_ok.csv")
 df_stations['cve_mun_inegi'] = df_stations['cve_mun_inegi'].astype(str).str.zfill(3)
-metro_lines = geopandas.read_file('./shapefiles/metro/STC_Metro_lineas_utm14n_repr.shp', index=False)
-mb_lines = geopandas.read_file('./shapefiles/mb/Metrobus_lineas_utm14n_repr.shp', index=False)
-munics_gdf = geopandas.read_file('./shapefiles/alcaldias/alcaldias_geo.shp', index=False)
-police_sectors_gdf = geopandas.read_file('./shapefiles/cuadrantes/sectores_agrupados_ssc.shp', index=False)
-lineas_cdmx = geopandas.read_file('./images/cdmx.json', encoding='utf-8')
+metro_lines = gpd.read_file('./shapefiles/metro/STC_Metro_lineas_utm14n_repr.shp', index=False)
+mb_lines = gpd.read_file('./shapefiles/mb/Metrobus_lineas_utm14n_repr.shp', index=False)
+zones_gdf = gpd.read_file('./shapefiles/zonas/zonas_geo.shp', index=False)
+munics_gdf = gpd.read_file('./shapefiles/alcaldias/alcaldias_geo.shp', index=False)
+police_sectors_gdf = gpd.read_file('./shapefiles/cuadrantes/sectores_agrupados_ssc.shp', index=False)
+lineas_cdmx = gpd.read_file('./images/cdmx.json', encoding='utf-8')
 lineas_cdmx_json = lineas_cdmx.to_json()
 
 # Adjusts to geodata
@@ -283,7 +340,7 @@ def load_afflu_forecast_values(transport: str, grouped_dataset_id: int):
             df = pd.read_csv('./predictions_sarima/predicciones_afluencia_sector_policial_semana_metro.csv')
     else:
         if grouped_dataset_id == 3 or grouped_dataset_id == 4:
-            df = pd.read_csv('./predictions_sarima/predicciones_afluencia_alcaldia_semana_metrobus.csv')
+            df = pd.read_csv('./predictions_sarima/predicciones_afluencia_alcaldia_semana_metrobus_final.csv')
         elif grouped_dataset_id == 6 or grouped_dataset_id == 7:
             df = pd.read_csv('./predictions_sarima/predicciones_afluencia_sector_policial_semana_metrobus.csv')
     
@@ -317,14 +374,14 @@ def load_thresholds_crime_model(transport: str, grouped_dataset_id: int):
 # EXPLORATORY SECTIONS
 
 # Initialize map of cdmx
-def init_map(center=(19.4326018, -99.1332049), zoom_start=11, map_type="cartodbpositron", height=300, width=100):
+def init_map(center=(19.4326018, -99.1332049), zoom_start=11, map_type="cartodbpositron", height=50, width=200):
     
     return folium.Map(location=center, zoom_start=zoom_start, tiles=map_type, height=height)
 
 # Plot map of stations
 def plot_stations(df, folium_map, type):
     # Validation of type of transport.
-    if type == 'METRO':
+    if type == 'STC Metro':
         # Add every station.
         for i, row in df.iterrows():
             # Customize icon.
@@ -344,7 +401,7 @@ def plot_stations(df, folium_map, type):
             coords_pts = [list(coord) for coord in row['geometry_yx'].coords]
             folium.PolyLine(coords_pts, color=LINESM[row['LINEA']]).add_to(folium_map)
     
-    elif type == 'METROBUS':
+    elif type == 'Metrobús':
         # Add every station.
         for i, row in df.iterrows():
             # Customize icon.
@@ -371,7 +428,637 @@ def plot_stations(df, folium_map, type):
 
     return folium_map
 
+# TRENDS SECTION
 
+# Normalize crime counts to 4-8 scatter point size
+def normalize_size(value, min_value, max_value, min_size=4, max_size=8):
+    return ((value - min_value) / (max_value - min_value)) * (max_size - min_size) + min_size
+
+def generate_geom_grouped(geom_df, level):
+    # Group regions by a certain level
+
+    groups = geom_df.groupby(level)
+    grouped_geoms = []
+    sectors = []
+
+    for sector, group in groups:
+        grouped_geom = unary_union(group['geometry'])
+        grouped_geoms.append(grouped_geom)
+        sectors.append(sector)
+
+    data_dict_grouped_geoms = {
+        level: sectors,
+        'geometry': grouped_geoms
+    }
+
+    #print(data_dict_grouped_geoms)
+
+    return gpd.GeoDataFrame(data_dict_grouped_geoms, geometry='geometry')
+
+def label_percentiles_5_parts(row, percentiles):
+    if row < percentiles.iloc[0]:
+        return 1
+    elif row < percentiles.iloc[1]:
+        return 2
+    elif row < percentiles.iloc[2]:
+        return 3
+    elif row < percentiles.iloc[3]:
+        return 4
+    else:
+        return 5
+
+# Plot the stations showing criminal trends
+def plot_crime_trend_stations(datageom, df: pd.DataFrame, transport: str, level_div: str, filter_div: list):
+    region_gdf_cp = datageom.copy(deep=True)
+    center_geom = region_gdf_cp['geometry'].to_list()[0].centroid
+    df['promedio_delitos'] = df['promedio_delitos'].astype(float)
+    # if filter_div == []:
+    #     filter_div = list(region_gdf_cp[level_div].unique())
+    
+    dict_colors_percentile = {
+        1: '#5bc7da',
+        2: '#4fc261',
+        3: '#d3a900',
+        4: '#d35600',
+        5: 'red',
+    }
+    
+    fig = go.Figure()
+    
+    fig.update_layout(
+        mapbox=dict(center=dict(lat=center_geom.y, lon=center_geom.x),zoom=9.8),
+    )
+
+    # Mostrar estaciones y líneas
+    if transport == 'STC Metro':
+        df_stations_metro_complete = df_stations_metro.merge(df[['linea', 'nombre', 'promedio_delitos']], on=['linea', 'nombre'])
+        min_value = df_stations_metro_complete['promedio_delitos'].min()
+        max_value = df_stations_metro_complete['promedio_delitos'].max()
+        percentile_values = df_stations_metro_complete['promedio_delitos'].quantile([0.15, 0.30, 0.50, 0.70])
+        df_stations_metro_complete['clase'] = df_stations_metro_complete['promedio_delitos'].apply(label_percentiles_5_parts, percentiles=percentile_values)
+        colors_ls = [dict_colors_percentile[class_] for class_ in df_stations_metro_complete['clase'].to_list()]
+        
+        lines_unique = df_stations_metro_complete['linea'].unique()
+        
+        # Map boundaries of regions selected
+        if level_div != 'linea':
+            # Filtrar geometría coropleta
+            if filter_div != []:
+                region_gdf_cp_aux = region_gdf_cp[region_gdf_cp[level_div].isin(filter_div)]
+            else:
+                region_gdf_cp_aux = region_gdf_cp
+            
+            for ind, row in region_gdf_cp_aux.iterrows():
+                geometry_ = row['geometry']
+                lon_geom, lat_geom = geometry_.exterior.xy
+                lon_geom = np.array(lon_geom).tolist()
+                lat_geom = np.array(lat_geom).tolist()
+                trace_boundary = go.Scattermapbox(
+                    lon=lon_geom,
+                    lat=lat_geom,
+                    mode='lines',
+                    fill='toself',
+                    fillcolor='rgba(196, 223, 225, 0.15)',
+                    line=dict(color='#65999d', width=2),
+                    hoverinfo='none',
+                )
+                fig.add_trace(trace_boundary)
+                
+            region_gdf_cp_aux[level_div] = 'union'
+            region_gdf_grouped = generate_geom_grouped(region_gdf_cp_aux, level_div)
+            polygon_ = region_gdf_grouped['geometry'].to_list()[0]
+            
+            # Se filtran aquellas líneas que intersectan (caen dentro) con la demarcación de la alcaldía en cuestión
+            for line in lines_unique:
+                metro_lines_aux = metro_lines[metro_lines['LINEA'] == line[1:]]
+                metro_lines_aux['geometry_yx'] = metro_lines_aux['geometry'].apply(lambda line: LineString([(point[0], point[1]) for point in line.coords])) 
+                lines_ = metro_lines_aux['geometry_yx'].iloc[0]
+                
+                intersection = lines_.intersection(polygon_)
+                if intersection.type == 'MultiLineString':
+                    # Oro molido
+                    # https://gis.stackexchange.com/questions/456266/error-of-multilinestring-object-is-not-iterable
+                    for ind_line in list(intersection.geoms):
+                        if ind_line.is_empty:
+                            #print("No hay intersección")
+                            pass
+                        else:
+                            #print('Intersecta')
+                            coords_pts = [[coord[0], coord[1]] for coord in ind_line.coords]
+                            line_trace = go.Scattermapbox(
+                                mode='lines',
+                                lon = [coord[0] for coord in coords_pts],
+                                lat = [coord[1] for coord in coords_pts],
+                                line=dict(color=LINESM[metro_lines_aux['LINEA'].to_list()[0]], width=4),
+                                hoverinfo='none',
+                            )
+                            fig.add_trace(line_trace)
+                else:
+                    if intersection.is_empty:
+                        #print("No hay intersección")
+                        pass
+                    else:
+                        #print('Intersecta')
+                        coords_pts = [[coord[0], coord[1]] for coord in intersection.coords]
+                        line_trace = go.Scattermapbox(
+                            mode='lines',
+                            lon = [coord[0] for coord in coords_pts],
+                            lat = [coord[1] for coord in coords_pts],
+                            line=dict(color=LINESM[metro_lines_aux['LINEA'].to_list()[0]], width=4),
+                            hoverinfo='none',
+                        )
+                        fig.add_trace(line_trace)
+        else:
+            geometry_ = lineas_cdmx['geometry'].to_list()[0]
+            lon_geom, lat_geom = geometry_.exterior.xy
+            lon_geom = np.array(lon_geom).tolist()
+            lat_geom = np.array(lat_geom).tolist()
+            trace_boundary = go.Scattermapbox(
+                lon=lon_geom,
+                lat=lat_geom,
+                mode='lines',
+                fill='toself',
+                fillcolor='rgba(196, 223, 225, 0.15)',
+                line=dict(color='#65999d', width=2),
+                hoverinfo='none',
+            )
+            fig.add_trace(trace_boundary)
+            
+            # Mapeamos todas las líneas
+            for line in lines_unique:
+                metro_lines_aux = metro_lines[metro_lines['LINEA'] == line[1:]]
+                metro_lines_aux['geometry_yx'] = metro_lines_aux['geometry'].apply(lambda line: LineString([(point[0], point[1]) for point in line.coords])) 
+                lines_ = metro_lines_aux['geometry_yx'].iloc[0]
+                coords_pts = [[coord[0], coord[1]] for coord in lines_.coords]
+                line_trace = go.Scattermapbox(
+                    mode='lines',
+                    lon = [coord[0] for coord in coords_pts],
+                    lat = [coord[1] for coord in coords_pts],
+                    line=dict(color=LINESM[metro_lines_aux['LINEA'].to_list()[0]], width=4),
+                    hoverinfo='none',
+                )
+                fig.add_trace(line_trace)
+        
+        # Se filtran las estaciones que caen dentro de la región seleccionada para pintarlas de cierto color, y las demás de otro
+        
+        for line in lines_unique:
+            df_stations_metro_aux = df_stations_metro_complete[(df_stations_metro_complete['linea'] == line)]
+            print('Longitud muestra', len(df_stations_metro_aux))
+            print('Longitud colores', len(colors_ls))
+            colors_ls_aux = [colors_ls[i] for i in df_stations_metro_aux.index.to_list()]
+            lats = df_stations_metro_aux['latitud']
+            lons = df_stations_metro_aux['longitud']
+            ids = df_stations_metro_aux['cve_est']
+            lines = df_stations_metro_aux['linea']
+            names = df_stations_metro_aux['nombre']
+            values_ = df_stations_metro_aux['promedio_delitos']
+            marker_sizes_red = [normalize_size(value, min_value, max_value, min_size=10, max_size=16) for value in values_]
+            marker_sizes_white = [normalize_size(value, min_value, max_value, min_size=4, max_size=9) for value in values_]
+            marker_sizes_color_st = [normalize_size(value, min_value, max_value, min_size=2, max_size=3) for value in values_]
+            
+            scatter_trace = go.Scattermapbox(
+                    lat=lats,
+                    lon=lons,
+                    mode='markers',
+                    customdata=[[i, l, n] for i, l, n in zip(ids, lines, names)],
+                    textposition='top center',
+                    marker=dict(
+                        size=marker_sizes_red,
+                        color=colors_ls_aux,
+                        opacity = 1.0,
+                    ),
+                    hoverinfo='none',
+            )
+            scatter_trace_2 = go.Scattermapbox(
+                    lat=lats,
+                    lon=lons,
+                    mode='markers',
+                    customdata=[[i, l, n] for i, l, n in zip(ids, lines, names)],
+                    textposition='top center',
+                    marker=dict(
+                        size=marker_sizes_white,
+                        color='white',
+                        opacity = 1.0,
+                    ),
+                    hovertext=ids,
+                    hoverlabel=dict(namelength=0),
+                    hovertemplate='%{customdata[2]} (%{customdata[1]})<br>',
+            )
+            scatter_trace_3 = go.Scattermapbox(
+                    lat=lats,
+                    lon=lons,
+                    mode='markers',
+                    customdata=[[i, l, n] for i, l, n in zip(ids, lines, names)],
+                    textposition='top center',
+                    marker=dict(
+                        size=marker_sizes_color_st,
+                        color=LINESM_aux[line],
+                        opacity = 1.0,
+                    ),
+                    hoverinfo='none',
+            )
+            fig.add_trace(scatter_trace)
+            fig.add_trace(scatter_trace_2)
+            #fig.add_trace(scatter_trace_3)
+
+    else:
+        df_stations_metrobus_complete = df_stations_metrobus.merge(df[['linea', 'nombre', 'promedio_delitos']], on=['linea', 'nombre'])
+        min_value = df_stations_metrobus_complete['promedio_delitos'].min()
+        max_value = df_stations_metrobus_complete['promedio_delitos'].max()
+        lines_unique = df_stations_metrobus_complete['linea'].unique()
+        
+        # Map boundaries of regions selected
+        if level_div != 'linea':
+            # Filtrar geometría coropleta
+            if filter_div != []:
+                region_gdf_cp_aux = region_gdf_cp[region_gdf_cp[level_div].isin(filter_div)]
+            else:
+                region_gdf_cp_aux = region_gdf_cp
+            
+            for ind, row in region_gdf_cp_aux.iterrows():
+                geometry_ = row['geometry']
+                lon_geom, lat_geom = geometry_.exterior.xy
+                lon_geom = np.array(lon_geom).tolist()
+                lat_geom = np.array(lat_geom).tolist()
+                trace_boundary = go.Scattermapbox(
+                    lon=lon_geom,
+                    lat=lat_geom,
+                    mode='lines',
+                    fill='toself',
+                    fillcolor='rgba(196, 223, 225, 0.15)',
+                    line=dict(color='#65999d', width=2),
+                    hoverinfo='none',
+                )
+                fig.add_trace(trace_boundary)
+                
+            region_gdf_cp_aux[level_div] = 'union'
+            region_gdf_grouped = generate_geom_grouped(region_gdf_cp_aux, level_div)
+            polygon_ = region_gdf_grouped['geometry'].to_list()[0]
+            
+            # Se filtran aquellas líneas que intersectan (caen dentro) con la demarcación de la alcaldía en cuestión
+            for line in lines_unique:
+                metrobus_lines_aux = mb_lines[mb_lines['LINEA'].str[-1] == line[1:]]
+                metrobus_lines_aux['geometry_yx'] = metrobus_lines_aux['geometry'].apply(lambda line: LineString([(point[0], point[1]) for point in line.coords])) 
+                lines_ = metrobus_lines_aux['geometry_yx']
+                
+                for i in range(len(lines_)):
+                    line_ = lines_.iloc[i]
+                    intersection = line_.intersection(polygon_)
+                    if intersection.type == 'MultiLineString':
+                        # Oro molido
+                        # https://gis.stackexchange.com/questions/456266/error-of-multilinestring-object-is-not-iterable
+                        for ind_line in list(intersection.geoms):
+                            if ind_line.is_empty:
+                                #print("No hay intersección")
+                                pass
+                            else:
+                                #print('Intersecta')
+                                coords_pts = [[coord[0], coord[1]] for coord in ind_line.coords]
+                                line_trace = go.Scattermapbox(
+                                    mode='lines',
+                                    lon = [coord[0] for coord in coords_pts],
+                                    lat = [coord[1] for coord in coords_pts],
+                                    line=dict(color=LINESMB[metrobus_lines_aux['LINEA'].to_list()[0]], width=4),
+                                    hoverinfo='none',
+                                )
+                                fig.add_trace(line_trace)
+                    else:
+                        if intersection.is_empty:
+                            #print("No hay intersección")
+                            pass
+                        else:
+                            #print('Intersecta')
+                            coords_pts = [[coord[0], coord[1]] for coord in intersection.coords]
+                            line_trace = go.Scattermapbox(
+                                mode='lines',
+                                lon = [coord[0] for coord in coords_pts],
+                                lat = [coord[1] for coord in coords_pts],
+                                line=dict(color=LINESMB[metrobus_lines_aux['LINEA'].to_list()[0]], width=4),
+                                hoverinfo='none',
+                            )
+                            fig.add_trace(line_trace) 
+        else:
+            geometry_ = lineas_cdmx['geometry'].to_list()[0]
+            lon_geom, lat_geom = geometry_.exterior.xy
+            lon_geom = np.array(lon_geom).tolist()
+            lat_geom = np.array(lat_geom).tolist()
+            trace_boundary = go.Scattermapbox(
+                lon=lon_geom,
+                lat=lat_geom,
+                mode='lines',
+                fill='toself',
+                fillcolor='rgba(196, 223, 225, 0.15)',
+                line=dict(color='#65999d', width=2),
+                hoverinfo='none',
+            )
+            fig.add_trace(trace_boundary)
+            
+            # Mapeamos todas las líneas
+            for line in lines_unique:
+                metrobus_lines_aux = mb_lines[mb_lines['LINEA'].str[-1] == line[1:]]
+                metrobus_lines_aux['geometry_yx'] = metrobus_lines_aux['geometry'].apply(lambda line: LineString([(point[0], point[1]) for point in line.coords])) 
+                lines_ = metrobus_lines_aux['geometry_yx']
+                
+                for i in range(len(lines_)):
+                    line_ = lines_.iloc[i]
+                    coords_pts = [[coord[0], coord[1]] for coord in line_.coords]
+                    line_trace = go.Scattermapbox(
+                        mode='lines',
+                        lon = [coord[0] for coord in coords_pts],
+                        lat = [coord[1] for coord in coords_pts],
+                        line=dict(color=LINESMB[metrobus_lines_aux['LINEA'].to_list()[0]], width=4),
+                        hoverinfo='none',
+                    )
+                    fig.add_trace(line_trace)
+
+        # Se filtran las estaciones que caen dentro de la región seleccionada para pintarlas de cierto color, y las demás de otro
+        for line in lines_unique:
+            # Estaciones dentro de la región
+            df_stations_metrobus_aux = df_stations_metrobus_complete[df_stations_metrobus_complete['linea'] == line]
+            lats = df_stations_metrobus_aux['latitud']
+            lons = df_stations_metrobus_aux['longitud']
+            ids = df_stations_metrobus_aux['cve_est']
+            lines = df_stations_metrobus_aux['linea']
+            names = df_stations_metrobus_aux['nombre']
+            values_ = df_stations_metrobus_aux['promedio_delitos']
+            marker_sizes_red = [normalize_size(value, min_value, max_value, min_size=8, max_size=16) for value in values_]
+            marker_sizes_white = [normalize_size(value, min_value, max_value, min_size=4, max_size=7) for value in values_]
+            marker_sizes_color_st = [normalize_size(value, min_value, max_value, min_size=2, max_size=3) for value in values_]
+            
+            scatter_trace = go.Scattermapbox(
+                    lat=lats,
+                    lon=lons,
+                    mode='markers',
+                    customdata=[[i, l, n] for i, l, n in zip(ids, lines, names)],
+                    textposition='top center',
+                    marker=dict(
+                        size=marker_sizes_red,
+                        color='red',
+                        opacity = 1.0,
+                    ),
+                    hoverinfo='none',
+            )
+            scatter_trace_2 = go.Scattermapbox(
+                    lat=lats,
+                    lon=lons,
+                    mode='markers',
+                    customdata=[[i, l, n] for i, l, n in zip(ids, lines, names)],
+                    textposition='top center',
+                    marker=dict(
+                        size=marker_sizes_white,
+                        color='white',
+                        opacity = 1.0,
+                    ),
+                    hovertext=ids,
+                    hoverlabel=dict(namelength=0),
+                    hovertemplate='%{customdata[2]} (%{customdata[1]})<br>',
+            )
+            scatter_trace_3 = go.Scattermapbox(
+                    lat=lats,
+                    lon=lons,
+                    mode='markers',
+                    customdata=[[i, l, n] for i, l, n in zip(ids, lines, names)],
+                    textposition='top center',
+                    marker=dict(
+                        size=marker_sizes_color_st,
+                        color=LINESM_aux[line],
+                        opacity = 1.0,
+                    ),
+                    hoverinfo='none',
+            )
+            fig.add_trace(scatter_trace)
+            fig.add_trace(scatter_trace_2)
+            #fig.add_trace(scatter_trace_3)
+    
+    fig.update_layout(
+        title_text='',
+        margin=dict(t=0, l=0, r=21, b=0),
+        title=dict(
+            y=0.95,
+            x=0.5,
+            xanchor='center',
+            yanchor='top',
+        ),
+        legend=dict(
+            title='',
+            traceorder='normal',
+            orientation='h',
+            y=0.5,
+            x=0.5,
+            xanchor='center',
+            yanchor='top',
+            itemsizing='constant',
+            itemwidth=30,
+            bgcolor='rgba(255, 255, 255, 0)'
+        ),
+        legend_title=dict(side='top right'),
+        showlegend=False,
+
+        mapbox_style="carto-positron",
+        mapbox=dict(
+            pitch=0,
+        ),
+        height = 480,
+        autosize=True,
+        dragmode=False,
+    )
+    
+    return fig
+
+# Plot the stations showing criminal trends
+def plot_transport_stations(datageom, transport: str):
+    region_gdf_cp = datageom.copy(deep=True)
+    center_geom = region_gdf_cp['geometry'].to_list()[0].centroid
+    
+    fig = go.Figure()
+    
+    fig.update_layout(
+        mapbox=dict(center=dict(lat=center_geom.y, lon=center_geom.x),zoom=10.2),
+    )
+
+    # Mostrar estaciones y líneas
+    if transport == 'STC Metro':
+        df_stations_metro_complete = df_stations_metro
+        lines_unique = df_stations_metro_complete['linea'].unique()
+        
+        # Map boundaries of regions selected
+        geometry_ = lineas_cdmx['geometry'].to_list()[0]
+        lon_geom, lat_geom = geometry_.exterior.xy
+        lon_geom = np.array(lon_geom).tolist()
+        lat_geom = np.array(lat_geom).tolist()
+        trace_boundary = go.Scattermapbox(
+            lon=lon_geom,
+            lat=lat_geom,
+            mode='lines',
+            fill='toself',
+            fillcolor='rgba(196, 223, 225, 0.15)',
+            line=dict(color='#65999d', width=2),
+            hoverinfo='none',
+        )
+        fig.add_trace(trace_boundary)
+        
+        # Mapeamos todas las líneas
+        for line in lines_unique:
+            metro_lines_aux = metro_lines[metro_lines['LINEA'] == line[1:]]
+            metro_lines_aux['geometry_yx'] = metro_lines_aux['geometry'].apply(lambda line: LineString([(point[0], point[1]) for point in line.coords])) 
+            lines_ = metro_lines_aux['geometry_yx'].iloc[0]
+            coords_pts = [[coord[0], coord[1]] for coord in lines_.coords]
+            line_trace = go.Scattermapbox(
+                mode='lines',
+                lon = [coord[0] for coord in coords_pts],
+                lat = [coord[1] for coord in coords_pts],
+                line=dict(color=LINESM[metro_lines_aux['LINEA'].to_list()[0]], width=4),
+                hoverinfo='none',
+            )
+            fig.add_trace(line_trace)
+        
+        # Se mapean todas las estaciones
+        lats = df_stations_metro_complete['latitud']
+        lons = df_stations_metro_complete['longitud']
+        ids = df_stations_metro_complete['cve_est']
+        lines = df_stations_metro_complete['linea']
+        names = df_stations_metro_complete['nombre']
+        scatter_trace = go.Scattermapbox(
+                lat=lats,
+                lon=lons,
+                mode='markers',
+                customdata=[[i, l, n] for i, l, n in zip(ids, lines, names)],
+                textposition='top center',
+                marker=dict(
+                    size=8,
+                    color='black',
+                    opacity = 1.0,
+                ),
+                hoverinfo='none',
+        )
+        scatter_trace_2 = go.Scattermapbox(
+                lat=lats,
+                lon=lons,
+                mode='markers',
+                customdata=[[i, l, n] for i, l, n in zip(ids, lines, names)],
+                textposition='top center',
+                marker=dict(
+                    size=4,
+                    color='white',
+                    opacity = 1.0,
+                ),
+                hovertext=ids,
+                hoverlabel=dict(namelength=0),
+                hovertemplate='%{customdata[2]} (%{customdata[1]})<br>',
+        )
+        fig.add_trace(scatter_trace)
+        fig.add_trace(scatter_trace_2)
+
+    else:
+        df_stations_metrobus_complete = df_stations_metrobus
+        lines_unique = df_stations_metrobus_complete['linea'].unique()
+        
+        # Map boundaries of regions selected
+        geometry_ = lineas_cdmx['geometry'].to_list()[0]
+        lon_geom, lat_geom = geometry_.exterior.xy
+        lon_geom = np.array(lon_geom).tolist()
+        lat_geom = np.array(lat_geom).tolist()
+        trace_boundary = go.Scattermapbox(
+            lon=lon_geom,
+            lat=lat_geom,
+            mode='lines',
+            fill='toself',
+            fillcolor='rgba(196, 223, 225, 0.15)',
+            line=dict(color='#65999d', width=2),
+            hoverinfo='none',
+        )
+        fig.add_trace(trace_boundary)
+        
+        # Mapeamos todas las líneas
+        for line in lines_unique:
+            metrobus_lines_aux = mb_lines[mb_lines['LINEA'].str[-1] == line[1:]]
+            metrobus_lines_aux['geometry_yx'] = metrobus_lines_aux['geometry'].apply(lambda line: LineString([(point[0], point[1]) for point in line.coords])) 
+            lines_ = metrobus_lines_aux['geometry_yx']
+            
+            for i in range(len(lines_)):
+                line_ = lines_.iloc[i]
+                coords_pts = [[coord[0], coord[1]] for coord in line_.coords]
+                line_trace = go.Scattermapbox(
+                    mode='lines',
+                    lon = [coord[0] for coord in coords_pts],
+                    lat = [coord[1] for coord in coords_pts],
+                    line=dict(color=LINESMB[metrobus_lines_aux['LINEA'].to_list()[0]], width=4),
+                    hoverinfo='none',
+                )
+                fig.add_trace(line_trace)
+
+        # Se mapean todas las estaciones
+        lats = df_stations_metrobus_complete['latitud']
+        lons = df_stations_metrobus_complete['longitud']
+        ids = df_stations_metrobus_complete['cve_est']
+        lines = df_stations_metrobus_complete['linea']
+        names = df_stations_metrobus_complete['nombre']
+        
+        scatter_trace = go.Scattermapbox(
+            lat=lats,
+            lon=lons,
+            mode='markers',
+            customdata=[[i, l, n] for i, l, n in zip(ids, lines, names)],
+            textposition='top center',
+            marker=dict(
+                size=8,
+                color='black',
+                opacity = 1.0,
+            ),
+            hoverinfo='none',
+        )
+        scatter_trace_2 = go.Scattermapbox(
+            lat=lats,
+            lon=lons,
+            mode='markers',
+            customdata=[[i, l, n] for i, l, n in zip(ids, lines, names)],
+            textposition='top center',
+            marker=dict(
+                size=4,
+                color='white',
+                opacity = 1.0,
+            ),
+            hovertext=ids,
+            hoverlabel=dict(namelength=0),
+            hovertemplate='%{customdata[2]} (%{customdata[1]})<br>',
+        )
+        fig.add_trace(scatter_trace)
+        fig.add_trace(scatter_trace_2)
+    
+    fig.update_layout(
+        title_text='',
+        margin=dict(t=0, l=0, r=0, b=0),
+        # title=dict(
+        #     y=0.0,
+        #     x=0.5,
+        #     xanchor='center',
+        #     yanchor='top',
+        # ),
+        legend=dict(
+            title='',
+            traceorder='normal',
+            orientation='h',
+            y=0,
+            x=0,
+            xanchor='center',
+            yanchor='bottom',
+            itemsizing='constant',
+            itemwidth=30,
+            bgcolor='rgba(255, 255, 255, 0)'
+        ),
+        legend_title=dict(side='top right'),
+        showlegend=False,
+
+        mapbox_style="carto-positron",
+        mapbox=dict(
+            pitch=0,
+        ),
+        height = 444,
+        autosize=True,
+        dragmode=False,
+    )
+    
+    return fig
 
 # PREDICTION SECTION
 
@@ -567,223 +1254,6 @@ def plot_predictive_map(datageom, transport: str, unique_values_metric):
 
     return fig
 
-# Normalize crime counts to 4-8 scatter point size
-def normalize_size(value, min_value, max_value, min_size=4, max_size=8):
-    return ((value - min_value) / (max_value - min_value)) * (max_size - min_size) + min_size
-
-# Plot the stations showing criminal trends
-def plot_crime_trend_stations(datageom, df: pd.DataFrame, transport: str):
-    region_gdf_cp = datageom.copy(deep=True)
-    center_geom = region_gdf_cp['geometry'].to_list()[0].centroid
-    
-    fig = go.Figure()
-    
-    fig.update_layout(
-        mapbox=dict(center=dict(lat=center_geom.y, lon=center_geom.x),zoom=9.8),
-    )
-    df['promedio_delitos'] = df['promedio_delitos'].astype(float)
-    print(len(df))
-    
-    # Mostrar estaciones y líneas
-    if transport == 'STC Metro':
-        df_stations_metro_complete = df_stations_metro.merge(df[['linea', 'nombre', 'promedio_delitos']], on=['linea', 'nombre'])
-        min_value = df_stations_metro_complete['promedio_delitos'].min()
-        max_value = df_stations_metro_complete['promedio_delitos'].max()
-        lines_unique = df_stations_metro_complete['linea'].unique()
-        
-        # Mapeamos todas las líneas
-        for line in lines_unique:
-            metro_lines_aux = metro_lines[metro_lines['LINEA'] == line[1:]]
-            metro_lines_aux['geometry_yx'] = metro_lines_aux['geometry'].apply(lambda line: LineString([(point[0], point[1]) for point in line.coords])) 
-            lines_ = metro_lines_aux['geometry_yx'].iloc[0]
-            coords_pts = [[coord[0], coord[1]] for coord in lines_.coords]
-            line_trace = go.Scattermapbox(
-                mode='lines',
-                lon = [coord[0] for coord in coords_pts],
-                lat = [coord[1] for coord in coords_pts],
-                line=dict(color=LINESM[metro_lines_aux['LINEA'].to_list()[0]], width=4),
-                hoverinfo='none',
-            )
-            
-            fig.add_trace(line_trace)      
-        
-        # Se filtran las estaciones que caen dentro de la región seleccionada para pintarlas de cierto color, y las demás de otro
-        for line in lines_unique:
-            df_stations_metro_aux = df_stations_metro_complete[df_stations_metro_complete['linea'] == line]
-            lats = df_stations_metro_aux['latitud']
-            lons = df_stations_metro_aux['longitud']
-            ids = df_stations_metro_aux['cve_est']
-            lines = df_stations_metro_aux['linea']
-            names = df_stations_metro_aux['nombre']
-            values_ = df_stations_metro_aux['promedio_delitos']
-            marker_sizes_red = [normalize_size(value, min_value, max_value, min_size=10, max_size=16) for value in values_]
-            marker_sizes_white = [normalize_size(value, min_value, max_value, min_size=4, max_size=9) for value in values_]
-            marker_sizes_color_st = [normalize_size(value, min_value, max_value, min_size=2, max_size=3) for value in values_]
-            
-            scatter_trace = go.Scattermapbox(
-                    lat=lats,
-                    lon=lons,
-                    mode='markers',
-                    customdata=[[i, l, n] for i, l, n in zip(ids, lines, names)],
-                    textposition='top center',
-                    marker=dict(
-                        size=marker_sizes_red,
-                        color='red',
-                        opacity = 1.0,
-                    ),
-                    hoverinfo='none',
-            )
-            scatter_trace_2 = go.Scattermapbox(
-                    lat=lats,
-                    lon=lons,
-                    mode='markers',
-                    customdata=[[i, l, n] for i, l, n in zip(ids, lines, names)],
-                    textposition='top center',
-                    marker=dict(
-                        size=marker_sizes_white,
-                        color='white',
-                        opacity = 1.0,
-                    ),
-                    hovertext=ids,
-                    hoverlabel=dict(namelength=0),
-                    hovertemplate='%{customdata[2]} (%{customdata[1]})<br>',
-            )
-            scatter_trace_3 = go.Scattermapbox(
-                    lat=lats,
-                    lon=lons,
-                    mode='markers',
-                    customdata=[[i, l, n] for i, l, n in zip(ids, lines, names)],
-                    textposition='top center',
-                    marker=dict(
-                        size=marker_sizes_color_st,
-                        color=LINESM_aux[line],
-                        opacity = 1.0,
-                    ),
-                    hoverinfo='none',
-            )
-            fig.add_trace(scatter_trace)
-            fig.add_trace(scatter_trace_2)
-            #fig.add_trace(scatter_trace_3)
-
-    else:
-        df_stations_metrobus_complete = df_stations_metrobus.merge(df[['linea', 'nombre', 'promedio_delitos']], on=['linea', 'nombre'])
-        min_value = df_stations_metrobus_complete['promedio_delitos'].min()
-        max_value = df_stations_metrobus_complete['promedio_delitos'].max()
-        lines_unique = df_stations_metrobus_complete['linea'].unique()
-        
-        # Mapeamos todas las líneas
-        for line in lines_unique:
-            metrobus_lines_aux = mb_lines[mb_lines['LINEA'].str[-1] == line[1:]]
-            metrobus_lines_aux['geometry_yx'] = metrobus_lines_aux['geometry'].apply(lambda line: LineString([(point[0], point[1]) for point in line.coords])) 
-            lines_ = metrobus_lines_aux['geometry_yx']
-            
-            for i in range(len(lines_)):
-                line_ = lines_.iloc[i]
-                coords_pts = [[coord[0], coord[1]] for coord in line_.coords]
-                line_trace = go.Scattermapbox(
-                    mode='lines',
-                    lon = [coord[0] for coord in coords_pts],
-                    lat = [coord[1] for coord in coords_pts],
-                    line=dict(color=LINESMB[metrobus_lines_aux['LINEA'].to_list()[0]], width=4),
-                    hoverinfo='none',
-                )
-                
-                fig.add_trace(line_trace) 
-        
-        # Se filtran las estaciones que caen dentro de la región seleccionada para pintarlas de cierto color, y las demás de otro
-        for line in lines_unique:
-            # Estaciones dentro de la región
-            df_stations_metrobus_aux = df_stations_metrobus_complete[df_stations_metrobus_complete['linea'] == line]
-            lats = df_stations_metrobus_aux['latitud']
-            lons = df_stations_metrobus_aux['longitud']
-            ids = df_stations_metrobus_aux['cve_est']
-            lines = df_stations_metrobus_aux['linea']
-            names = df_stations_metrobus_aux['nombre']
-            values_ = df_stations_metrobus_aux['promedio_delitos']
-            marker_sizes_red = [normalize_size(value, min_value, max_value, min_size=8, max_size=16) for value in values_]
-            marker_sizes_white = [normalize_size(value, min_value, max_value, min_size=4, max_size=7) for value in values_]
-            marker_sizes_color_st = [normalize_size(value, min_value, max_value, min_size=2, max_size=3) for value in values_]
-            
-            scatter_trace = go.Scattermapbox(
-                    lat=lats,
-                    lon=lons,
-                    mode='markers',
-                    customdata=[[i, l, n] for i, l, n in zip(ids, lines, names)],
-                    textposition='top center',
-                    marker=dict(
-                        size=marker_sizes_red,
-                        color='red',
-                        opacity = 1.0,
-                    ),
-                    hoverinfo='none',
-            )
-            scatter_trace_2 = go.Scattermapbox(
-                    lat=lats,
-                    lon=lons,
-                    mode='markers',
-                    customdata=[[i, l, n] for i, l, n in zip(ids, lines, names)],
-                    textposition='top center',
-                    marker=dict(
-                        size=marker_sizes_white,
-                        color='white',
-                        opacity = 1.0,
-                    ),
-                    hovertext=ids,
-                    hoverlabel=dict(namelength=0),
-                    hovertemplate='%{customdata[2]} (%{customdata[1]})<br>',
-            )
-            scatter_trace_3 = go.Scattermapbox(
-                    lat=lats,
-                    lon=lons,
-                    mode='markers',
-                    customdata=[[i, l, n] for i, l, n in zip(ids, lines, names)],
-                    textposition='top center',
-                    marker=dict(
-                        size=marker_sizes_color_st,
-                        color=LINESM_aux[line],
-                        opacity = 1.0,
-                    ),
-                    hoverinfo='none',
-            )
-            fig.add_trace(scatter_trace)
-            fig.add_trace(scatter_trace_2)
-            #fig.add_trace(scatter_trace_3)
-    
-    fig.update_layout(
-        title_text='',
-        margin=dict(t=0, l=0, r=21, b=0),
-        title=dict(
-            y=0.95,
-            x=0.5,
-            xanchor='center',
-            yanchor='top',
-        ),
-        legend=dict(
-            title='',
-            traceorder='normal',
-            orientation='h',
-            y=0.5,
-            x=0.5,
-            xanchor='center',
-            yanchor='top',
-            itemsizing='constant',
-            itemwidth=30,
-            bgcolor='rgba(255, 255, 255, 0)'
-        ),
-        legend_title=dict(side='top right'),
-        showlegend=False,
-
-        mapbox_style="carto-positron",
-        mapbox=dict(
-            pitch=0,
-        ),
-        height = 480,
-        autosize=True,
-        dragmode=False,
-    )
-    
-    return fig
-
 # Plot the view of the region selected with its stations inside
 def plot_complementary_predictive_map(datageom, transport: str, region_gdf_aux: pd.DataFrame, region_column: str):
     region_gdf_cp = datageom.copy(deep=True)
@@ -943,7 +1413,7 @@ def plot_complementary_predictive_map(datageom, transport: str, region_gdf_aux: 
                     mode='markers',
                     customdata=[[i, l, n] for i, l, n in zip(ids, lines, names)],
                     textposition='top center',
-                    marker_size=8,
+                    marker_size=10,
                     marker_color='black',
                     hovertext=ids,
                     hoverlabel=dict(namelength=0),
@@ -955,11 +1425,11 @@ def plot_complementary_predictive_map(datageom, transport: str, region_gdf_aux: 
                     mode='markers',
                     customdata=[[i, l, n] for i, l, n in zip(ids, lines, names)],
                     textposition='top center',
-                    marker_size=5,
+                    marker_size=6,
                     marker_color='white',
                     hovertext=ids,
                     hoverlabel=dict(namelength=0),
-                    hovertemplate=''
+                    hovertemplate='%{customdata[2]} (%{customdata[1]})<br>'
             )
             scatter_trace_3 = go.Scattermapbox(
                     lat=lats,
@@ -971,12 +1441,11 @@ def plot_complementary_predictive_map(datageom, transport: str, region_gdf_aux: 
                     marker_color=LINESM_aux[line],
                     hovertext=ids,
                     hoverlabel=dict(namelength=0),
-                    hovertemplate='%{customdata[2]} (%{customdata[1]})<br>'
+                    hovertemplate=''
             )
             fig.add_trace(scatter_trace)
             fig.add_trace(scatter_trace_2)
-            fig.add_trace(scatter_trace_3)
-            
+            #fig.add_trace(scatter_trace_3)
             
             # Estaciones fuera de la región
             df_stations_metro_aux_out = df_stations_metro[(df_stations_metro['linea'] == line) & (df_stations_metro[region_column_aux] != cve_region_selected)]
@@ -991,8 +1460,8 @@ def plot_complementary_predictive_map(datageom, transport: str, region_gdf_aux: 
                     mode='markers',
                     customdata=[[i, l, n] for i, l, n in zip(ids_out, lines_out, names_out)],
                     textposition='top center',
-                    marker_size=7,
-                    marker_color='black',
+                    marker_size=6,
+                    marker_color='gray',
                     hovertext=ids_out,
                     hoverlabel=dict(namelength=0),
                     hovertemplate=''
@@ -1003,11 +1472,11 @@ def plot_complementary_predictive_map(datageom, transport: str, region_gdf_aux: 
                     mode='markers',
                     customdata=[[i, l, n] for i, l, n in zip(ids_out, lines_out, names_out)],
                     textposition='top center',
-                    marker_size=5,
+                    marker_size=4,
                     marker_color='white',
                     hovertext=ids_out,
                     hoverlabel=dict(namelength=0),
-                    hovertemplate=''
+                    hovertemplate='%{customdata[2]} (%{customdata[1]})<br>',
             )
             scatter_trace_3_out = go.Scattermapbox(
                     lat=lats_out,
@@ -1017,13 +1486,11 @@ def plot_complementary_predictive_map(datageom, transport: str, region_gdf_aux: 
                     textposition='top center',
                     marker_size=3,
                     marker_color=LINESM_aux[line],
-                    hovertext=ids_out,
-                    hoverlabel=dict(namelength=0),
-                    hovertemplate='%{customdata[2]} (%{customdata[1]})<br>'
+                    hovertemplate=''
             )
-            #fig.add_trace(scatter_trace_out)
+            fig.add_trace(scatter_trace_out)
             fig.add_trace(scatter_trace_2_out)
-            fig.add_trace(scatter_trace_3_out)
+            #fig.add_trace(scatter_trace_3_out)
 
     else:
         lines_unique = df_stations_metrobus['linea'].unique()
@@ -1053,9 +1520,7 @@ def plot_complementary_predictive_map(datageom, transport: str, region_gdf_aux: 
                 )
                 
                 fig.add_trace(line_trace)
-                
-            
-        
+
         # Se filtran las estaciones que caen dentro de la región seleccionada para pintarlas de cierto color, y las demás de otro
         for line in lines_unique:
             if region_column == 'CVE_MUN':
@@ -1076,7 +1541,7 @@ def plot_complementary_predictive_map(datageom, transport: str, region_gdf_aux: 
                     mode='markers',
                     customdata=[[i, l, n] for i, l, n in zip(ids, lines, names)],
                     textposition='top center',
-                    marker_size=8,
+                    marker_size=10,
                     marker_color='black',
                     hovertext=ids,
                     hoverlabel=dict(namelength=0),
@@ -1088,11 +1553,11 @@ def plot_complementary_predictive_map(datageom, transport: str, region_gdf_aux: 
                     mode='markers',
                     customdata=[[i, l, n] for i, l, n in zip(ids, lines, names)],
                     textposition='top center',
-                    marker_size=5,
+                    marker_size=6,
                     marker_color='white',
                     hovertext=ids,
                     hoverlabel=dict(namelength=0),
-                    hovertemplate=''
+                    hovertemplate='%{customdata[2]} (%{customdata[1]})<br>',
             )
             scatter_trace_3 = go.Scattermapbox(
                     lat=lats,
@@ -1102,13 +1567,11 @@ def plot_complementary_predictive_map(datageom, transport: str, region_gdf_aux: 
                     textposition='top center',
                     marker_size=3,
                     marker_color=LINESM_aux[line],
-                    hovertext=ids,
-                    hoverlabel=dict(namelength=0),
-                    hovertemplate='%{customdata[2]} (%{customdata[1]})<br>'
+                    hovertemplate=''
             )
             fig.add_trace(scatter_trace)
             fig.add_trace(scatter_trace_2)
-            fig.add_trace(scatter_trace_3)
+            #fig.add_trace(scatter_trace_3)
             
             
             # Estaciones fuera de la región
@@ -1124,8 +1587,8 @@ def plot_complementary_predictive_map(datageom, transport: str, region_gdf_aux: 
                     mode='markers',
                     customdata=[[i, l, n] for i, l, n in zip(ids_out, lines_out, names_out)],
                     textposition='top center',
-                    marker_size=7,
-                    marker_color='black',
+                    marker_size=6,
+                    marker_color='gray',
                     hovertext=ids_out,
                     hoverlabel=dict(namelength=0),
                     hovertemplate=''
@@ -1136,11 +1599,11 @@ def plot_complementary_predictive_map(datageom, transport: str, region_gdf_aux: 
                     mode='markers',
                     customdata=[[i, l, n] for i, l, n in zip(ids_out, lines_out, names_out)],
                     textposition='top center',
-                    marker_size=5,
+                    marker_size=4,
                     marker_color='white',
                     hovertext=ids_out,
                     hoverlabel=dict(namelength=0),
-                    hovertemplate=''
+                    hovertemplate='%{customdata[2]} (%{customdata[1]})<br>',
             )
             scatter_trace_3_out = go.Scattermapbox(
                     lat=lats_out,
@@ -1150,13 +1613,11 @@ def plot_complementary_predictive_map(datageom, transport: str, region_gdf_aux: 
                     textposition='top center',
                     marker_size=3,
                     marker_color=LINESM_aux[line],
-                    hovertext=ids_out,
-                    hoverlabel=dict(namelength=0),
-                    hovertemplate='%{customdata[2]} (%{customdata[1]})<br>'
+                    hovertemplate=''
             )
-            #fig.add_trace(scatter_trace_out)
+            fig.add_trace(scatter_trace_out)
             fig.add_trace(scatter_trace_2_out)
-            fig.add_trace(scatter_trace_3_out)
+            #fig.add_trace(scatter_trace_3_out)
     
     fig.update_layout(
         title_text='',
@@ -1186,7 +1647,7 @@ def plot_complementary_predictive_map(datageom, transport: str, region_gdf_aux: 
         mapbox=dict(
             pitch=20,
         ),
-        height = 300,
+        height = 260,
         autosize=True,
         dragmode=False,
     )
@@ -1282,39 +1743,6 @@ def trends():
         </style>
         """, unsafe_allow_html=True)
     
-    # if st.session_state.transport == 'STC Metro':
-    #     st.markdown("""
-    #     <style>
-    #         [data-testid=stSidebar] {
-    #             background-color: #e8540c;
-    #         }
-    #         [data-testid=stSidebar] h1 {
-    #             color: white;
-    #         }
-    #     </style>
-    #     """, unsafe_allow_html=True)
-        
-    #     col1, col2 = st.columns([1, 5])
-    #     with col1:
-    #         st.markdown("<div style='{}'><img src='data:image/gif;base64,{}' width='90' style='margin-right:0px;'></div>".format(center_css, data_url_metro_logo), unsafe_allow_html=True)
-    #     with col2:
-    #         st.title('STC Metro')
-    #         #st.markdown("<div style='display: flex; justify-content: left; align-items: center;'><h1 style='text-align: left;'>STC Metro</h1></div>", unsafe_allow_html=True)
-    #     st.markdown("<br>", unsafe_allow_html=True)
-    # else:
-    #     st.markdown("""
-    #     <style>
-    #         [data-testid=stSidebar] {
-    #             background-color: #c80f2e;
-    #         }
-    #         [data-testid=stSidebar] h1 {
-    #             color: white;
-    #         }
-    #     </style>
-    #     """, unsafe_allow_html=True)
-        
-    #     st.title("Metrobús")
-    
     # First container.
     with st.container():
         st.header("🔥 Tendencias")
@@ -1328,26 +1756,39 @@ def trends():
             level_div = st.selectbox("Nivel de filtrado", ["Zona", "Alcaldía", "Línea"])
         
         filter_div = []
+        region_column = ""
         with col3:
             if level_div == 'Zona':
-                filter_div = st.multiselect("Escoge una zona", zones_ls)
+                filter_div = st.multiselect("Filtrado", zones_ls, placeholder='Selecciona zonas')
+                region_column = 'zona'
+                datageom = zones_gdf
+                
             elif level_div == 'Alcaldía':
-                filter_div = st.multiselect("Escoge una alcaldía", munics_ls[st.session_state.transport])
+                filter_div = st.multiselect("Filtrado", munics_ls[st.session_state.transport], placeholder='Selecciona alcaldías')
+                print(munics_gdf)
+                region_column = 'NOMGEO'
+                datageom = munics_gdf[munics_gdf[region_column].isin(munics_ls[transport])]
+                
             elif level_div == 'Línea':
-                filter_div = st.multiselect("Escoge una línea", lines_ls[st.session_state.transport])
+                filter_div = st.multiselect("Filtrado", lines_ls[st.session_state.transport], placeholder='Selecciona líneas')
+                region_column = 'linea'
+                datageom = munics_gdf
                 
         st.write("🗓️ Las siguientes tendencias se toman a partir de los datos históricos en los días <b>{}</b> de la <b>semana {}</b> de años pasados.".format(weekday.lower(), week_year), unsafe_allow_html=True)
         
         # Make SQL queries
         n = 10
+        radio_int = 540 if transport == 'STC Metro' else 270
         df_top_stations_affluence_trends = query_top_stations_affluence_trends(transport, level_div, filter_div, weekday, week_year, n)
-        df_top_stations_crime_trends = query_top_stations_crime_trends(transport, level_div, filter_div, weekday, week_year, 540, 1000)
+        df_top_stations_crime_trends = query_top_stations_crime_trends(transport, level_div, filter_div, weekday, week_year, radio_int, 1000)
         df_top_stations_crime_trends_aux = df_top_stations_crime_trends.head(n)
         
         col3, col4 = st.columns([2, 2])
         with col3:
             st.write(f"##### Mapa de puntos calientes delictivos")
-            fig = plot_crime_trend_stations(munics_gdf, df_top_stations_crime_trends, transport)
+            print('lineas unicas')
+            print(df_top_stations_crime_trends['linea'].unique())
+            fig = plot_crime_trend_stations(datageom, df_top_stations_crime_trends, transport, region_column, filter_div)
             fig.update_layout({"uirevision": "foo"}, overwrite=True)
             
             st.plotly_chart(fig, use_container_width=True, config={'displayModeBar': False,})
@@ -1375,90 +1816,132 @@ def exploration():
     </style>
     """, unsafe_allow_html=True)
     
-    st.title("Metrobús")
     with st.container():
         st.header("🔍 Explora las estaciones")
-        col1, col2 = st.columns(2)
+        
+        col1, colmid, col2 = st.columns([20, 1, 20])
         # Map column.
         with col1:
-            m = init_map()
-            m = plot_stations(df_stations_metro, m, 'METRO')
-            level1_map_data = st_folium(m)
-            st.session_state.selected_id = level1_map_data['last_object_clicked_tooltip']
-        # Second column validation.
-        if 'selected_id' not in st.session_state:
-            col2.subheader("Es necesario seleccionar una estación")
-            col2.write("Al seleccionar alguna aparecerá la siguiente información sobre los hechos delictivos ocurridos dentro un radio de 540 metros alrededor de las estaciones:")
-            col2.write(" - Top delitos más frecuentes")
-            col2.write(" - Comparación de géneros de víctimas")
-            col2.write(" - Rangos de edad más vulnerables")
-            col2.write(" - Comportamiento de la distancia delito-estación")
-            col2.write(" - Partes del día más delictivas")
-        else:
-            if st.session_state.selected_id is not None:
-                cve_est = st.session_state.selected_id.split(":")[0]
-                name_est = get_station(df_stations_metro, cve_est, "nombre")
-                tipo_est = get_station(df_stations_metro, cve_est, "tipo")
-                linea_est = get_station(df_stations_metro, cve_est, "linea")
-                col2.subheader(f'{name_est.upper()}')
-                col2.write(f'LÍNEA: {linea_est[1:]}')
-                col2.write(f'ESTACIÓN TIPO: {tipo_est.upper()}')
-                col2.write("##### TOP DELITOS")
-                data = {
-                    'Tipo de Delito': ['Robo', 'Asalto', 'Homicidio'],
-                    'Frecuencia': [20, 15, 5]  # Ejemplo de frecuencia de delitos
-                }
-                df = pd.DataFrame(data)
-                plt.barh(df['Tipo de Delito'], df['Frecuencia'], color='skyblue', edgecolor='black')
-                plt.xlabel('Tipo de Delitos')
-                plt.ylabel('Frecuencia de Delitos')
-                plt.title('Histograma de Frecuencia de Delitos')
-                plt.grid(True)
-                col2.pyplot(plt)
-                col2.write("##### COMPARACIÓN DE GÉNEROS")
-                # Datos de ejemplo
-                labels = ['HOMBRE', 'MUJER']
-                sizes = [45, 55]
-                # Configuración de colores
-                colors = sns.color_palette('pastel')
-                # Crear gráfico de pastel
-                fig, ax = plt.subplots()
-                ax.pie(sizes, labels=labels, colors=colors, autopct='%1.1f%%', startangle=140)
-                ax.axis('equal')  # Equal aspect ratio para asegurar que es un círculo
-                ax.set_title('Ejemplo de Gráfico de Pastel con Seaborn', fontsize=16)
-                col2.pyplot(fig)
-                col2.write("###### EDAD")
-                data2 = {
-                    'Edad': ['[10-20]', '[40-50]', '[90-100]'],
-                    'Frecuencia': [20, 15, 5]  # Ejemplo de frecuencia de delitos
-                }
-                df2 = pd.DataFrame(data2)
-                fig2, ax2 = plt.subplots()
-                ax2.bar(df2['Edad'], df2['Frecuencia'], color='skyblue', edgecolor='black')
-                col2.pyplot(fig2)
-                col2.divider()
-                col2.write("###### DISTANCIAS DE LOS DELITOS")
-                # Generar datos aleatorios para el histograma
-                np.random.seed(0)
-                data = np.random.randn(1000)
-                # Definir el número de bins para el histograma
-                plt.figure(figsize=(8, 6))
-                plt.hist(data, bins=100, orientation='horizontal', color='skyblue')
-                plt.xlabel('Frecuencia')
-                plt.ylabel('xlabel')
-                plt.title('Histograma Horizontal')
-                plt.grid(True)
-                col2.pyplot(plt)
+            transport = st.selectbox("Sistema", ["STC Metro", "Metrobús"])
+            df_stations_transport = df_stations_metro if transport == 'STC Metro' else df_stations_metrobus
+            st.session_state.transport = transport
+            radio_int = 540 if transport == 'STC Metro' else 270
+            radio_ = '540' if transport == 'STC Metro' else '270'
+            # m = init_map()
+            # m = plot_stations(df_stations_transport, m, transport)
+            # level1_map_data = st_folium(m)
+            # st.session_state.selected_id = ['last_object_clicked_tooltip']
+            fig = plot_transport_stations(zones_gdf, transport)
+            selected_click_cve_est = plotly_events(fig, click_event=True,)
+            st.session_state.selected_id.append(selected_click_cve_est)
+            #print('click', st.session_state.selected_id)
+        
+        with col2:
+            # Second column validation.
+            if 'selected_id' not in st.session_state:
+                st.subheader("Seleccione una estación")
+                st.write(f"Al seleccionar aparecerá la siguiente información sobre los hechos delictivos ocurridos dentro un radio de {radio_} metros alrededor de la estación seleccionada:")
+                st.write(" - Top delitos más frecuentes")
+                st.write(" - Comparación de géneros de víctimas")
+                st.write(" - Rangos de edad más vulnerables")
+                st.write(" - Comportamiento de la distancia delito-estación")
+                st.write(" - Partes del día más delictivas")
             else:
-                col2.subheader("Es necesario seleccionar una estación")
-                col2.write("Al seleccionar alguna aparecerá la siguiente información sobre los hechos delictivos ocurridos dentro un radio de 540 metros alrededor de las estaciones:")
-                col2.write(" - Top delitos más frecuentes")
-                col2.write(" - Comparación de géneros de víctimas")
-                col2.write(" - Rangos de edad más vulnerables")
-                col2.write(" - Comportamiento de la distancia delito-estación")
-                col2.write(" - Partes del día más delictivas")
+                if st.session_state.selected_id is not None and st.session_state.selected_id[-1]:
+                    last_selected_id = st.session_state.selected_id[-1]
+                    if last_selected_id[0]['curveNumber'] >= len(lines_ls[transport]) + 1:
+                        if transport == 'STC Metro':
+                            df_stations_metro_filtered = df_stations_metro.iloc[last_selected_id[0]['pointIndex']]
+                            cve_est = df_stations_metro_filtered['cve_est'] 
+                        else:
+                            df_stations_metrobus_filtered = df_stations_metrobus.iloc[last_selected_id[0]['pointIndex']]
+                            cve_est = df_stations_metrobus_filtered['cve_est'] 
+                        #print('CVE_EST', cve_est)
+                        name_est = get_station(df_stations_transport, cve_est, "nombre")
+                        tipo_est = get_station(df_stations_transport, cve_est, "tipo")
+                        linea_est = get_station(df_stations_transport, cve_est, "linea")
+                        nivel_circul = get_station(df_stations_transport, cve_est, "nivel_circulacion_transporte")
+                        name_est_line = name_est + f' (L{linea_est[1:]})'
+                        st.subheader(f'{name_est_line.upper()}')
+                        st.write(f'Tipo de estación: {tipo_est.capitalize()}')
+                        st.write(f'Nivel de circulación: {nivel_circul.capitalize()}')
+                        st.write("##### Top 10 delitos históricos más frecuentes (2019-2023)")
+                        
+                        # SQL queries
+                        df_top_crimes_historical = query_top_crimes_historical(transport, cve_est, radio_int, 10)
+                        fig = plot_top_crime_station(df_top_crimes_historical)
+                        fig.update_layout({"uirevision": "foo"}, overwrite=True)
+                        st.plotly_chart(fig, use_container_width=True, config={'displayModeBar': False,})
 
+                    else:
+                        st.subheader("Seleccione una estación")
+                        st.write(f"Al seleccionar aparecerá la siguiente información sobre los hechos delictivos ocurridos dentro un radio de {radio_} metros alrededor de la estación seleccionada:")
+                        st.write(" - Top delitos más frecuentes")
+                        st.write(" - Comparación de géneros de víctimas")
+                        st.write(" - Rangos de edad más vulnerables")
+                        st.write(" - Comportamiento de la distancia delito-estación")
+                        st.write(" - Partes del día más delictivas") 
+                
+                else:
+                    radio_ = '540' if transport == 'STC Metro' else '270'
+                    st.subheader("Seleccione una estación")
+                    st.write(f"Al seleccionar aparecerá la siguiente información sobre los hechos delictivos ocurridos dentro un radio de {radio_} metros alrededor de la estación seleccionada:")
+                    st.write(" - Top delitos más frecuentes")
+                    st.write(" - Comparación de géneros de víctimas")
+                    st.write(" - Rangos de edad más vulnerables")
+                    st.write(" - Comportamiento de la distancia delito-estación")
+                    st.write(" - Partes del día más delictivas") 
+        
+        if 'selected_id' in st.session_state:
+            if st.session_state.selected_id is not None and st.session_state.selected_id[-1]:
+                last_selected_id = st.session_state.selected_id[-1]
+                if last_selected_id[0]['curveNumber'] >= len(lines_ls[transport]) + 1:
+                    col3, col4 = st.columns([2, 3])
+                    # with col3:    
+                    #     month_selected_aux = st.selectbox('Mes', months_queries_ls, index=months_queries_ls.index(month_names[month].capitalize()))
+                    #     month_selected = months_queries_ls.index(month_selected_aux) + 1
+                    with col3:    
+                        weekday_selected = st.selectbox('Día de la semana', weekdays_queries_ls, index=weekdays_queries_ls.index(weekday))
+                    with col4:    
+                        # crime_class_selected = st.selectbox('Clase delito', crime_classes_queries_ls)
+                        crime_var_selected = st.selectbox('Variable delito', crime_vars_queries_ls)
+                    
+                    df_crimes_exploration_gender = query_crimes_exploration_gender(transport, cve_est, radio_int, weekday_selected, crime_var_selected)
+                    df_crimes_exploration_age_group = query_crimes_exploration_age_group(transport, cve_est, radio_int, weekday_selected, crime_var_selected)
+                    df_crimes_exploration_distances = query_crimes_exploration_distances(transport, cve_est, radio_int, weekday_selected, crime_var_selected)    
+                    df_crimes_exploration_part_of_day = query_crimes_part_of_day(transport, cve_est, radio_int, weekday_selected, crime_var_selected)
+                    
+                    total_rows_sample = df_crimes_exploration_gender['conteo_delitos'].sum()
+                    
+                    if total_rows_sample > 0:
+                        st.markdown(f"{total_rows_sample} {' carpetas de investigación encontrada' if total_rows_sample == 1 else ' carpetas de investigación encontradas'}") 
+                        col6, col7, col8, col9 = st.columns([2, 2, 3, 2])
+                        with col6:
+                            st.write("##### Comparación de género")
+                            fig = plot_crime_exploration_gender(df_crimes_exploration_gender)
+                            fig.update_layout({"uirevision": "foo"}, overwrite=True)
+                            st.plotly_chart(fig, use_container_width=True, config={'displayModeBar': False,})
 
+                        with col7:
+                            st.write("##### Distribución de la edad")
+                            fig = plot_crime_exploration_age_group(df_crimes_exploration_age_group)
+                            fig.update_layout({"uirevision": "foo"}, overwrite=True)
+                            st.plotly_chart(fig, use_container_width=True, config={'displayModeBar': False,})
+                            
+                        with col8:
+                            st.write("##### Comparación de momentos del día")
+                            fig = plot_crime_exploration_day_parts(df_crimes_exploration_part_of_day)
+                            fig.update_layout({"uirevision": "foo"}, overwrite=True)
+                            st.plotly_chart(fig, use_container_width=True, config={'displayModeBar': False,})
+                            
+                        with col9:
+                            st.write("##### Distancia delito-estación")
+                            fig = plot_crime_exploration_distances(df_crimes_exploration_distances)
+                            fig.update_layout({"uirevision": "foo"}, overwrite=True)
+                            st.plotly_chart(fig, use_container_width=True, config={'displayModeBar': False,})
+                    else:
+                        st.write('Se encontraron 0 registros coincidentes para los filtros aplicados')
+                            
 # Predictions view
 def predictions():
     
@@ -1552,7 +2035,7 @@ def predictions():
             else:
                 regions = ['Azcapotzalco', 'Benito Juárez', 'Coyoacán', 'Cuauhtémoc',
                     'Gustavo A. Madero', 'Iztacalco', 'Iztapalapa', 'Miguel Hidalgo',
-                    'Tlalpan', 'Venustiano Carranza', 'Álvaro Obregón']
+                    'Tlalpan', 'Venustiano Carranza', 'Álvaro Obregón', 'Xochimilco']
                 
             inputs_model_ls = []
             for region in regions:
@@ -1586,7 +2069,7 @@ def predictions():
             else:
                 regions = ['Azcapotzalco', 'Benito Juárez', 'Coyoacán', 'Cuauhtémoc',
                     'Gustavo A. Madero', 'Iztacalco', 'Iztapalapa', 'Miguel Hidalgo',
-                    'Tlalpan', 'Venustiano Carranza', 'Álvaro Obregón']
+                    'Tlalpan', 'Venustiano Carranza', 'Álvaro Obregón', 'Xochimilco']
                 
             inputs_model_ls = []
             for region in regions:
@@ -1644,7 +2127,6 @@ def predictions():
             else:
                 pass
         
-        
         print('Resultados')
         
         # Carga de modelo respectivo y lectura de afluencia predicha para este año
@@ -1684,7 +2166,7 @@ def predictions():
     bool_plot_ts_weekly_crime = False
     with st.container():
         metric_unique_values = np.sort(region_gdf_merge['valor'].unique())
-        col7, col78, col8 = st.columns([20, 1, 40])
+        col7, col78, col8 = st.columns([20, 1, 30])
         with col7:
             fig = plot_predictive_map(region_gdf_merge, transport, metric_unique_values)
             fig.update_layout({"uirevision": "foo"}, overwrite=True)
@@ -1726,22 +2208,27 @@ def predictions():
                     
                     #col8.markdown(f'<span style="color: black; font-size: 14px;">para las estaciones de <b>{region_name}</b> durante la <b>{text_num_week_forward}</b></span> <span style="color: #a5a5a5; font-size: 14px;">({get_week_date_range(weeks_forward + int(week_year), year)})</span>', unsafe_allow_html=True)
                     
-                    print(weekly_crime_counts_filtered)
-                    weekly_crime_counts_filtered = weekly_crime_counts_filtered[weekly_crime_counts_filtered[region_column_name_2] == region_name]
-                    print(weekly_crime_counts_filtered)
-                    #fig3 = plot_ts_weekly_crime(weekly_crime_counts_filtered, f'Conteo semanal de {categ_crime_ok.lower()} (2019-2023)', threshold_grouped_dataset)
-                    fig3 = plot_ts_weekly_crime(weekly_crime_counts_filtered, f'Conteo semanal delictivo (2019-2023)', threshold_grouped_dataset)
+                    # print(weekly_crime_counts_filtered)
+                    # weekly_crime_counts_filtered = weekly_crime_counts_filtered[weekly_crime_counts_filtered[region_column_name_2] == region_name]
+                    # print(weekly_crime_counts_filtered)
+                    # #fig3 = plot_ts_weekly_crime(weekly_crime_counts_filtered, f'Conteo semanal de {categ_crime_ok.lower()} (2019-2023)', threshold_grouped_dataset)
+                    # fig3 = plot_ts_weekly_crime(weekly_crime_counts_filtered, f'Conteo semanal delictivo (2019-2023)', threshold_grouped_dataset)
                     
-                    col9, col10, col11 = col8.columns([40, 1, 80])
-                    with col9:
-                        fig2 = plot_complementary_predictive_map(region_gdf_merge, transport, region_gdf_aux, region_column)
-                        fig2.update_layout({"uirevision": "foo"}, overwrite=True)
+                    # col9, col10, col11 = col8.columns([40, 1, 80])
+                    # with col9:
+                    #     fig2 = plot_complementary_predictive_map(region_gdf_merge, transport, region_gdf_aux, region_column)
+                    #     fig2.update_layout({"uirevision": "foo"}, overwrite=True)
                         
-                        col9.plotly_chart(fig2, use_container_width=True, config={'displayModeBar': False,})
-                    with col11:
-                        st.plotly_chart(fig3, use_container_width=True, config={'displayModeBar': False,})
+                    #     col9.plotly_chart(fig2, use_container_width=True, config={'displayModeBar': False,})
+                    # with col11:
+                    #     st.plotly_chart(fig3, use_container_width=True, config={'displayModeBar': False,})
                     
-                    with st.expander("Estaciones afectadas", expanded=True):
+                    fig2 = plot_complementary_predictive_map(region_gdf_merge, transport, region_gdf_aux, region_column)
+                    fig2.update_layout({"uirevision": "foo"}, overwrite=True)
+                    st.plotly_chart(fig2, use_container_width=True, config={'displayModeBar': False,})
+                    
+                    
+                    with st.expander("Estaciones afectadas", expanded=False):
                         #st.markdown('<span style="color: black; font-size: 14px;">Estaciones afectadas:</span>', unsafe_allow_html=True)
                         if region_column == 'CVE_MUN':
                             df_stations_metro_aux = df_stations_metro[(df_stations_metro['alcaldia'] == region_name)]
@@ -1769,12 +2256,12 @@ def predictions():
                             st.write(f'<li style="font-size: 12px;">{elemento}</li>', unsafe_allow_html=True)
                         radio_ = '540' if transport == 'STC Metro' else '270'
                         st.write(f'<span style="font-size: 12px; color: #a5a5a5"><b>Nota:</b> El nivel de riesgo predictivo se predice considerando la evidencia delictiva tanto dentro como en un radio de {radio_}m alrededor de las estaciones, para el caso del {transport}.</span>', unsafe_allow_html=True)
-                        #st.write('<br>', unsafe_allow_html=True)
-                    # weekly_crime_counts_filtered = weekly_crime_counts_filtered[weekly_crime_counts_filtered[region_column_name_2] == region_name]
-                    # fig3 = plot_ts_weekly_crime(weekly_crime_counts_filtered, f'Conteo semanal de {categ_crime_ok.lower()} (2019-2023)', threshold_grouped_dataset)
-                    
-                    # col8.plotly_chart(fig3, use_container_width=True)
-                            
+                else:
+                    st.subheader("Seleccione una alcaldía")
+                    st.write("Al seleccionar se muestran las estaciones afectadas en tal alcaldía, así como detalles sobre la predicción")                   
+            else:
+                st.subheader("Seleccione una alcaldía")
+                st.write("Al seleccionar se muestran las estaciones afectadas en tal alcaldía, así como detalles sobre la predicción")                   
        
     with st.container():
         pass
@@ -1856,10 +2343,11 @@ with st.sidebar:
     if st.button("Inicio"):
         st.session_state.selection = "INICIO"
     if st.button("Tendencias"):
-        st.session_state.selection = "METRO"
+        st.session_state.selection = "TENDENCIAS"
         st.session_state.transport = 'STC Metro'
     if st.button("Explora"):
-        st.session_state.selection = "METROBÚS"
+        st.session_state.selection = "EXPLORA"
+        st.session_state.selected_id = []
     if st.button("Predicciones"):
         st.session_state.selection = "PREDICCIONES"
         st.session_state.selected_click_pred_map = []
@@ -1870,9 +2358,9 @@ if "selection" not in st.session_state:
 else:
     if st.session_state.selection == "INICIO":
         home()
-    if st.session_state.selection == "METRO":
+    if st.session_state.selection == "TENDENCIAS":
         trends()
-    if st.session_state.selection == "METROBÚS":
+    if st.session_state.selection == "EXPLORA":
         exploration()
     if st.session_state.selection == "PREDICCIONES":
         #if len(st.session_state.selected_click_pred_map) > 0:

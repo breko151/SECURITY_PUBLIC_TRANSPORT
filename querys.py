@@ -77,7 +77,6 @@ def query_top_stations_affluence_trends(transport: str, level_div: str, filter_d
     
     return df
 
-
 def query_top_stations_crime_trends(transport: str, level_div: str, filter_div: list, weekday: str, week_year: str, radio: float, n: int):
     conn = pyodbc.connect(connectionString)
     
@@ -183,6 +182,172 @@ def query_top_stations_crime_trends(transport: str, level_div: str, filter_div: 
                 ORDER BY 
                     promedio_delitos DESC
                 """
+    cursor = conn.cursor()
+    cursor.execute(Query)
+    data = cursor.fetchall()
+    
+    columns = [column[0] for column in cursor.description]
+    data_ = [tuple(row) for row in data]
+    
+    cursor.close()
+    conn.close()
+    
+    df = pd.DataFrame(data_, columns=columns)
+    
+    return df
+
+def query_top_crimes_historical(transport: str, cve_est: str, radio: float, n: int):
+    conn = pyodbc.connect(connectionString)
+    Query = f"""
+            SELECT TOP {n}
+                est.cve_est,
+                est.linea,
+                est.nombre,
+                del.clase_cndfe_snieg_2018 AS clase_delito,
+                COUNT(carpetas.id_delito) AS conteo_delitos
+            FROM [crimen_equip_urbano_afluencia_metro_metrobus_cdmx].[dbo].[ftb_carpetas_investigacion_fgj] as carpetas
+            JOIN [crimen_equip_urbano_afluencia_metro_metrobus_cdmx].[dbo].[dim_delitos] AS del ON del.id_delito = carpetas.id_delito
+            JOIN [crimen_equip_urbano_afluencia_metro_metrobus_cdmx].[dbo].[dim_estaciones] AS est ON est.cve_est = carpetas.cve_est_mas_cercana
+            JOIN [crimen_equip_urbano_afluencia_metro_metrobus_cdmx].[dbo].[dim_tiempo] AS tiem ON tiem.id_tiempo = carpetas.id_tiempo
+            WHERE est.sistema = '{transport}' AND est.cve_est = '{cve_est}' AND carpetas.dist_delito_estacion <= {radio}
+            GROUP BY est.cve_est, est.linea, est.nombre, del.clase_cndfe_snieg_2018
+            ORDER BY conteo_delitos DESC
+            """
+    cursor = conn.cursor()
+    cursor.execute(Query)
+    data = cursor.fetchall()
+    
+    columns = [column[0] for column in cursor.description]
+    data_ = [tuple(row) for row in data]
+    
+    cursor.close()
+    conn.close()
+    
+    df = pd.DataFrame(data_, columns=columns)
+    
+    return df
+
+def query_crimes_exploration_gender(transport: str, cve_est: str, radio: float, weekday: str, crime_var: str):
+    conn = pyodbc.connect(connectionString)
+    Query = f"""
+            SELECT
+                sex.sexo_victima,
+                COUNT(carpetas.id_delito) AS conteo_delitos
+            FROM [crimen_equip_urbano_afluencia_metro_metrobus_cdmx].[dbo].[ftb_carpetas_investigacion_fgj] as carpetas
+            JOIN [crimen_equip_urbano_afluencia_metro_metrobus_cdmx].[dbo].[dim_delitos] AS del ON del.id_delito = carpetas.id_delito
+            JOIN [crimen_equip_urbano_afluencia_metro_metrobus_cdmx].[dbo].[dim_estaciones] AS est ON est.cve_est = carpetas.cve_est_mas_cercana
+            JOIN [crimen_equip_urbano_afluencia_metro_metrobus_cdmx].[dbo].[dim_tiempo] AS tiem ON tiem.id_tiempo = carpetas.id_tiempo
+            JOIN [crimen_equip_urbano_afluencia_metro_metrobus_cdmx].[dbo].[dim_sexo_victima] AS sex ON sex.id_sexo = carpetas.id_sexo
+            WHERE est.sistema = '{transport}' AND est.cve_est = '{cve_est}' AND carpetas.dist_delito_estacion <= {radio}
+            AND tiem.dia_semana = '{weekday}'
+            AND del.variable_cndfe_snieg_2018 = '{crime_var}'
+            GROUP BY sex.sexo_victima
+            ORDER BY conteo_delitos DESC
+            """
+    cursor = conn.cursor()
+    cursor.execute(Query)
+    data = cursor.fetchall()
+    
+    columns = [column[0] for column in cursor.description]
+    data_ = [tuple(row) for row in data]
+    
+    cursor.close()
+    conn.close()
+    
+    df = pd.DataFrame(data_, columns=columns)
+    
+    return df
+
+def query_crimes_exploration_age_group(transport: str, cve_est: str, radio: float, weekday: str, crime_var: str):
+    conn = pyodbc.connect(connectionString)
+    Query = f"""
+            WITH unique_grupos AS (
+                SELECT DISTINCT grupo_quinquenal_inegi 
+                FROM [crimen_equip_urbano_afluencia_metro_metrobus_cdmx].[dbo].[dim_edad_victima]
+            ),
+            conteos AS (
+                SELECT
+                    age.grupo_quinquenal_inegi,
+                    COUNT(carpetas.id_delito) AS conteo_delitos
+                FROM [crimen_equip_urbano_afluencia_metro_metrobus_cdmx].[dbo].[ftb_carpetas_investigacion_fgj] as carpetas
+                JOIN [crimen_equip_urbano_afluencia_metro_metrobus_cdmx].[dbo].[dim_delitos] AS del ON del.id_delito = carpetas.id_delito
+                JOIN [crimen_equip_urbano_afluencia_metro_metrobus_cdmx].[dbo].[dim_estaciones] AS est ON est.cve_est = carpetas.cve_est_mas_cercana
+                JOIN [crimen_equip_urbano_afluencia_metro_metrobus_cdmx].[dbo].[dim_tiempo] AS tiem ON tiem.id_tiempo = carpetas.id_tiempo
+                JOIN [crimen_equip_urbano_afluencia_metro_metrobus_cdmx].[dbo].[dim_edad_victima] AS age ON age.id_edad = carpetas.id_edad
+                WHERE est.sistema = '{transport}' 
+                AND est.cve_est = '{cve_est}' 
+                AND carpetas.dist_delito_estacion <= {radio}
+                AND tiem.dia_semana = '{weekday}'
+                AND del.variable_cndfe_snieg_2018 = '{crime_var}'
+                GROUP BY age.grupo_quinquenal_inegi
+            )
+            SELECT 
+                u.grupo_quinquenal_inegi,
+                COALESCE(c.conteo_delitos, 0) AS conteo_delitos
+            FROM unique_grupos u
+            LEFT JOIN conteos c ON u.grupo_quinquenal_inegi = c.grupo_quinquenal_inegi
+            ORDER BY u.grupo_quinquenal_inegi;
+            """
+    cursor = conn.cursor()
+    cursor.execute(Query)
+    data = cursor.fetchall()
+    
+    columns = [column[0] for column in cursor.description]
+    data_ = [tuple(row) for row in data]
+    
+    cursor.close()
+    conn.close()
+    
+    df = pd.DataFrame(data_, columns=columns)
+    
+    return df
+
+def query_crimes_exploration_distances(transport: str, cve_est: str, radio: float, weekday: str, crime_var: str):
+    conn = pyodbc.connect(connectionString)
+    Query = f"""
+            SELECT
+                carpetas.dist_delito_estacion AS distancia
+            FROM [crimen_equip_urbano_afluencia_metro_metrobus_cdmx].[dbo].[ftb_carpetas_investigacion_fgj] as carpetas
+            JOIN [crimen_equip_urbano_afluencia_metro_metrobus_cdmx].[dbo].[dim_delitos] AS del ON del.id_delito = carpetas.id_delito
+            JOIN [crimen_equip_urbano_afluencia_metro_metrobus_cdmx].[dbo].[dim_estaciones] AS est ON est.cve_est = carpetas.cve_est_mas_cercana
+            JOIN [crimen_equip_urbano_afluencia_metro_metrobus_cdmx].[dbo].[dim_tiempo] AS tiem ON tiem.id_tiempo = carpetas.id_tiempo
+            WHERE est.sistema = '{transport}' AND est.cve_est = '{cve_est}' AND carpetas.dist_delito_estacion <= {radio}
+            AND tiem.dia_semana = '{weekday}'
+            AND del.variable_cndfe_snieg_2018 = '{crime_var}'
+            ORDER BY distancia
+            """
+    cursor = conn.cursor()
+    cursor.execute(Query)
+    data = cursor.fetchall()
+    
+    columns = [column[0] for column in cursor.description]
+    data_ = [tuple(row) for row in data]
+    
+    cursor.close()
+    conn.close()
+    
+    df = pd.DataFrame(data_, columns=columns)
+    
+    return df
+
+def query_crimes_part_of_day(transport: str, cve_est: str, radio: float, weekday: str, crime_var: str):
+    conn = pyodbc.connect(connectionString)
+    Query = f"""
+            SELECT
+                fase.parte_dia,
+                COUNT(carpetas.id_delito) AS conteo_delitos
+            FROM [crimen_equip_urbano_afluencia_metro_metrobus_cdmx].[dbo].[ftb_carpetas_investigacion_fgj] as carpetas
+            JOIN [crimen_equip_urbano_afluencia_metro_metrobus_cdmx].[dbo].[dim_delitos] AS del ON del.id_delito = carpetas.id_delito
+            JOIN [crimen_equip_urbano_afluencia_metro_metrobus_cdmx].[dbo].[dim_estaciones] AS est ON est.cve_est = carpetas.cve_est_mas_cercana
+            JOIN [crimen_equip_urbano_afluencia_metro_metrobus_cdmx].[dbo].[dim_tiempo] AS tiem ON tiem.id_tiempo = carpetas.id_tiempo
+            JOIN [crimen_equip_urbano_afluencia_metro_metrobus_cdmx].[dbo].[dim_fases_dia] AS fase ON fase.id_fase_dia = tiem.id_fase_dia
+            JOIN [crimen_equip_urbano_afluencia_metro_metrobus_cdmx].[dbo].[dim_sexo_victima] AS sex ON sex.id_sexo = carpetas.id_sexo
+            WHERE est.sistema = '{transport}' AND est.cve_est = '{cve_est}' AND carpetas.dist_delito_estacion <= {radio}
+            AND tiem.dia_semana = '{weekday}'
+            AND del.variable_cndfe_snieg_2018 = '{crime_var}'
+            GROUP BY fase.parte_dia
+            ORDER BY conteo_delitos DESC
+            """
     cursor = conn.cursor()
     cursor.execute(Query)
     data = cursor.fetchall()

@@ -42,26 +42,26 @@ id_delito,violencia,categoria_cndfe_snieg_2018,variable_cndfe_snieg_2018,categor
 41,Con violencia,La libertad y la seguridad sexual,Violación,Violación,Otro tipo de violación,03.04.99,Violación tumultuaria equiparada
 42,Con violencia,La libertad y la seguridad sexual,Violación,Violación,Otro tipo de violación,03.04.99,Violación tumultuaria equiparada por conocido
 43,Con violencia,La libertad y la seguridad sexual,Violación,Violación,Otro tipo de violación,03.04.99,Violación y robo de vehículo
-44,Con violencia,La libertad y la seguridad sexual,Estupro,Delito de bajo impacto,Estupro,03.05,Estupro
-45,Con violencia,La libertad y la seguridad sexual,Otros delitos que atentan contra la libertad y la seguridad sexual,Delito de bajo impacto,Otros delitos que atentan contra la libertad y la seguridad sexual,03.99,Contra la intimidad sexual
+44,Con violencia,La libertad y la seguridad sexual,Violación,Delito de bajo impacto,Otro tipo de violación,03.04.99,Estupro
+45,Con violencia,La libertad y la seguridad sexual,Estupro,Delito de bajo impacto,Estupro,03.05,Contra la intimidad sexual
 46,Con violencia,La libertad y la seguridad sexual,Otros delitos que atentan contra la libertad y la seguridad sexual,Delito de bajo impacto,Otros delitos que atentan contra la libertad y la seguridad sexual,03.99,Privación de la libertad personal (realizar acto sexual)
-47,No especifica,El patrimonio,Robo,Delito de bajo impacto,Robo simple,04.01.01,Robo de alhajas
+47,Con violencia,La libertad y la seguridad sexual,Otros delitos que atentan contra la libertad y la seguridad sexual,Delito de bajo impacto,Otros delitos que atentan contra la libertad y la seguridad sexual,03.99,Robo de alhajas
 48,No especifica,El patrimonio,Robo,Delito de bajo impacto,Robo simple,04.01.01,Robo de vehículo de pedales
 49,No especifica,El patrimonio,Robo,Delito de bajo impacto,Robo simple,04.01.01,Tentativa de robo
 50,No especifica,El patrimonio,Robo,Delito de bajo impacto,Robo simple,04.01.01,Robo de objetos
 51,No especifica,El patrimonio,Robo,Delito de bajo impacto,Robo simple,04.01.01,Robo de dinero
-52,Con violencia,El patrimonio,Robo,Delito de bajo impacto,Robo de vehículo,04.01.03,Robo a transeúnte y vehículo con violencia
+52,No especifica,El patrimonio,Robo,Delito de bajo impacto,Robo simple,04.01.01,Robo a transeúnte y vehículo con violencia
 53,No especifica,El patrimonio,Robo,Delito de bajo impacto,Robo de vehículo,04.01.03,Robo de vehículo eléctrico motopatín
-54,Con violencia,El patrimonio,Violación,Violación,Robo de vehículo,04.01.03,Violación equiparada y robo de vehículo
-55,Con violencia,El patrimonio,Robo,Robo de vehículo con y sin violencia,Robo de vehículo,04.01.03,Robo de vehículo de servicio de transporte con violencia
+54,Sin violencia,El patrimonio,Robo,Violación,Robo de vehículo,04.01.03,Violación equiparada y robo de vehículo
+55,Sin violencia,El patrimonio,Robo,Robo de vehículo con y sin violencia,Robo de vehículo,04.01.03,Robo de vehículo de servicio de transporte con violencia
 56,Con violencia,El patrimonio,Robo,Delito de bajo impacto,Robo de vehículo,04.01.03,Lesiones intencionales y robo de vehículo
-57,Sin violencia,El patrimonio,Robo,Robo de vehículo con y sin violencia,Robo de vehículo,04.01.03,Robo de vehículo de servicio de transporte sin violencia
-58,No especifica,El patrimonio,Robo,Delito de bajo impacto,Robo de vehículo,04.01.03,Tentativa de robo de vehículo
-59,Sin violencia,El patrimonio,Robo,Robo de vehículo con y sin violencia,Robo de vehículo,04.01.03,Robo de vehículo de servicio público sin violencia
-60,Con violencia,El patrimonio,Robo,Robo de vehículo con y sin violencia,Robo de vehículo,04.01.03,Robo de vehículo de servicio público con violencia
+57,Con violencia,El patrimonio,Robo,Robo de vehículo con y sin violencia,Robo de vehículo,04.01.03,Robo de vehículo de servicio de transporte sin violencia
+58,Sin violencia,El patrimonio,Robo,Delito de bajo impacto,Robo de vehículo,04.01.03,Tentativa de robo de vehículo
+59,Con violencia,El patrimonio,Robo,Robo de vehículo con y sin violencia,Robo de vehículo,04.01.03,Robo de vehículo de servicio público sin violencia
+60,Sin violencia,El patrimonio,Robo,Robo de vehículo con y sin violencia,Robo de vehículo,04.01.03,Robo de vehículo de servicio público con violencia
 61,Con violencia,El patrimonio,Robo,Robo de vehículo con y sin violencia,Robo de vehículo,04.01.03,Robo de vehículo de servicio particular con violencia
-62,Sin violencia,El patrimonio,Robo,Robo de vehículo con y sin violencia,Robo de vehículo,04.01.03,Robo de motocicleta sin violencia
-63,Sin violencia,El patrimonio,Robo,Robo de vehículo con y sin violencia,Robo de vehículo,04.01.03,Robo de vehículo de servicio particular sin violencia
+62,Con violencia,El patrimonio,Robo,Robo de vehículo con y sin violencia,Robo de vehículo,04.01.03,Robo de motocicleta sin violencia
+63,No especifica,El patrimonio,Robo,Robo de vehículo con y sin violencia,Robo de vehículo,04.01.03,Robo de vehículo de servicio particular sin violencia
 64,Con violencia,El patrimonio,Robo,Robo de vehículo con y sin violencia,Robo de vehículo,04.01.03,Robo de motocicleta con violencia
 65,No especifica,El patrimonio,Robo,Delito de bajo impacto,Robo de autopartes,04.01.04,Robo de accesorios de auto
 66,Sin violencia,El patrimonio,Robo,Robo a transeúnte en vía pública con y sin violencia,Robo a transeúnte en vía pública,04.01.05,Robo a transeúnte en vía pública (nómina) sin violencia
