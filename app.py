@@ -63,7 +63,7 @@ hide_streamlit_style = """
             """
 st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 
-#Successful trial to remove top blankspace
+#Successful trial to remove top blankspace at dashboard
 st.markdown(
         """
             <style>
@@ -83,11 +83,7 @@ st.markdown(
 
 # Get the week of month given a datetime object
 def week_of_month(dt):
-    """ Returns the week of the month for the specified date.
-    """
-
     first_day = dt.replace(day=1)
-
     dom = dt.day
     adjusted_dom = dom + first_day.weekday()
 
@@ -108,8 +104,6 @@ def get_week_date_range(week_number, year):
     start_date += timedelta(days=days_offset)
     start_week_date = start_date + timedelta(weeks=week_number - 1)
     end_week_date = start_week_date + timedelta(days=6)
-    #start_date_str = start_week_date.strftime('%d-%m-%Y')
-    #end_date_str = end_week_date.strftime('%d-%m-%Y')
     start_date_str = f"{start_week_date.day} de {month_names[start_week_date.month]} de {start_week_date.year}"
     end_date_str = f"{end_week_date.day} de {month_names[end_week_date.month]} de {end_week_date.year}"
     
@@ -176,7 +170,6 @@ crime_classes_queries_ls = [
     
     # 'Secuestro',
     # 'Secuestro exprés',
-    
     # 'Posesión simple de narcóticos',
     # 'Posesión con fines de comercio o suministro de narcóticos',
     # 'Delitos en materia de armas y objetos prohibidos',
@@ -263,10 +256,6 @@ POINTSMB = {
     'L7': './images/circulos/MB_L7.png',
 }
 
-# Clicks at prediction map
-if 'selected_click_pred_map' not in st.session_state:
-    st.session_state.selected_click_pred_map = []
-
 # Geodata
 df_stations = pd.read_csv("./fact_constellation_schema/dim_estaciones_espacio_ok.csv")
 df_stations['cve_mun_inegi'] = df_stations['cve_mun_inegi'].astype(str).str.zfill(3)
@@ -315,6 +304,9 @@ contents = file_metrobus_logo.read()
 data_url_metrobus_logo = base64.b64encode(contents).decode("utf-8")
 file_metrobus_logo.close()
 
+# Clicks at prediction map
+if 'selected_click_pred_map' not in st.session_state:
+    st.session_state.selected_click_pred_map = []
 
 # LOAD DATA OR MODELS FUNCTIONS
 
@@ -373,61 +365,6 @@ def load_thresholds_crime_model(transport: str, grouped_dataset_id: int):
 
 # EXPLORATORY SECTIONS
 
-# Initialize map of cdmx
-def init_map(center=(19.4326018, -99.1332049), zoom_start=11, map_type="cartodbpositron", height=50, width=200):
-    
-    return folium.Map(location=center, zoom_start=zoom_start, tiles=map_type, height=height)
-
-# Plot map of stations
-def plot_stations(df, folium_map, type):
-    # Validation of type of transport.
-    if type == 'STC Metro':
-        # Add every station.
-        for i, row in df.iterrows():
-            # Customize icon.
-            icon = folium.CustomIcon(
-                POINTSM[row.linea],
-                icon_size=(15, 15)
-            )
-            folium.Marker(
-                [row.latitud, row.longitud],
-                icon=icon,
-                tooltip=f'{row.cve_est}: {row.nombre} (línea {row.linea[1:]})'
-            ).add_to(folium_map)
-        
-        # Add every line.
-        metro_lines['geometry_yx'] = metro_lines['geometry'].apply(lambda line: LineString([(point[1], point[0]) for point in line.coords]))
-        for i, row in metro_lines.iterrows():
-            coords_pts = [list(coord) for coord in row['geometry_yx'].coords]
-            folium.PolyLine(coords_pts, color=LINESM[row['LINEA']]).add_to(folium_map)
-    
-    elif type == 'Metrobús':
-        # Add every station.
-        for i, row in df.iterrows():
-            # Customize icon.
-            icon = folium.CustomIcon(
-                POINTSMB[row.linea],
-                icon_size=(15, 15)
-            )
-            folium.Marker(
-                [row.latitud, row.longitud],
-                icon=icon,
-                tooltip=f'{row.cve_est}: {row.nombre} (línea {row.linea[1:]})'
-            ).add_to(folium_map)
-        
-        # Add every line.
-        mb_lines['geometry_yx'] = mb_lines['geometry'].apply(lambda line: LineString([(point[1], point[0]) for point in line.coords])) 
-        for i, row in mb_lines.iterrows():
-            coords_pts = [list(coord) for coord in row['geometry_yx'].coords]
-            folium.PolyLine(coords_pts, color=LINESMB[row['LINEA']]).add_to(folium_map)
-        
-    # Add CDMX shapefile to map.
-    folium.GeoJson(lineas_cdmx_json, 
-               name=None, 
-               style_function=lambda x: {'color': 'black', 'weight': 2, 'fillColor': 'transparent'}).add_to(folium_map) 
-
-    return folium_map
-
 # TRENDS SECTION
 
 # Normalize crime counts to 4-8 scatter point size
@@ -466,6 +403,26 @@ def label_percentiles_5_parts(row, percentiles):
         return 4
     else:
         return 5
+    
+def label_percentiles_3_parts(row, percentiles):
+    if row <= percentiles.iloc[0]:
+        return 1
+    elif row <= percentiles.iloc[1]:
+        return 2
+    else:
+        return 3
+
+def generate_ranges_labels_percentiles_3_parts(percentiles, min_value, max_value):
+    sorted_values = sorted(percentiles)
+    ranges = []
+    ranges.append(f'{min_value} - {round(sorted_values[0], 2)}')
+    
+    for i in range(1, len(sorted_values)):
+        ranges.append(f'{round(round(sorted_values[i-1], 2) + 0.01, 2)} - {round(sorted_values[i], 2)}')
+
+    ranges.append(f'{round(round(sorted_values[-1], 2) + 0.1, 2)} - {max_value}')
+    
+    return ranges
 
 # Plot the stations showing criminal trends
 def plot_crime_trend_stations(datageom, df: pd.DataFrame, transport: str, level_div: str, filter_div: list):
@@ -475,12 +432,18 @@ def plot_crime_trend_stations(datageom, df: pd.DataFrame, transport: str, level_
     # if filter_div == []:
     #     filter_div = list(region_gdf_cp[level_div].unique())
     
+    # dict_colors_percentile = {
+    #     1: '#5bc7da',
+    #     2: '#4fc261',
+    #     3: '#d3a900',
+    #     4: '#d35600',
+    #     5: 'red',
+    # }
+    
     dict_colors_percentile = {
         1: '#5bc7da',
-        2: '#4fc261',
-        3: '#d3a900',
-        4: '#d35600',
-        5: 'red',
+        2: '#ffa200',
+        3: 'red',
     }
     
     fig = go.Figure()
@@ -489,20 +452,23 @@ def plot_crime_trend_stations(datageom, df: pd.DataFrame, transport: str, level_
         mapbox=dict(center=dict(lat=center_geom.y, lon=center_geom.x),zoom=9.8),
     )
 
-    # Mostrar estaciones y líneas
+    # Show stations and lines
     if transport == 'STC Metro':
         df_stations_metro_complete = df_stations_metro.merge(df[['linea', 'nombre', 'promedio_delitos']], on=['linea', 'nombre'])
         min_value = df_stations_metro_complete['promedio_delitos'].min()
         max_value = df_stations_metro_complete['promedio_delitos'].max()
-        percentile_values = df_stations_metro_complete['promedio_delitos'].quantile([0.15, 0.30, 0.50, 0.70])
-        df_stations_metro_complete['clase'] = df_stations_metro_complete['promedio_delitos'].apply(label_percentiles_5_parts, percentiles=percentile_values)
+        # percentile_values = df_stations_metro_complete['promedio_delitos'].quantile([0.15, 0.30, 0.50, 0.70])
+        percentile_values = df_stations_metro_complete['promedio_delitos'].quantile([0.33, 0.66])
+        df_stations_metro_complete['clase'] = df_stations_metro_complete['promedio_delitos'].apply(label_percentiles_3_parts, percentiles=percentile_values)
         colors_ls = [dict_colors_percentile[class_] for class_ in df_stations_metro_complete['clase'].to_list()]
         
         lines_unique = df_stations_metro_complete['linea'].unique()
+        colors_classes_unique = list(dict_colors_percentile.keys())
+        ranges_classes_unique = generate_ranges_labels_percentiles_3_parts(percentile_values, min_value, max_value)
         
         # Map boundaries of regions selected
         if level_div != 'linea':
-            # Filtrar geometría coropleta
+            # Filter geometry of choroplet
             if filter_div != []:
                 region_gdf_cp_aux = region_gdf_cp[region_gdf_cp[level_div].isin(filter_div)]
             else:
@@ -521,6 +487,7 @@ def plot_crime_trend_stations(datageom, df: pd.DataFrame, transport: str, level_
                     fillcolor='rgba(196, 223, 225, 0.15)',
                     line=dict(color='#65999d', width=2),
                     hoverinfo='none',
+                    showlegend=False,
                 )
                 fig.add_trace(trace_boundary)
                 
@@ -528,7 +495,7 @@ def plot_crime_trend_stations(datageom, df: pd.DataFrame, transport: str, level_
             region_gdf_grouped = generate_geom_grouped(region_gdf_cp_aux, level_div)
             polygon_ = region_gdf_grouped['geometry'].to_list()[0]
             
-            # Se filtran aquellas líneas que intersectan (caen dentro) con la demarcación de la alcaldía en cuestión
+            # Filter just the fragment of line which intersects the area of the choroplet
             for line in lines_unique:
                 metro_lines_aux = metro_lines[metro_lines['LINEA'] == line[1:]]
                 metro_lines_aux['geometry_yx'] = metro_lines_aux['geometry'].apply(lambda line: LineString([(point[0], point[1]) for point in line.coords])) 
@@ -551,6 +518,7 @@ def plot_crime_trend_stations(datageom, df: pd.DataFrame, transport: str, level_
                                 lat = [coord[1] for coord in coords_pts],
                                 line=dict(color=LINESM[metro_lines_aux['LINEA'].to_list()[0]], width=4),
                                 hoverinfo='none',
+                                showlegend=False,
                             )
                             fig.add_trace(line_trace)
                 else:
@@ -566,6 +534,7 @@ def plot_crime_trend_stations(datageom, df: pd.DataFrame, transport: str, level_
                             lat = [coord[1] for coord in coords_pts],
                             line=dict(color=LINESM[metro_lines_aux['LINEA'].to_list()[0]], width=4),
                             hoverinfo='none',
+                            showlegend=False,
                         )
                         fig.add_trace(line_trace)
         else:
@@ -581,10 +550,11 @@ def plot_crime_trend_stations(datageom, df: pd.DataFrame, transport: str, level_
                 fillcolor='rgba(196, 223, 225, 0.15)',
                 line=dict(color='#65999d', width=2),
                 hoverinfo='none',
+                showlegend=False,
             )
             fig.add_trace(trace_boundary)
             
-            # Mapeamos todas las líneas
+            # Map all the lines
             for line in lines_unique:
                 metro_lines_aux = metro_lines[metro_lines['LINEA'] == line[1:]]
                 metro_lines_aux['geometry_yx'] = metro_lines_aux['geometry'].apply(lambda line: LineString([(point[0], point[1]) for point in line.coords])) 
@@ -596,25 +566,21 @@ def plot_crime_trend_stations(datageom, df: pd.DataFrame, transport: str, level_
                     lat = [coord[1] for coord in coords_pts],
                     line=dict(color=LINESM[metro_lines_aux['LINEA'].to_list()[0]], width=4),
                     hoverinfo='none',
+                    showlegend=False,
                 )
                 fig.add_trace(line_trace)
         
-        # Se filtran las estaciones que caen dentro de la región seleccionada para pintarlas de cierto color, y las demás de otro
-        
-        for line in lines_unique:
-            df_stations_metro_aux = df_stations_metro_complete[(df_stations_metro_complete['linea'] == line)]
-            print('Longitud muestra', len(df_stations_metro_aux))
-            print('Longitud colores', len(colors_ls))
-            colors_ls_aux = [colors_ls[i] for i in df_stations_metro_aux.index.to_list()]
+        # Plot stations with different sizes and colors
+        for color_cl, range_cl in zip(colors_classes_unique, ranges_classes_unique):
+            df_stations_metro_aux = df_stations_metro_complete[(df_stations_metro_complete['clase'] == color_cl)]
             lats = df_stations_metro_aux['latitud']
             lons = df_stations_metro_aux['longitud']
             ids = df_stations_metro_aux['cve_est']
             lines = df_stations_metro_aux['linea']
             names = df_stations_metro_aux['nombre']
             values_ = df_stations_metro_aux['promedio_delitos']
-            marker_sizes_red = [normalize_size(value, min_value, max_value, min_size=10, max_size=16) for value in values_]
+            marker_sizes_colors = [normalize_size(value, min_value, max_value, min_size=10, max_size=16) for value in values_]
             marker_sizes_white = [normalize_size(value, min_value, max_value, min_size=4, max_size=9) for value in values_]
-            marker_sizes_color_st = [normalize_size(value, min_value, max_value, min_size=2, max_size=3) for value in values_]
             
             scatter_trace = go.Scattermapbox(
                     lat=lats,
@@ -623,11 +589,13 @@ def plot_crime_trend_stations(datageom, df: pd.DataFrame, transport: str, level_
                     customdata=[[i, l, n] for i, l, n in zip(ids, lines, names)],
                     textposition='top center',
                     marker=dict(
-                        size=marker_sizes_red,
-                        color=colors_ls_aux,
+                        size=marker_sizes_colors,
+                        color=dict_colors_percentile[color_cl],
                         opacity = 1.0,
                     ),
                     hoverinfo='none',
+                    name=range_cl,
+                    showlegend=True,
             )
             scatter_trace_2 = go.Scattermapbox(
                     lat=lats,
@@ -643,33 +611,27 @@ def plot_crime_trend_stations(datageom, df: pd.DataFrame, transport: str, level_
                     hovertext=ids,
                     hoverlabel=dict(namelength=0),
                     hovertemplate='%{customdata[2]} (%{customdata[1]})<br>',
-            )
-            scatter_trace_3 = go.Scattermapbox(
-                    lat=lats,
-                    lon=lons,
-                    mode='markers',
-                    customdata=[[i, l, n] for i, l, n in zip(ids, lines, names)],
-                    textposition='top center',
-                    marker=dict(
-                        size=marker_sizes_color_st,
-                        color=LINESM_aux[line],
-                        opacity = 1.0,
-                    ),
-                    hoverinfo='none',
+                    showlegend=False,
             )
             fig.add_trace(scatter_trace)
             fig.add_trace(scatter_trace_2)
-            #fig.add_trace(scatter_trace_3)
 
     else:
         df_stations_metrobus_complete = df_stations_metrobus.merge(df[['linea', 'nombre', 'promedio_delitos']], on=['linea', 'nombre'])
         min_value = df_stations_metrobus_complete['promedio_delitos'].min()
         max_value = df_stations_metrobus_complete['promedio_delitos'].max()
+        # percentile_values = df_stations_metrobus_complete['promedio_delitos'].quantile([0.15, 0.30, 0.50, 0.70])
+        percentile_values = df_stations_metrobus_complete['promedio_delitos'].quantile([0.33, 0.66])
+        df_stations_metrobus_complete['clase'] = df_stations_metrobus_complete['promedio_delitos'].apply(label_percentiles_3_parts, percentiles=percentile_values)
+        colors_ls = [dict_colors_percentile[class_] for class_ in df_stations_metrobus_complete['clase'].to_list()]
+        
         lines_unique = df_stations_metrobus_complete['linea'].unique()
+        colors_classes_unique = list(dict_colors_percentile.keys())
+        ranges_classes_unique = generate_ranges_labels_percentiles_3_parts(percentile_values, min_value, max_value)
         
         # Map boundaries of regions selected
         if level_div != 'linea':
-            # Filtrar geometría coropleta
+            # Filter geometry of choroplet
             if filter_div != []:
                 region_gdf_cp_aux = region_gdf_cp[region_gdf_cp[level_div].isin(filter_div)]
             else:
@@ -688,6 +650,7 @@ def plot_crime_trend_stations(datageom, df: pd.DataFrame, transport: str, level_
                     fillcolor='rgba(196, 223, 225, 0.15)',
                     line=dict(color='#65999d', width=2),
                     hoverinfo='none',
+                    showlegend=False,
                 )
                 fig.add_trace(trace_boundary)
                 
@@ -695,7 +658,7 @@ def plot_crime_trend_stations(datageom, df: pd.DataFrame, transport: str, level_
             region_gdf_grouped = generate_geom_grouped(region_gdf_cp_aux, level_div)
             polygon_ = region_gdf_grouped['geometry'].to_list()[0]
             
-            # Se filtran aquellas líneas que intersectan (caen dentro) con la demarcación de la alcaldía en cuestión
+            # Filter just the fragment of line which intersects the area of the choroplet
             for line in lines_unique:
                 metrobus_lines_aux = mb_lines[mb_lines['LINEA'].str[-1] == line[1:]]
                 metrobus_lines_aux['geometry_yx'] = metrobus_lines_aux['geometry'].apply(lambda line: LineString([(point[0], point[1]) for point in line.coords])) 
@@ -720,6 +683,7 @@ def plot_crime_trend_stations(datageom, df: pd.DataFrame, transport: str, level_
                                     lat = [coord[1] for coord in coords_pts],
                                     line=dict(color=LINESMB[metrobus_lines_aux['LINEA'].to_list()[0]], width=4),
                                     hoverinfo='none',
+                                    showlegend=False,
                                 )
                                 fig.add_trace(line_trace)
                     else:
@@ -735,6 +699,7 @@ def plot_crime_trend_stations(datageom, df: pd.DataFrame, transport: str, level_
                                 lat = [coord[1] for coord in coords_pts],
                                 line=dict(color=LINESMB[metrobus_lines_aux['LINEA'].to_list()[0]], width=4),
                                 hoverinfo='none',
+                                showlegend=False,
                             )
                             fig.add_trace(line_trace) 
         else:
@@ -750,10 +715,11 @@ def plot_crime_trend_stations(datageom, df: pd.DataFrame, transport: str, level_
                 fillcolor='rgba(196, 223, 225, 0.15)',
                 line=dict(color='#65999d', width=2),
                 hoverinfo='none',
+                showlegend=False,
             )
             fig.add_trace(trace_boundary)
             
-            # Mapeamos todas las líneas
+            # Map all the lines
             for line in lines_unique:
                 metrobus_lines_aux = mb_lines[mb_lines['LINEA'].str[-1] == line[1:]]
                 metrobus_lines_aux['geometry_yx'] = metrobus_lines_aux['geometry'].apply(lambda line: LineString([(point[0], point[1]) for point in line.coords])) 
@@ -768,22 +734,21 @@ def plot_crime_trend_stations(datageom, df: pd.DataFrame, transport: str, level_
                         lat = [coord[1] for coord in coords_pts],
                         line=dict(color=LINESMB[metrobus_lines_aux['LINEA'].to_list()[0]], width=4),
                         hoverinfo='none',
+                        showlegend=False,
                     )
                     fig.add_trace(line_trace)
 
-        # Se filtran las estaciones que caen dentro de la región seleccionada para pintarlas de cierto color, y las demás de otro
-        for line in lines_unique:
-            # Estaciones dentro de la región
-            df_stations_metrobus_aux = df_stations_metrobus_complete[df_stations_metrobus_complete['linea'] == line]
+        # Plot stations with different sizes and colors
+        for color_cl, range_cl in zip(colors_classes_unique, ranges_classes_unique):
+            df_stations_metrobus_aux = df_stations_metrobus_complete[(df_stations_metrobus_complete['clase'] == color_cl)]
             lats = df_stations_metrobus_aux['latitud']
             lons = df_stations_metrobus_aux['longitud']
             ids = df_stations_metrobus_aux['cve_est']
             lines = df_stations_metrobus_aux['linea']
             names = df_stations_metrobus_aux['nombre']
             values_ = df_stations_metrobus_aux['promedio_delitos']
-            marker_sizes_red = [normalize_size(value, min_value, max_value, min_size=8, max_size=16) for value in values_]
+            marker_sizes_colors = [normalize_size(value, min_value, max_value, min_size=8, max_size=16) for value in values_]
             marker_sizes_white = [normalize_size(value, min_value, max_value, min_size=4, max_size=7) for value in values_]
-            marker_sizes_color_st = [normalize_size(value, min_value, max_value, min_size=2, max_size=3) for value in values_]
             
             scatter_trace = go.Scattermapbox(
                     lat=lats,
@@ -792,11 +757,13 @@ def plot_crime_trend_stations(datageom, df: pd.DataFrame, transport: str, level_
                     customdata=[[i, l, n] for i, l, n in zip(ids, lines, names)],
                     textposition='top center',
                     marker=dict(
-                        size=marker_sizes_red,
-                        color='red',
+                        size=marker_sizes_colors,
+                        color=dict_colors_percentile[color_cl],
                         opacity = 1.0,
                     ),
                     hoverinfo='none',
+                    name=range_cl,
+                    showlegend=True,
             )
             scatter_trace_2 = go.Scattermapbox(
                     lat=lats,
@@ -812,23 +779,26 @@ def plot_crime_trend_stations(datageom, df: pd.DataFrame, transport: str, level_
                     hovertext=ids,
                     hoverlabel=dict(namelength=0),
                     hovertemplate='%{customdata[2]} (%{customdata[1]})<br>',
-            )
-            scatter_trace_3 = go.Scattermapbox(
-                    lat=lats,
-                    lon=lons,
-                    mode='markers',
-                    customdata=[[i, l, n] for i, l, n in zip(ids, lines, names)],
-                    textposition='top center',
-                    marker=dict(
-                        size=marker_sizes_color_st,
-                        color=LINESM_aux[line],
-                        opacity = 1.0,
-                    ),
-                    hoverinfo='none',
+                    showlegend=False,
             )
             fig.add_trace(scatter_trace)
             fig.add_trace(scatter_trace_2)
-            #fig.add_trace(scatter_trace_3)
+
+    # colors_ls_aux_final = list(dict_colors_percentile.values())
+    # labels_colors_ls_aux_final = list(dict_colors_percentile.keys())
+    # for label, color in zip(labels_colors_ls_aux_final, colors_ls_aux_final):
+    #     fig.add_trace(go.Scattermapbox(
+    #         lat=[None],
+    #         lon=[None],
+    #         mode='markers',
+    #         marker=dict(
+    #             size=10,
+    #             color=color,
+    #             opacity=1.0,
+    #         ),
+    #         name=label,
+    #         showlegend=True,
+    #     ))
     
     fig.update_layout(
         title_text='',
@@ -840,19 +810,21 @@ def plot_crime_trend_stations(datageom, df: pd.DataFrame, transport: str, level_
             yanchor='top',
         ),
         legend=dict(
-            title='',
-            traceorder='normal',
-            orientation='h',
-            y=0.5,
-            x=0.5,
-            xanchor='center',
-            yanchor='top',
-            itemsizing='constant',
-            itemwidth=30,
-            bgcolor='rgba(255, 255, 255, 0)'
+            title=dict(
+                text='Puntos calientes',
+                font=dict(
+                    size=14,
+                    color='black',
+                )
+            ),
+            orientation="h",
+            yanchor="bottom",
+            y=1.02,
+            xanchor="center",
+            x=0.5
         ),
-        legend_title=dict(side='top right'),
-        showlegend=False,
+        legend_title=dict(side='top center'),
+        showlegend=True,
 
         mapbox_style="carto-positron",
         mapbox=dict(
@@ -865,6 +837,8 @@ def plot_crime_trend_stations(datageom, df: pd.DataFrame, transport: str, level_
     
     return fig
 
+# EXPLORATION SECTION
+
 # Plot the stations showing criminal trends
 def plot_transport_stations(datageom, transport: str):
     region_gdf_cp = datageom.copy(deep=True)
@@ -876,7 +850,7 @@ def plot_transport_stations(datageom, transport: str):
         mapbox=dict(center=dict(lat=center_geom.y, lon=center_geom.x),zoom=10.2),
     )
 
-    # Mostrar estaciones y líneas
+    # Show stations and lines
     if transport == 'STC Metro':
         df_stations_metro_complete = df_stations_metro
         lines_unique = df_stations_metro_complete['linea'].unique()
@@ -897,7 +871,7 @@ def plot_transport_stations(datageom, transport: str):
         )
         fig.add_trace(trace_boundary)
         
-        # Mapeamos todas las líneas
+        # Map all the lines
         for line in lines_unique:
             metro_lines_aux = metro_lines[metro_lines['LINEA'] == line[1:]]
             metro_lines_aux['geometry_yx'] = metro_lines_aux['geometry'].apply(lambda line: LineString([(point[0], point[1]) for point in line.coords])) 
@@ -912,7 +886,7 @@ def plot_transport_stations(datageom, transport: str):
             )
             fig.add_trace(line_trace)
         
-        # Se mapean todas las estaciones
+        # Map all stations
         lats = df_stations_metro_complete['latitud']
         lons = df_stations_metro_complete['longitud']
         ids = df_stations_metro_complete['cve_est']
@@ -969,7 +943,7 @@ def plot_transport_stations(datageom, transport: str):
         )
         fig.add_trace(trace_boundary)
         
-        # Mapeamos todas las líneas
+        # Map all lines
         for line in lines_unique:
             metrobus_lines_aux = mb_lines[mb_lines['LINEA'].str[-1] == line[1:]]
             metrobus_lines_aux['geometry_yx'] = metrobus_lines_aux['geometry'].apply(lambda line: LineString([(point[0], point[1]) for point in line.coords])) 
@@ -987,7 +961,7 @@ def plot_transport_stations(datageom, transport: str):
                 )
                 fig.add_trace(line_trace)
 
-        # Se mapean todas las estaciones
+        # Map all the stations
         lats = df_stations_metrobus_complete['latitud']
         lons = df_stations_metrobus_complete['longitud']
         ids = df_stations_metrobus_complete['cve_est']
@@ -1028,12 +1002,6 @@ def plot_transport_stations(datageom, transport: str):
     fig.update_layout(
         title_text='',
         margin=dict(t=0, l=0, r=0, b=0),
-        # title=dict(
-        #     y=0.0,
-        #     x=0.5,
-        #     xanchor='center',
-        #     yanchor='top',
-        # ),
         legend=dict(
             title='',
             traceorder='normal',
@@ -1062,76 +1030,6 @@ def plot_transport_stations(datageom, transport: str):
 
 # PREDICTION SECTION
 
-# Plot of time series weekly crime
-def plot_ts_weekly_crime(df, title, threshold):
-    fig = go.Figure()
-    x = df['semana_anio_completa']
-    print(df)
-    y = df['conteo']
-    
-    # Bicolor graph
-    # https://stackoverflow.com/questions/65931888/how-to-fill-colors-on-a-plotly-chart-based-on-y-axis-values
-    
-    colors_ = ['#5bc7da', '#b21800']
-    risks_ = ['Riesgo moderado', 'Riesgo alto']
-    colors = [colors_[0] if val <= threshold else colors_[1] for val in y]
-    
-    fig.add_trace(go.Scatter(x=x, y=y, mode='lines', name='', showlegend=False,
-                             line=dict(color='#b9b9b9', width=1)))
-    
-    fig.add_shape(type='line', x0=x.iloc[0], x1=x.iloc[-1], y0=threshold + 0.0, y1=threshold + 0.0,
-                  line=dict(color='#ff6c00', width=1.5, ), name='Límite de riesgo moderado', showlegend=True)
-    
-    for i in range(len(colors_)):
-        color_ = colors_[i]
-        risk_ = risks_[i]
-        color_mask = [c == color_ for c in colors]
-        fig.add_trace(go.Scatter(
-                x=x[color_mask],
-                y=y[color_mask],
-                mode='markers',
-                name=risk_, 
-                marker=dict(color=color_, size=4,),
-                #line=dict(color='#b9b9b9', width=1,),
-                showlegend=True,
-            )
-        )
-    
-    tick_indices = list(range(0, len(x), 52))
-    tick_labels = [x.iloc[i] for i in tick_indices]
-
-    fig.update_xaxes(tickvals=tick_indices, ticktext=tick_labels)
-
-    fig.update_layout(
-        title=title,
-        title_font=dict(
-            #family="Arial", 
-            size=14,      
-            color="navy",
-        ),
-        xaxis_title='Semana',
-        yaxis_title='Conteo de delitos',
-        height=300,
-        margin=dict(
-            t=30,
-            b=0,
-            l=0,
-            r=0,
-        ),
-        legend=dict(
-            x = 0.51,
-            y = 1.42,
-            #xanchor = 'right',
-            #yanchor = 'top',
-            #xanchor='auto', yanchor='auto',
-            #bgcolor='rgba(255, 255, 255, 0.5)', 
-            #bordercolor='rgba(0, 0, 0, 0.5)',
-            # borderwidth=1,
-        ),
-    )
-
-    return fig
-    
 # Plot crime level risk map
 def plot_predictive_map(datageom, transport: str, unique_values_metric):
     metric = 'valor'
@@ -1150,7 +1048,7 @@ def plot_predictive_map(datageom, transport: str, unique_values_metric):
     
     fig = go.Figure()
 
-    # Las figuras con go las pude hacer gracias a:
+    # Useful links to make the figures
     # https://community.plotly.com/t/annotations-on-plotly-choropleth-choropleth-mapbox-scattermapbox/74556/6
     # https://stackoverflow.com/questions/68709936/how-to-plot-a-shp-file-with-plotly-go-choroplethmapbox
     # https://plotly.com/python-api-reference/generated/plotly.graph_objects.Choroplethmapbox.html
@@ -1172,11 +1070,10 @@ def plot_predictive_map(datageom, transport: str, unique_values_metric):
     # Discrete map
     # https://community.plotly.com/t/discrete-colors-for-choroplethmapbox-with-plotly-graph-objects/37989/2
     
-    
     # CHECK TO HIGHLIGHT CHOROPLET
     # https://towardsdatascience.com/highlighting-click-data-on-plotly-choropleth-map-377e721c5893
     
-    # Si todo el mapa va a tener el mismo color validamos porque sino hay un bug de visualización
+    # If the entire map is going to be red or blue (high and low risk), we should make a special plot to avoid a bug
     if datageom[metric].value_counts().iloc[0] == len(datageom):
         dfp = datageom
         label_ = datageom[metric].unique()[0]
@@ -1202,7 +1099,7 @@ def plot_predictive_map(datageom, transport: str, unique_values_metric):
                     showscale=False,
             )
         )
-    # Si el mapa si tiene valores de ambas clases
+    # If the map has choroplets from both classes
     else:
         for i, label_ in enumerate(unique_values_metric):
             dfp = datageom[datageom[metric] == label_]
@@ -1270,113 +1167,17 @@ def plot_complementary_predictive_map(datageom, transport: str, region_gdf_aux: 
         mapbox=dict(center=dict(lat=center_geom.y, lon=center_geom.x),zoom=9.8),
     )
 
-    # Las figuras con go las pude hacer gracias a:
+    # The figures were made thanks to this
     # https://community.plotly.com/t/annotations-on-plotly-choropleth-choropleth-mapbox-scattermapbox/74556/6
     # https://stackoverflow.com/questions/68709936/how-to-plot-a-shp-file-with-plotly-go-choroplethmapbox
     # https://plotly.com/python-api-reference/generated/plotly.graph_objects.Choroplethmapbox.html
     # https://plotly.com/python-api-reference/generated/plotly.graph_objects.choroplethmapbox.html#plotly.graph_objects.choroplethmapbox.ColorBar
     
-    # Mostrar estaciones y líneas
+    # Show stations and lines
     if transport == 'STC Metro':
         lines_unique = df_stations_metro['linea'].unique()
         
-        # (Enfoque omitido, puesto que ahora se grafican todas las líneas y estaciones)
-        # Se filtran aquellas líneas que intersectan (caen dentro) con la demarcación de la alcaldía en cuestión
-        # for line in lines_unique:
-        #     metro_lines_aux = metro_lines[metro_lines['LINEA'] == line[1:]]
-        #     metro_lines_aux['geometry_yx'] = metro_lines_aux['geometry'].apply(lambda line: LineString([(point[0], point[1]) for point in line.coords])) 
-        #     lines_ = metro_lines_aux['geometry_yx'].iloc[0]
-        #     polygon_ = region_gdf_cp.loc[region_gdf_cp[region_column] == cve_region_selected, 'geometry'].to_list()[0]
-        #     intersection = lines_.intersection(polygon_)
-        #     if intersection.type == 'MultiLineString':
-        #         # Oro molido
-        #         # https://gis.stackexchange.com/questions/456266/error-of-multilinestring-object-is-not-iterable
-        #         for ind_line in list(intersection.geoms):
-        #             if ind_line.is_empty:
-        #                 #print("No hay intersección")
-        #                 pass
-        #             else:
-        #                 #print('Intersecta')
-        #                 coords_pts = [[coord[0], coord[1]] for coord in ind_line.coords]
-        #                 line_trace = go.Scattermapbox(
-        #                     mode='lines',
-        #                     lon = [coord[0] for coord in coords_pts],
-        #                     lat = [coord[1] for coord in coords_pts],
-        #                     line=dict(color=LINESM[metro_lines_aux['LINEA'].to_list()[0]], width=4),
-        #                     hoverinfo='none',
-        #                 )
-        #                 fig.add_trace(line_trace)
-                
-        #     else:
-        #         if intersection.is_empty:
-        #             #print("No hay intersección")
-        #             pass
-        #         else:
-        #             #print('Intersecta')
-        #             coords_pts = [[coord[0], coord[1]] for coord in intersection.coords]
-        #             line_trace = go.Scattermapbox(
-        #                 mode='lines',
-        #                 lon = [coord[0] for coord in coords_pts],
-        #                 lat = [coord[1] for coord in coords_pts],
-        #                 line=dict(color=LINESM[metro_lines_aux['LINEA'].to_list()[0]], width=4),
-        #                 hoverinfo='none',
-        #             )
-                    
-        #             fig.add_trace(line_trace)
-        
-        # # Se filtran las estaciones que caen dentro de la alcaldía
-        # for line in lines_unique:
-        #     if region_column == 'CVE_MUN':
-        #         region_column_aux = 'cve_mun_inegi'
-        #     else:
-        #         region_column_aux = 'sector'
-        #     df_stations_metro_aux = df_stations_metro[(df_stations_metro['linea'] == line) & (df_stations_metro[region_column_aux] == cve_region_selected)]
-        #     lats = df_stations_metro_aux['latitud']
-        #     lons = df_stations_metro_aux['longitud']
-        #     ids = df_stations_metro_aux['cve_est']
-        #     lines = df_stations_metro_aux['linea']
-        #     names = df_stations_metro_aux['nombre']
-        #     scatter_trace = go.Scattermapbox(lat=lats,
-        #             lon=lons,
-        #             mode='markers',
-        #             #text=ids,
-        #             customdata=[[i, l, n] for i, l, n in zip(ids, lines, names)],
-        #             textposition='top center',
-        #             marker_size=4,
-        #             marker_color='black',
-        #             hovertext=ids,
-        #             hoverlabel=dict(namelength=0),
-        #             hovertemplate=''
-        #     )
-        #     # scatter_trace_2 = go.Scattermapbox(lat=lats,
-        #     #         lon=lons,
-        #     #         mode='markers',
-        #     #         #text=ids,
-        #     #         customdata=[[i, l, n] for i, l, n in zip(ids, lines, names)],
-        #     #         textposition='top center',
-        #     #         marker_size=10,
-        #     #         marker_color='white',
-        #     #         hovertext=ids,
-        #     #         hoverlabel=dict(namelength=0),
-        #     #         hovertemplate=''
-        #     # )
-        #     scatter_trace_3 = go.Scattermapbox(lat=lats,
-        #             lon=lons,
-        #             mode='markers',
-        #             #text=ids,
-        #             customdata=[[i, l, n] for i, l, n in zip(ids, lines, names)],
-        #             textposition='top center',
-        #             marker_size=3,
-        #             marker_color=LINESM_aux[line],
-        #             hovertext=ids,
-        #             hoverlabel=dict(namelength=0),
-        #             hovertemplate='<b>Estación:</b> %{customdata[2]} (%{customdata[1]})<br>'
-        #     )
-        #     fig.add_trace(scatter_trace)
-        #     #fig.add_trace(scatter_trace_2)
-        #     fig.add_trace(scatter_trace_3)
-        
-        # Mapeamos todas las líneas
+        # Mapping all the lines
         for line in lines_unique:
             metro_lines_aux = metro_lines[metro_lines['LINEA'] == line[1:]]
             metro_lines_aux['geometry_yx'] = metro_lines_aux['geometry'].apply(lambda line: LineString([(point[0], point[1]) for point in line.coords])) 
@@ -1393,14 +1194,14 @@ def plot_complementary_predictive_map(datageom, transport: str, region_gdf_aux: 
             fig.add_trace(line_trace)
                     
         
-        # Se filtran las estaciones que caen dentro de la región seleccionada para pintarlas de cierto color, y las demás de otro
+        # Filter just the stations within the selected region to mark it differently
         for line in lines_unique:
             if region_column == 'CVE_MUN':
                 region_column_aux = 'cve_mun_inegi'
             else:
                 region_column_aux = 'sector'
             
-            # Estaciones dentro de la región
+            # Stations within the region
             df_stations_metro_aux = df_stations_metro[(df_stations_metro['linea'] == line) & (df_stations_metro[region_column_aux] == cve_region_selected)]
             lats = df_stations_metro_aux['latitud']
             lons = df_stations_metro_aux['longitud']
@@ -1447,7 +1248,7 @@ def plot_complementary_predictive_map(datageom, transport: str, region_gdf_aux: 
             fig.add_trace(scatter_trace_2)
             #fig.add_trace(scatter_trace_3)
             
-            # Estaciones fuera de la región
+            # Stations outside the region
             df_stations_metro_aux_out = df_stations_metro[(df_stations_metro['linea'] == line) & (df_stations_metro[region_column_aux] != cve_region_selected)]
             lats_out = df_stations_metro_aux_out['latitud']
             lons_out = df_stations_metro_aux_out['longitud']
@@ -1494,23 +1295,16 @@ def plot_complementary_predictive_map(datageom, transport: str, region_gdf_aux: 
 
     else:
         lines_unique = df_stations_metrobus['linea'].unique()
-        #print(lines_unique)
-        #print(mb_lines['LINEA'].unique())
-        # Mapeamos todas las líneas
+        
+        # Mapping all the lines
         for line in lines_unique:
-            #print(line)
             metrobus_lines_aux = mb_lines[mb_lines['LINEA'].str[-1] == line[1:]]
             metrobus_lines_aux['geometry_yx'] = metrobus_lines_aux['geometry'].apply(lambda line: LineString([(point[0], point[1]) for point in line.coords])) 
-            #print(metrobus_lines_aux)
             lines_ = metrobus_lines_aux['geometry_yx']
-            #print(metrobus_lines_aux['geometry_yx'])
-            #print(len(lines_.type))
             
             for i in range(len(lines_)):
                 line_ = lines_.iloc[i]
                 coords_pts = [[coord[0], coord[1]] for coord in line_.coords]
-                #print('llega')
-                #print(LINESMB[metrobus_lines_aux['LINEA'].to_list()[0]])
                 line_trace = go.Scattermapbox(
                     mode='lines',
                     lon = [coord[0] for coord in coords_pts],
@@ -1521,14 +1315,14 @@ def plot_complementary_predictive_map(datageom, transport: str, region_gdf_aux: 
                 
                 fig.add_trace(line_trace)
 
-        # Se filtran las estaciones que caen dentro de la región seleccionada para pintarlas de cierto color, y las demás de otro
+        # Filter just the stations within the selected region to mark it differently
         for line in lines_unique:
             if region_column == 'CVE_MUN':
                 region_column_aux = 'cve_mun_inegi'
             else:
                 region_column_aux = 'sector'
             
-            # Estaciones dentro de la región
+            # Stations within the region
             df_stations_metrobus_aux = df_stations_metrobus[(df_stations_metrobus['linea'] == line) & (df_stations_metrobus[region_column_aux] == cve_region_selected)]
             lats = df_stations_metrobus_aux['latitud']
             lons = df_stations_metrobus_aux['longitud']
@@ -1574,7 +1368,7 @@ def plot_complementary_predictive_map(datageom, transport: str, region_gdf_aux: 
             #fig.add_trace(scatter_trace_3)
             
             
-            # Estaciones fuera de la región
+            # Stations outside the region
             df_stations_metrobus_aux_out = df_stations_metrobus[(df_stations_metrobus['linea'] == line) & (df_stations_metrobus[region_column_aux] != cve_region_selected)]
             lats_out = df_stations_metrobus_aux_out['latitud']
             lons_out = df_stations_metrobus_aux_out['longitud']
@@ -1652,7 +1446,7 @@ def plot_complementary_predictive_map(datageom, transport: str, region_gdf_aux: 
         dragmode=False,
     )
 
-    # Trazar contorno de la región seleccionada
+    # Trace border of region selected
     geometry_ = region_gdf_cp['geometry'].iloc[0]
     lon_geom, lat_geom = geometry_.exterior.xy
     lon_geom = np.array(lon_geom).tolist()
@@ -1660,7 +1454,6 @@ def plot_complementary_predictive_map(datageom, transport: str, region_gdf_aux: 
     
     colorscales = [
         'rgba(255,84,84,0.3)',
-        #'rgba(176,242,244,0.3)',
         'rgba(40, 202, 207, 0.3)',
     ]
     colorborders = [
@@ -1707,7 +1500,6 @@ center_css = """
     flex-direction: row;
 """
 
-
 # Home view.
 def home():
     
@@ -1743,7 +1535,6 @@ def trends():
         </style>
         """, unsafe_allow_html=True)
     
-    # First container.
     with st.container():
         st.header("🔥 Tendencias")
         col1, col2, col3 = st.columns([1, 1, 3])
@@ -1786,19 +1577,15 @@ def trends():
         col3, col4 = st.columns([2, 2])
         with col3:
             st.write(f"##### Mapa de puntos calientes delictivos")
-            print('lineas unicas')
-            print(df_top_stations_crime_trends['linea'].unique())
             fig = plot_crime_trend_stations(datageom, df_top_stations_crime_trends, transport, region_column, filter_div)
             fig.update_layout({"uirevision": "foo"}, overwrite=True)
             
             st.plotly_chart(fig, use_container_width=True, config={'displayModeBar': False,})
             
         with col4:
-            # n = col4.slider(f'No. de estaciones a mostrar', 0, 20, 10)
-            
             st.write(f"##### Top {n} estaciones más peligrosas")
             st.plotly_chart(plot_top_stations_crime_trends(df_top_stations_crime_trends_aux, transport), use_container_width=True, config={'displayModeBar': False,})
-        
+            
             st.write(f"##### Top {n} estaciones con mayor afluencia")
             st.plotly_chart(plot_top_stations_affluence_trends(df_top_stations_affluence_trends, transport), use_container_width=True, config={'displayModeBar': False,})
 
@@ -1827,14 +1614,9 @@ def exploration():
             st.session_state.transport = transport
             radio_int = 540 if transport == 'STC Metro' else 270
             radio_ = '540' if transport == 'STC Metro' else '270'
-            # m = init_map()
-            # m = plot_stations(df_stations_transport, m, transport)
-            # level1_map_data = st_folium(m)
-            # st.session_state.selected_id = ['last_object_clicked_tooltip']
             fig = plot_transport_stations(zones_gdf, transport)
             selected_click_cve_est = plotly_events(fig, click_event=True,)
             st.session_state.selected_id.append(selected_click_cve_est)
-            #print('click', st.session_state.selected_id)
         
         with col2:
             # Second column validation.
@@ -1856,7 +1638,7 @@ def exploration():
                         else:
                             df_stations_metrobus_filtered = df_stations_metrobus.iloc[last_selected_id[0]['pointIndex']]
                             cve_est = df_stations_metrobus_filtered['cve_est'] 
-                        #print('CVE_EST', cve_est)
+                        
                         name_est = get_station(df_stations_transport, cve_est, "nombre")
                         tipo_est = get_station(df_stations_transport, cve_est, "tipo")
                         linea_est = get_station(df_stations_transport, cve_est, "linea")
@@ -1897,13 +1679,9 @@ def exploration():
                 last_selected_id = st.session_state.selected_id[-1]
                 if last_selected_id[0]['curveNumber'] >= len(lines_ls[transport]) + 1:
                     col3, col4 = st.columns([2, 3])
-                    # with col3:    
-                    #     month_selected_aux = st.selectbox('Mes', months_queries_ls, index=months_queries_ls.index(month_names[month].capitalize()))
-                    #     month_selected = months_queries_ls.index(month_selected_aux) + 1
                     with col3:    
                         weekday_selected = st.selectbox('Día de la semana', weekdays_queries_ls, index=weekdays_queries_ls.index(weekday))
                     with col4:    
-                        # crime_class_selected = st.selectbox('Clase delito', crime_classes_queries_ls)
                         crime_var_selected = st.selectbox('Variable delito', crime_vars_queries_ls)
                     
                     df_crimes_exploration_gender = query_crimes_exploration_gender(transport, cve_est, radio_int, weekday_selected, crime_var_selected)
@@ -1959,25 +1737,10 @@ def predictions():
     st.title("📈 Predicción del nivel de riesgo delictivo")
     
     col1, col2 = st.columns([1, 5])
-    #st.markdown("<br>", unsafe_allow_html=True)
     
     # First container.
     with st.container():
-        #st.markdown('<b>Parámetros para la predicción</b>', unsafe_allow_html=True)
         col1, col2, col3 = st.columns([1, 3, 1])
-        
-        list_categ_crimes = {
-            'Robo simple': 'Robo simple',
-            'Robo a pasajero en transporte público colectivo o individual': 'Robo en transporte público individual o colectivo',
-            'Robo a transeúnte': 'Robo a transeúnte',
-            'Delitos sexuales (acoso, abuso, violación y otros)': 'Acoso, abuso, violación y otros delitos sexuales',
-            'Robo de vehículo, autopartes y en transporte individual': 'Robo de vehículo, autopartes y en transporte individual',
-            'Robo a negocio': 'Robo a negocio',
-            'Lesiones': 'Lesiones',
-            'Homicidio': 'Homicidio',
-            'Fraude': 'Fraude',
-            'Amenazas': 'Amenazas',
-        }
         
         list_categ_crimes_ = {
             'Robo a transeúnte y pasajero en transporte público': 'Robo a transeúnte y pasajero en transporte público',
@@ -1993,10 +1756,6 @@ def predictions():
             "Metrobús",
         ])
         level_div = 'Alcaldía'
-        # level_div = col2.selectbox("Nivel de división", [
-        #     "Alcaldía",
-        #     #"Sector policial"
-        # ])
         
         categ_crime = col2.selectbox("Categoría delictiva", list_categ_crimes_.keys())
         categ_crime_ok = list_categ_crimes_[categ_crime]
@@ -2017,15 +1776,13 @@ def predictions():
             text_num_week_forward += str(weeks_forward + int(week_year))
         
         
-        
-        # Validar a que agrupamiento corresponde determinado modelo predictivo
+        # Validate which grouping dataset belongs the model (3, 4, 6, 7)
         grouped_dataset_id = 0
         columns_input_model = []
         regions = []
         if level_div == 'Alcaldía' and sex == 'Ambos':
             print('Agrupamiento 3')
             grouped_dataset_id = 3
-            #columns_input_model = ['alcaldia', 'categoria_delito_adaptada', 'semana_1',]
             columns_input_model = ['semana_mes', 'alcaldia', 'categoria_delito_adaptada', 'semana_1',]
             columns_weekly_count = ['semana_anio_completa', 'semana_anio', 'anio', 'alcaldia', 'categoria_delito_adaptada', 'conteo']
             if transport == 'STC Metro':
@@ -2042,24 +1799,20 @@ def predictions():
                 inputs_model_ls.append([week_month_aux, region, categ_crime_ok])
             input_model_df_partial = pd.DataFrame(inputs_model_ls, columns=columns_input_model[:-1])
             
-            weekly_crime_counts = load_weekly_crime_counts(transport, grouped_dataset_id)[columns_weekly_count]
-            weekly_crime_counts = weekly_crime_counts.groupby(columns_weekly_count[:-1])['conteo'].sum().reset_index(name='conteo')
-            print(weekly_crime_counts)
-            weekly_crime_counts_filtered = weekly_crime_counts[(weekly_crime_counts['categoria_delito_adaptada'] == categ_crime_ok)].sort_values(by=['anio', 'semana_anio'])
-            print('\n')
-            print(weekly_crime_counts_filtered)
-            thresholds_pred = load_thresholds_crime_model(transport, grouped_dataset_id)
+            # weekly_crime_counts = load_weekly_crime_counts(transport, grouped_dataset_id)[columns_weekly_count]
+            # weekly_crime_counts = weekly_crime_counts.groupby(columns_weekly_count[:-1])['conteo'].sum().reset_index(name='conteo')
+            # print(weekly_crime_counts)
+            # weekly_crime_counts_filtered = weekly_crime_counts[(weekly_crime_counts['categoria_delito_adaptada'] == categ_crime_ok)].sort_values(by=['anio', 'semana_anio'])
+            # print('\n')
+            # print(weekly_crime_counts_filtered)
             
-            print('Thresholds')
-            print(thresholds_pred)
+            thresholds_pred = load_thresholds_crime_model(transport, grouped_dataset_id)
             threshold_grouped_dataset = thresholds_pred[(thresholds_pred['categ_delito'] == categ_crime_ok)]['percentil'].to_list()[0]
-            print(threshold_grouped_dataset)
             
         
         elif level_div == 'Alcaldía' and sex != 'Ambos':
             print('Agrupamiento 4')
             grouped_dataset_id = 4
-            #columns_input_model = ['alcaldia', 'categoria_delito_adaptada', 'sexo_victima', 'semana_1',]
             columns_input_model = ['semana_mes', 'alcaldia', 'categoria_delito_adaptada', 'sexo_victima', 'semana_1',]
             columns_weekly_count = ['semana_anio_completa', 'semana_anio', 'anio', 'alcaldia', 'categoria_delito_adaptada', 'id_sexo', 'conteo']
             if transport == 'STC Metro':
@@ -2076,22 +1829,18 @@ def predictions():
                 inputs_model_ls.append([week_month_aux, region, categ_crime_ok, id_sex, ])
             input_model_df_partial = pd.DataFrame(inputs_model_ls, columns=columns_input_model[:-1])
             
-            weekly_crime_counts = load_weekly_crime_counts(transport, grouped_dataset_id)[columns_weekly_count]
-            weekly_crime_counts = weekly_crime_counts.groupby(columns_weekly_count[:-1])['conteo'].sum().reset_index(name='conteo')
-            print(weekly_crime_counts)
-            weekly_crime_counts_filtered = weekly_crime_counts[(weekly_crime_counts['categoria_delito_adaptada'] == categ_crime_ok)
-                                                               & (weekly_crime_counts['id_sexo'] == id_sex)].sort_values(by=['anio', 'semana_anio'])
+            # weekly_crime_counts = load_weekly_crime_counts(transport, grouped_dataset_id)[columns_weekly_count]
+            # weekly_crime_counts = weekly_crime_counts.groupby(columns_weekly_count[:-1])['conteo'].sum().reset_index(name='conteo')
+            # print(weekly_crime_counts)
+            # weekly_crime_counts_filtered = weekly_crime_counts[(weekly_crime_counts['categoria_delito_adaptada'] == categ_crime_ok)
+            #                                                    & (weekly_crime_counts['id_sexo'] == id_sex)].sort_values(by=['anio', 'semana_anio'])
             
             thresholds_pred = load_thresholds_crime_model(transport, grouped_dataset_id)
-            print('Thresholds')
-            print(thresholds_pred)
             threshold_grouped_dataset = thresholds_pred[(thresholds_pred['categ_delito'] == categ_crime_ok) & (thresholds_pred['sexo'] == id_sex)]['percentil'].to_list()[0]
-            print(threshold_grouped_dataset)
             
         if level_div == 'Sector policial' and sex == 'Ambos':
             print('Agrupamiento 6')
             grouped_dataset_id = 6
-            #columns_input_model = ['sector', 'categoria_delito_adaptada', 'semana_1',]
             columns_input_model = ['semana_mes', 'sector', 'categoria_delito_adaptada', 'semana_1',]
             columns_weekly_count = ['semana_anio_completa', 'semana_anio', 'anio', 'sector', 'categoria_delito_adaptada', 'conteo']
             if transport == 'STC Metro':
@@ -2107,10 +1856,10 @@ def predictions():
                         'Zapotitla', 'Zaragoza', 'Ángel', 'Ticomán']
             else:
                 pass
+        
         elif level_div == 'Sector policial' and sex != 'Ambos':
             print('Agrupamiento 7')
             grouped_dataset_id = 7
-            #columns_input_model = ['sector', 'categoria_delito_adaptada', 'sexo_victima', 'semana_1',]
             columns_input_model = ['semana_mes', 'sector', 'categoria_delito_adaptada', 'sexo_victima', 'semana_1',]
             columns_weekly_count = ['semana_anio_completa', 'semana_anio', 'anio', 'sector', 'categoria_delito_adaptada', 'id_sexo', 'conteo']
             if transport == 'STC Metro':
@@ -2129,27 +1878,25 @@ def predictions():
         
         print('Resultados')
         
-        # Carga de modelo respectivo y lectura de afluencia predicha para este año
+        # Load of pickle model and reading of affluence predictions
         crime_model = load_crime_model(transport, grouped_dataset_id)
         afflu_fc_values = load_afflu_forecast_values(transport, grouped_dataset_id)
         afflu_fc_values_filtered = afflu_fc_values[afflu_fc_values['semana_anio'] == weeks_forward + int(week_year) - 1]
         input_model_df = input_model_df_partial.merge(afflu_fc_values_filtered, left_on=columns_input_model[1], right_on=['region'])
         input_model_df.rename(columns={'afluencia': 'semana_1'}, inplace=True)
         input_model_df = input_model_df[columns_input_model]
-        #print(crime_model)
         print(input_model_df)
+        
+        # Predictions
         preds = crime_model.predict(input_model_df)
-        #print(input_model_df)
         print('Predicciones para semana {}:'.format(weeks_forward + int(week_year)))
         df_preds = pd.DataFrame(columns=['valor'])
         df_preds['valor'] = preds
         df_preds['valor'] = df_preds['valor'].replace({'High': 'Riesgo elevado', 'Low': 'Riesgo moderado'})
         print(df_preds)
-        #print(munics_gdf)
-        #print(police_sectors_gdf)
         input_model_df_preds = pd.concat([input_model_df, df_preds], axis=1)
         
-        # Obtener la granularidad espacial para luego pasarla como argumento al gráfico de mapa
+        # Get the spatial granularity for then pass it as an arg to the predictive map plot function
         if level_div == 'Alcaldía':
             region_gdf_merge = munics_gdf.merge(input_model_df_preds[['alcaldia', 'valor']], left_on=['NOMGEO'], right_on=['alcaldia'])
             region_column = 'CVE_MUN'
@@ -2162,21 +1909,21 @@ def predictions():
             region_column_name_2 = 'sector'
         region_gdf_merge = region_gdf_merge.sort_values(by=['valor'])
         print(region_gdf_merge)
-     
-    bool_plot_ts_weekly_crime = False
+    
     with st.container():
         metric_unique_values = np.sort(region_gdf_merge['valor'].unique())
         col7, col78, col8 = st.columns([20, 1, 30])
         with col7:
             fig = plot_predictive_map(region_gdf_merge, transport, metric_unique_values)
             fig.update_layout({"uirevision": "foo"}, overwrite=True)
+            # Interactive map was done thanks to
             # https://discuss.streamlit.io/t/interactive-plot-get-which-point-a-user-clicked/14596
             # https://github.com/null-jones/streamlit-plotly-events
             # https://orosz-attila-covid-19-dashboard-streamlit-app-kmmvgj.streamlit.app/
             #https://towardsdatascience.com/highlighting-click-data-on-plotly-choropleth-map-377e721c5893
             selected_click_aux = plotly_events(fig, click_event=True,)
             st.session_state.selected_click_pred_map.append(selected_click_aux)
-            print('click', st.session_state.selected_click_pred_map)
+            # print('click', st.session_state.selected_click_pred_map)
            
         with col8:
             if len(st.session_state.selected_click_pred_map) > 0:
@@ -2206,36 +1953,18 @@ def predictions():
                         # Checar luego para alinear texto si queremos
                         col8.markdown(f'<span style="color: black; font-size: 20px; font-weight: bold;">{level_risk} ({threshold_txt})</span> <br><span style="color: black; font-size: 14px;">para las estaciones en <b>{region_name}</b> durante la <b>{text_num_week_forward}</b></span> <span style="color: #a5a5a5; font-size: 14px;">({get_week_date_range(weeks_forward + int(week_year), year)})</span>', unsafe_allow_html=True)
                     
-                    #col8.markdown(f'<span style="color: black; font-size: 14px;">para las estaciones de <b>{region_name}</b> durante la <b>{text_num_week_forward}</b></span> <span style="color: #a5a5a5; font-size: 14px;">({get_week_date_range(weeks_forward + int(week_year), year)})</span>', unsafe_allow_html=True)
-                    
-                    # print(weekly_crime_counts_filtered)
-                    # weekly_crime_counts_filtered = weekly_crime_counts_filtered[weekly_crime_counts_filtered[region_column_name_2] == region_name]
-                    # print(weekly_crime_counts_filtered)
-                    # #fig3 = plot_ts_weekly_crime(weekly_crime_counts_filtered, f'Conteo semanal de {categ_crime_ok.lower()} (2019-2023)', threshold_grouped_dataset)
-                    # fig3 = plot_ts_weekly_crime(weekly_crime_counts_filtered, f'Conteo semanal delictivo (2019-2023)', threshold_grouped_dataset)
-                    
-                    # col9, col10, col11 = col8.columns([40, 1, 80])
-                    # with col9:
-                    #     fig2 = plot_complementary_predictive_map(region_gdf_merge, transport, region_gdf_aux, region_column)
-                    #     fig2.update_layout({"uirevision": "foo"}, overwrite=True)
-                        
-                    #     col9.plotly_chart(fig2, use_container_width=True, config={'displayModeBar': False,})
-                    # with col11:
-                    #     st.plotly_chart(fig3, use_container_width=True, config={'displayModeBar': False,})
-                    
                     fig2 = plot_complementary_predictive_map(region_gdf_merge, transport, region_gdf_aux, region_column)
                     fig2.update_layout({"uirevision": "foo"}, overwrite=True)
                     st.plotly_chart(fig2, use_container_width=True, config={'displayModeBar': False,})
                     
                     
                     with st.expander("Estaciones afectadas", expanded=False):
-                        #st.markdown('<span style="color: black; font-size: 14px;">Estaciones afectadas:</span>', unsafe_allow_html=True)
                         if region_column == 'CVE_MUN':
                             df_stations_metro_aux = df_stations_metro[(df_stations_metro['alcaldia'] == region_name)]
                         else:
                             df_stations_metro_aux = df_stations_metro[(df_stations_metro['sector'] == region_name)]
                         
-                        # Estaciones dentro de la región
+                        # Stations within the region
                         lines = df_stations_metro_aux['linea'].unique()
                         
                         list_text_stations_per_line = []
@@ -2255,6 +1984,7 @@ def predictions():
                         for elemento in list_text_stations_per_line:
                             st.write(f'<li style="font-size: 12px;">{elemento}</li>', unsafe_allow_html=True)
                         radio_ = '540' if transport == 'STC Metro' else '270'
+                        
                         st.write(f'<span style="font-size: 12px; color: #a5a5a5"><b>Nota:</b> El nivel de riesgo predictivo se predice considerando la evidencia delictiva tanto dentro como en un radio de {radio_}m alrededor de las estaciones, para el caso del {transport}.</span>', unsafe_allow_html=True)
                 else:
                     st.subheader("Seleccione una alcaldía")
@@ -2266,9 +1996,8 @@ def predictions():
     with st.container():
         pass
 
-
 # SIDEBAR
-# LINKS AUXILIARES CSS EN STREAMLIT
+# Auxiliar links to generate CSS at streamlit
 # https://discuss.streamlit.io/t/button-css-for-streamlit/45888/3
 # https://discuss.streamlit.io/t/button-size-in-sidebar/36132/2
 # https://discuss.streamlit.io/t/image-and-text-next-to-each-other/7627/7
