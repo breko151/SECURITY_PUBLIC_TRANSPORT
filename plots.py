@@ -260,6 +260,7 @@ def plot_crime_exploration_distances(df: pd.DataFrame):
         yaxis_title='Conteo de distancias',
         margin=dict(t=0), 
         height=280,
+        showlegend=False,
     )
 
     return fig
