@@ -2,19 +2,16 @@
 import pyodbc
 import pandas as pd
 from datetime import datetime
+from dotenv import load_dotenv
+import os
 
 # Credenciales
-#SERVER = ' 2806:2f0:9260:a1d8:be8c:9f51:81bb:a15, 1433'
-# Antiguas compu vaps
-# SERVER = '2806:2f0:93a0:f3e1:dab5:85bb:2b96:66d5, 1433'
-# DATABASE = 'crimen_equip_urbano_afluencia_metro_metrobus_cdmx'
-# USERNAME = 'vaps2'
-# PASSWORD = 'hola3311'
+load_dotenv()
 
-SERVER = '217.21.78.91, 1433'
-DATABASE = 'crimen_equip_urbano_afluencia_metro_metrobus_cdmx'
-USERNAME = 'braulio'
-PASSWORD = 'Holas3312#'
+SERVER = os.getenv('SERVER')
+DATABASE = os.getenv('DATABASE')
+USERNAME = os.getenv('USERNAME')
+PASSWORD = os.getenv('PASSWORD')
 
 connectionString = 'DRIVER={ODBC Driver 17 for SQL Server};SERVER=' + SERVER + ';DATABASE=' + DATABASE + ';UID=' + USERNAME + ';PWD=' + PASSWORD
 conn = pyodbc.connect(connectionString)
