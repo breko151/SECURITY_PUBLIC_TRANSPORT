@@ -256,7 +256,6 @@ def plot_crime_exploration_distances(df: pd.DataFrame):
     ))
 
     fig.update_layout(
-        title='Distribución de distancias',
         xaxis_title='Distancia en metros',
         yaxis_title='Conteo de distancias',
         margin=dict(t=0), 
