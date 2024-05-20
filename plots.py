@@ -127,6 +127,7 @@ def plot_top_crime_station(df: pd.DataFrame):
         yaxis_title='Clase delito',
         margin=dict(t=0,b=0,), 
         height=321,
+        dragmode=False,
     )
     
     return fig
@@ -153,7 +154,8 @@ def plot_crime_exploration_gender(df: pd.DataFrame):
             y=1.1,
             xanchor="center",
             x=0.5
-        )
+        ),
+        dragmode=False,
     )
 
     return fig
@@ -179,6 +181,7 @@ def plot_crime_exploration_age_group(df: pd.DataFrame):
         yaxis_title='Grupo de edad',
         margin=dict(t=0), 
         height=300,
+        dragmode=False,
     )
 
     return fig
@@ -230,6 +233,7 @@ def plot_crime_exploration_day_parts(df: pd.DataFrame):
         margin=dict(t=0), 
         height=300,
         showlegend=False,
+        dragmode=False,
     )
 
     return fig
@@ -261,6 +265,7 @@ def plot_crime_exploration_distances(df: pd.DataFrame):
         margin=dict(t=0), 
         height=280,
         showlegend=False,
+        dragmode=False,
     )
 
     return fig

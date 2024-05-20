@@ -304,6 +304,18 @@ contents = file_metrobus_logo.read()
 data_url_metrobus_logo = base64.b64encode(contents).decode("utf-8")
 file_metrobus_logo.close()
 
+metro_map_url = "./images/MAPA_METRO.png"
+file_metro_map = open(metro_map_url, "rb")
+contents = file_metro_map.read()
+data_url_metro_map = base64.b64encode(contents).decode("utf-8")
+file_metro_map.close()
+
+metrobus_map_url = "./images/MAPA_METROBUS.png"
+file_metrobus_map = open(metrobus_map_url, "rb")
+contents = file_metrobus_map.read()
+data_url_metrobus_map = base64.b64encode(contents).decode("utf-8")
+file_metrobus_map.close()
+
 # Clicks at prediction map
 if 'selected_click_pred_map' not in st.session_state:
     st.session_state.selected_click_pred_map = []
@@ -1516,57 +1528,67 @@ def home():
                 
     """, unsafe_allow_html=True)
     st.title("¡Bienvenido a tu transporte seguro!\n")
-    col_1, col_2 = st.columns([0.40, 0.60])
+    st.markdown('<br>', unsafe_allow_html=True,)
+    col_1, col_mid, col_2 = st.columns([0.30, 0.05, 0.65])
     with col_1:
-        st.image(r'./images/MapaCDMX.png')
-        # st.markdown(
-        #     r'<div style="{}"><img src="data:image/gif;base64,{}" alt="Imagen home" width=200 ></div>'.format(center_css, data_url_image_home),
-        #     unsafe_allow_html=True,
-        # )
+        st.markdown(
+            r'<div style="{}"><img src="data:image/gif;base64,{}" alt="Imagen home" width=320 ></div>'.format(center_css, data_url_image_home),
+            unsafe_allow_html=True,
+        )
+        # st.image(r'./images/MapaCDMX.png')
     with col_2:
         st.subheader("La delincuencia en el transporte público de la Ciudad de México")
-        st.write(r'El transporte público es un elemento esencial en la vida cotidiana de las personas. En particular, para la Ciudad de México el STC Metro y Metrobús son los medios de transporte más utilizados, por lo que, es importante garantizar la seguridad y satisfacción de los usuarios. Sin embargo, debido al crecimiento en la red de transporte público, se ha generado una alta concentración de personas en las instalaciones de ambos medios de transporte, lo que ha propiciado un aumento en la incidencia delictiva.')
-        st.write(r'Lo anterior requiere de un proceso de conocer la dinámica de los delitos por medio de un proceso de integración de datos públicos donde se considera:')
+        st.markdown(r'<div style="text-align: justify;">El transporte público es un elemento esencial en la vida cotidiana de las personas. En particular, para la Ciudad de México el STC Metro y Metrobús son los medios de transporte más utilizados, por lo que, es importante garantizar la seguridad y satisfacción de los usuarios. Sin embargo, debido al crecimiento en la red de transporte público, se ha generado una alta concentración de personas en las instalaciones de ambos medios de transporte, lo que ha propiciado un aumento en la incidencia delictiva.</div><br>', unsafe_allow_html=True,)
+        st.markdown(r'<div style="text-align: justify;">Para conocer la dinámica de los delitos que ocurrieron dentro y en las cercanías de las estaciones de ambos medios de transporte, se requiere de un proceso de integración de datos públicos donde se considera:</div><br>', unsafe_allow_html=True,)
         st.markdown("""
                     - Carpetas de investigación de la Fiscalía General de Justicia de la Ciudad de México.
-                    - Datos geoespaciales de las estaciones de Metro y Metrobús
-                    - Datos de afluencia de las estaciones de Metro y Metrobús
+                    - Datos geoespaciales de las estaciones de Metro y Metrobús.
+                    - Datos de afluencia de las estaciones de Metro y Metrobús.
                     """)
-        st.write(r'Con la finalidad de conocer el fenómeno de los delitos que ocurrieron dentro y en las cercanías de las estaciones de ambos medios de transporte.')
-    level_div = st.selectbox("Tipo de transporte", ["Metro", "Metrobús"])
-    if level_div == "Metro":
-        col_1, col_2 = st.columns([0.50, 0.50])
+    st.markdown('<br>', unsafe_allow_html=True,)
+    level_div = st.selectbox("Tipo de transporte", ["STC Metro", "Metrobús"])
+    st.markdown('<br>', unsafe_allow_html=True,)
+    if level_div == "STC Metro":
+        col_1, col_mid, col_2 = st.columns([0.45, 0.05, 0.45])
         with col_1:
-            st.write(r'El Sistema de Transporte Colectivo Metro es una red de transporte público subterráneo que se encuentra en la Ciudad de México y parte de su área metropolitana. Según la INEGI, 90.2 millones de personas usaban mensualmente este transporte en 2022, por lo que lo vuelve en el transporte público más utilizado en la ciudad y su área metropolitana.')
-            st.write(r'El Metro cuenta:')
+            st.markdown(r'<div style="text-align: justify;">El Sistema de Transporte Colectivo Metro (STC Metro) es una red de transporte público subterráneo que se encuentra en la Ciudad de México y parte de su área metropolitana. Según el INEGI, 90.2 millones de personas usaban mensualmente este transporte en 2022, por lo que lo vuelve en el transporte público más utilizado en la ciudad y su área metropolitana.</div><br>', unsafe_allow_html=True,)
+            st.write(r'El metro cuenta con:')
             st.markdown("""
                         - 12 líneas.
                         - 195 estaciones.
                         - 269.52 km.""")
             st.write(r'Horarios de operación: ')
             st.markdown("""
-                        - Lunes a viernes: 5:00-00:00 horas.
+                        - Lunes a viernes: 5:00-0:00 horas.
                         - Sábados: 6:00-0:00 horas.
                         - Domingos y días festivos: 7:00-0:00 horas.
                         """)
         with col_2:
-            st.image(r'./images/MAPA_METRO.png')
+            st.markdown(
+                r'<div style="{}"><img src="data:image/gif;base64,{}" alt="Imagen home" width=600 ></div>'.format(center_css, data_url_metro_map),
+                unsafe_allow_html=True,
+            )
+            # st.image(r'./images/MAPA_METRO.png')
     elif level_div == "Metrobús":
-        col_1, col_2 = st.columns([0.50, 0.50])
+        col_1, col_mid, col_2 = st.columns([0.45, 0.05, 0.45])
         with col_1:
-            st.write(r'El metrobús es un sistema de autobús, infraestructura dedica, carriles exclusivo y sistemas de control que se inauguró el 19 de junio de 2005. Según la INEGI el metrobus presto servicio a 22.2 millones de personas de manera mensual en el año 2021. Se considera que es el tipo de transporte que le sigue en importancia al Metro.')
-            st.write(r'El metrobús cuenta:')
+            st.write(r'<div style="text-align: justify;">El Metrobús es un sistema de autobuses con infraestructura dedicada, carriles exclusivos y sistemas de control, que se inauguró el 19 de junio de 2005. Según el INEGI, en 2022 el metrobús prestó servicio a 33.8 millones de personas de manera mensual. Se considera que es el tipo de transporte que le sigue en importancia al STC Metro.</div><br>', unsafe_allow_html=True,)
+            st.write(r'El metrobús cuenta con:')
             st.markdown("""
                         - 7 líneas.
                         - 283 estaciones.
                         - 125 km.""")
             st.write(r'Horarios de operación: ')
             st.markdown("""
-                        - Lunes a sabado: 4:30-00:00 horas.
-                        - Domigos y días festivos: 5:00-0:00 horas.
+                        - Lunes a sábado: 4:30-0:00 horas.
+                        - Domingos y días festivos: 5:00-0:00 horas.
                         """)
         with col_2:
-            st.image(r'./images/MAPA_METROBUS.png')
+            st.markdown(
+                r'<div style="{}"><img src="data:image/gif;base64,{}" alt="Imagen home" width=600 ></div>'.format(center_css, data_url_metrobus_map),
+                unsafe_allow_html=True,
+            )
+            # st.image(r'./images/MAPA_METROBUS.png')
     
 
 # Metro view.
