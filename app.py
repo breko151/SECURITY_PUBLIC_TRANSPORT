@@ -1146,6 +1146,7 @@ def plot_predictive_map(datageom, transport: str, unique_values_metric):
         height = 450,
         autosize=True,
         mapbox=dict(center=dict(lat=center_geom.y, lon=center_geom.x),zoom=9.0),
+        dragmode=False
     )
 
     return fig
@@ -1163,7 +1164,7 @@ def plot_complementary_predictive_map(datageom, transport: str, region_gdf_aux: 
     fig = go.Figure()
     
     fig.update_layout(
-        mapbox=dict(center=dict(lat=center_geom.y, lon=center_geom.x),zoom=9.8),
+        mapbox=dict(center=dict(lat=center_geom.y, lon=center_geom.x),zoom=9.8),dragmode=False
     )
 
     # The figures were made thanks to this
@@ -1630,7 +1631,7 @@ def trends():
         with col3:
             st.write(f"##### Mapa de puntos calientes delictivos")
             fig = plot_crime_trend_stations(datageom, df_top_stations_crime_trends, transport, region_column, filter_div)
-            fig.update_layout({"uirevision": "foo"}, overwrite=True)
+            fig.update_layout({"uirevision": "foo"}, overwrite=True, dragmode=False)
             
             st.plotly_chart(fig, use_container_width=True, config={'displayModeBar': False,})
             
@@ -1704,7 +1705,7 @@ def exploration():
                         # SQL queries
                         df_top_crimes_historical = query_top_crimes_historical(transport, cve_est, radio_int, 10)
                         fig = plot_top_crime_station(df_top_crimes_historical)
-                        fig.update_layout({"uirevision": "foo"}, overwrite=True)
+                        fig.update_layout({"uirevision": "foo"}, overwrite=True, dragmode=False)
                         st.plotly_chart(fig, use_container_width=True, config={'displayModeBar': False,})
 
                     else:
@@ -1749,25 +1750,25 @@ def exploration():
                         with col6:
                             st.write("##### Comparación de género")
                             fig = plot_crime_exploration_gender(df_crimes_exploration_gender)
-                            fig.update_layout({"uirevision": "foo"}, overwrite=True)
+                            fig.update_layout({"uirevision": "foo"}, overwrite=True, dragmode=False)
                             st.plotly_chart(fig, use_container_width=True, config={'displayModeBar': False,})
 
                         with col7:
                             st.write("##### Distribución de la edad")
                             fig = plot_crime_exploration_age_group(df_crimes_exploration_age_group)
-                            fig.update_layout({"uirevision": "foo"}, overwrite=True)
+                            fig.update_layout({"uirevision": "foo"}, overwrite=True, dragmode=False)
                             st.plotly_chart(fig, use_container_width=True, config={'displayModeBar': False,})
                             
                         with col8:
                             st.write("##### Comparación de momentos del día")
                             fig = plot_crime_exploration_day_parts(df_crimes_exploration_part_of_day)
-                            fig.update_layout({"uirevision": "foo"}, overwrite=True)
+                            fig.update_layout({"uirevision": "foo"}, overwrite=True, dragmode=False)
                             st.plotly_chart(fig, use_container_width=True, config={'displayModeBar': False,})
                             
                         with col9:
                             st.write("##### Distancia delito-estación")
                             fig = plot_crime_exploration_distances(df_crimes_exploration_distances)
-                            fig.update_layout({"uirevision": "foo"}, overwrite=True)
+                            fig.update_layout({"uirevision": "foo"}, overwrite=True, dragmode=False)
                             st.plotly_chart(fig, use_container_width=True, config={'displayModeBar': False,})
                     else:
                         st.write('Se encontraron 0 registros coincidentes para los filtros aplicados')
@@ -1968,7 +1969,7 @@ def predictions():
         col7, col78, col8 = st.columns([20, 1, 30])
         with col7:
             fig = plot_predictive_map(region_gdf_merge, transport, metric_unique_values)
-            fig.update_layout({"uirevision": "foo"}, overwrite=True)
+            fig.update_layout({"uirevision": "foo"}, overwrite=True, dragmode=False)
             # Interactive map was done thanks to
             # https://discuss.streamlit.io/t/interactive-plot-get-which-point-a-user-clicked/14596
             # https://github.com/null-jones/streamlit-plotly-events
@@ -2007,7 +2008,7 @@ def predictions():
                         col8.markdown(f'<span style="color: black; font-size: 20px; font-weight: bold;">{level_risk} ({threshold_txt})</span> <br><span style="color: black; font-size: 14px;">para las estaciones en <b>{region_name}</b> durante la <b>{text_num_week_forward}</b></span> <span style="color: #a5a5a5; font-size: 14px;">({get_week_date_range(weeks_forward + int(week_year), year)})</span>', unsafe_allow_html=True)
                     
                     fig2 = plot_complementary_predictive_map(region_gdf_merge, transport, region_gdf_aux, region_column)
-                    fig2.update_layout({"uirevision": "foo"}, overwrite=True)
+                    fig2.update_layout({"uirevision": "foo"}, overwrite=True, dragmode=False)
                     st.plotly_chart(fig2, use_container_width=True, config={'displayModeBar': False,})
                     
                     
