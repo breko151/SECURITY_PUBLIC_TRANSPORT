@@ -9,3 +9,4 @@ shapely==2.0.2
 streamlit==1.33.0
 streamlit-plotly-events==0.0.6
 streamlit_folium==0.19.0
+python-dotenv
