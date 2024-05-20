@@ -93,11 +93,7 @@ def week_of_month(dt):
 def get_monday_week_year(week, year):
     first_day_year = datetime(year, 1, 1)
     monday_first_week = first_day_year - timedelta(days=first_day_year.weekday())
-    monday_week_date = monday_first_week + timedelta(weeks=week - 1)
-
-    return monday_week_date
-
-# Get the week range (init_date_week to final_date_week)
+    return monday_first_week + timedelta(weeks=week - 1)
 def get_week_date_range(week_number, year):
     start_date = datetime(year, 1, 1)
     days_offset = (7 - start_date.weekday()) % 7
@@ -112,16 +108,10 @@ def get_week_date_range(week_number, year):
 # Get columns from cve_est.
 def get_station(df, cve_est, column=None):
     if column is None:
-        result = df[df['cve_est'] == cve_est]
-    else:
-        filter = df[df['cve_est'] == cve_est]
-        print(filter)
-        result = filter[column].to_list()[0]
-    
-    return result
-
-
-# INITIALIZATION OF VARIABLES
+        return df[df['cve_est'] == cve_est]
+    filter = df[df['cve_est'] == cve_est]
+    print(filter)
+    return filter[column].to_list()[0]
 
 # List of default regions and lines
 zones_ls = ["Centro", "Norte", "Sur", "Oriente", "Poniente"]
@@ -167,7 +157,7 @@ crime_classes_queries_ls = [
     'Homicidio',
     'Feminicidio',
     'Lesiones',
-    
+
     # 'Secuestro',
     # 'Secuestro exprés',
     # 'Posesión simple de narcóticos',
@@ -287,17 +277,13 @@ week_month = week_of_month(today_)
 
 # Load of images to display at dashboard without st.image()
 image_home_logo_url = "./images/MapaCDMX.png"
-file_image_home = open(image_home_logo_url, "rb")
-contents = file_image_home.read()
-data_url_image_home = base64.b64encode(contents).decode("utf-8")
-file_image_home.close()
-
+with open(image_home_logo_url, "rb") as file_image_home:
+    contents = file_image_home.read()
+    data_url_image_home = base64.b64encode(contents).decode("utf-8")
 metro_logo_url = "./images/logo_metro.png"
-file_metro_logo = open(metro_logo_url, "rb")
-contents = file_metro_logo.read()
-data_url_metro_logo = base64.b64encode(contents).decode("utf-8")
-file_metro_logo.close()
-
+with open(metro_logo_url, "rb") as file_metro_logo:
+    contents = file_metro_logo.read()
+    data_url_metro_logo = base64.b64encode(contents).decode("utf-8")
 metrobus_logo_url = "./images/logo_metrobus.png"
 file_metrobus_logo = open(metrobus_logo_url, "rb")
 contents = file_metrobus_logo.read()
@@ -320,8 +306,6 @@ file_metrobus_map.close()
 if 'selected_click_pred_map' not in st.session_state:
     st.session_state.selected_click_pred_map = []
 
-# LOAD DATA OR MODELS FUNCTIONS
-
 # Load of crime models
 @st.cache_resource
 def load_crime_model(transport: str, grouped_dataset_id: int):
@@ -338,28 +322,31 @@ def load_crime_model(transport: str, grouped_dataset_id: int):
 @st.cache_resource
 def load_afflu_forecast_values(transport: str, grouped_dataset_id: int):
     if transport == 'STC Metro':
-        if grouped_dataset_id == 3 or grouped_dataset_id == 4:
+        if grouped_dataset_id in {3, 4}:
             df = pd.read_csv('./predictions_sarima/predicciones_afluencia_alcaldia_semana_metro.csv')
-        elif grouped_dataset_id == 6 or grouped_dataset_id == 7:
+        elif grouped_dataset_id in {6, 7}:
             df = pd.read_csv('./predictions_sarima/predicciones_afluencia_sector_policial_semana_metro.csv')
-    else:
-        if grouped_dataset_id == 3 or grouped_dataset_id == 4:
-            df = pd.read_csv('./predictions_sarima/predicciones_afluencia_alcaldia_semana_metrobus_final.csv')
-        elif grouped_dataset_id == 6 or grouped_dataset_id == 7:
-            df = pd.read_csv('./predictions_sarima/predicciones_afluencia_sector_policial_semana_metrobus.csv')
-    
+    elif grouped_dataset_id in {3, 4}:
+        df = pd.read_csv('./predictions_sarima/predicciones_afluencia_alcaldia_semana_metrobus_final.csv')
+    elif grouped_dataset_id in {6, 7}:
+        df = pd.read_csv('./predictions_sarima/predicciones_afluencia_sector_policial_semana_metrobus.csv')
+
     return df
 
 # Load of weekly crime counts values
 @st.cache_resource
 def load_weekly_crime_counts(transport: str, grouped_dataset_id: int):
     if transport == 'STC Metro':
-        df = pd.read_csv('./datasets_aux/test/carpetas_afluencia_metro_grupo_{}_wm_final_red.csv'.format(grouped_dataset_id))
+        df = pd.read_csv(
+            f'./datasets_aux/test/carpetas_afluencia_metro_grupo_{grouped_dataset_id}_wm_final_red.csv'
+        )
     else:
-        df = pd.read_csv('./datasets_aux/test/carpetas_afluencia_metrobus_grupo_{}_wm_final_red.csv'.format(grouped_dataset_id))
-    
+        df = pd.read_csv(
+            f'./datasets_aux/test/carpetas_afluencia_metrobus_grupo_{grouped_dataset_id}_wm_final_red.csv'
+        )
+
     df['semana_anio_completa'] = df['anio'].astype(str) + ' - s' + df['semana_anio'].astype(str)
-    
+
     return df
 
 # Load criteria thresholds of predictions
@@ -1513,7 +1500,7 @@ center_css = """
 """
 
 # Home view.
-def home():
+def home():  # sourcery skip: extract-duplicate-method
     
     # Style config.
     st.markdown("""
@@ -1531,11 +1518,7 @@ def home():
     st.markdown('<br>', unsafe_allow_html=True,)
     col_1, col_mid, col_2 = st.columns([0.30, 0.05, 0.65])
     with col_1:
-        st.markdown(
-            r'<div style="{}"><img src="data:image/gif;base64,{}" alt="Imagen home" width=320 ></div>'.format(center_css, data_url_image_home),
-            unsafe_allow_html=True,
-        )
-        # st.image(r'./images/MapaCDMX.png')
+        st.image(r'./images/MapaCDMX.png',  use_column_width=True, output_format='PNG')
     with col_2:
         st.subheader("La delincuencia en el transporte público de la Ciudad de México")
         st.markdown(r'<div style="text-align: justify;">El transporte público es un elemento esencial en la vida cotidiana de las personas. En particular, para la Ciudad de México el STC Metro y Metrobús son los medios de transporte más utilizados, por lo que, es importante garantizar la seguridad y satisfacción de los usuarios. Sin embargo, debido al crecimiento en la red de transporte público, se ha generado una alta concentración de personas en las instalaciones de ambos medios de transporte, lo que ha propiciado un aumento en la incidencia delictiva.</div><br>', unsafe_allow_html=True,)
@@ -1564,11 +1547,11 @@ def home():
                         - Domingos y días festivos: 7:00-0:00 horas.
                         """)
         with col_2:
-            st.markdown(
-                r'<div style="{}"><img src="data:image/gif;base64,{}" alt="Imagen home" width=600 ></div>'.format(center_css, data_url_metro_map),
-                unsafe_allow_html=True,
-            )
-            # st.image(r'./images/MAPA_METRO.png')
+            #st.markdown(
+            #    f'<div style="{center_css}"><img src="data:image/gif;base64,{data_url_metro_map}" alt="Imagen home" width=600 ></div>',
+            #    unsafe_allow_html=True,
+            #)
+            st.image(r'./images/MAPA_METRO.png', use_column_width=True, output_format='PNG')
     elif level_div == "Metrobús":
         col_1, col_mid, col_2 = st.columns([0.45, 0.05, 0.45])
         with col_1:
@@ -1584,11 +1567,11 @@ def home():
                         - Domingos y días festivos: 5:00-0:00 horas.
                         """)
         with col_2:
-            st.markdown(
-                r'<div style="{}"><img src="data:image/gif;base64,{}" alt="Imagen home" width=600 ></div>'.format(center_css, data_url_metrobus_map),
-                unsafe_allow_html=True,
-            )
-            # st.image(r'./images/MAPA_METROBUS.png')
+            #st.markdown(
+            #    r'<div style="{}"><img src="data:image/gif;base64,{}" alt="Imagen home" width=600 ></div>'.format(center_css, data_url_metrobus_map),
+            #    unsafe_allow_html=True,
+            #)
+            st.image(r'./images/MAPA_METROBUS.png', use_column_width=True, output_format='PNG')
     
 
 # Metro view.
@@ -1788,7 +1771,8 @@ def exploration():
                             st.plotly_chart(fig, use_container_width=True, config={'displayModeBar': False,})
                     else:
                         st.write('Se encontraron 0 registros coincidentes para los filtros aplicados')
-                            
+
+
 # Predictions view
 def predictions():
     

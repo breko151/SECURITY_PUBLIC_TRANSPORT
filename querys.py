@@ -13,13 +13,19 @@ DATABASE = os.getenv('DATABASE')
 USERNAME = os.getenv('USERNAME')
 PASSWORD = os.getenv('PASSWORD')
 
-connectionString = 'DRIVER={ODBC Driver 17 for SQL Server};SERVER=' + SERVER + ';DATABASE=' + DATABASE + ';UID=' + USERNAME + ';PWD=' + PASSWORD
+connectionString = (
+    'DRIVER={ODBC Driver 17 for SQL Server};'
+    f'SERVER={SERVER};'
+    f'DATABASE={DATABASE};'
+    f'UID={USERNAME};'
+    f'PWD={PASSWORD};'
+    'TrustServerCertificate=yes;'
+)
 conn = pyodbc.connect(connectionString)
 
 def query_top_stations_affluence_trends(transport: str, level_div: str, filter_div: list, weekday: str, week_year: str, n: int):
     conn = pyodbc.connect(connectionString)
-    
-    if filter_div == []:
+    if not filter_div:
         Query = f"""
                 SELECT TOP {n} view_aflu.nombre, view_aflu.linea, AVG(view_aflu.afluencia) as afluencia_promedio
                 FROM (
@@ -38,15 +44,15 @@ def query_top_stations_affluence_trends(transport: str, level_div: str, filter_d
             filter_div = ['L' + elem.split()[-1] for elem in filter_div]
         filter_div = [f"\'{elem}\'" for elem in filter_div]
         filter_values_in = ", ".join(filter_div)
-        if level_div == 'Zona':
-            filter_div_in_str = f"esp.zona IN ({filter_values_in})"
-        elif level_div == 'Alcaldía':
+        if level_div == 'Alcaldía':
             filter_div_in_str = f'esp.alcaldia IN ({filter_values_in})'
         elif level_div == 'Línea':
             filter_div_in_str = f'est.linea IN ({filter_values_in})'
+        elif level_div == 'Zona':
+            filter_div_in_str = f"esp.zona IN ({filter_values_in})"
         print('\n\n\nFILTRO')
         print(filter_div_in_str)
-        
+
         Query = f"""
                 SELECT TOP {n} view_aflu.nombre, view_aflu.linea, AVG(view_aflu.afluencia) as afluencia_promedio
                 FROM (
@@ -63,21 +69,19 @@ def query_top_stations_affluence_trends(transport: str, level_div: str, filter_d
     cursor = conn.cursor()
     cursor.execute(Query)
     data = cursor.fetchall()
-    
+
     columns = [column[0] for column in cursor.description]
     data_ = [tuple(row) for row in data]
-    
+
     cursor.close()
     conn.close()
-    
-    df = pd.DataFrame(data_, columns=columns)
-    
-    return df
+
+    return pd.DataFrame(data_, columns=columns)
 
 def query_top_stations_crime_trends(transport: str, level_div: str, filter_div: list, weekday: str, week_year: str, radio: float, n: int):
     conn = pyodbc.connect(connectionString)
-    
-    if filter_div == []:
+
+    if not filter_div:
         Query = f"""
                 SELECT 
                     TOP {n} final.linea, 
@@ -126,15 +130,15 @@ def query_top_stations_crime_trends(transport: str, level_div: str, filter_div: 
             filter_div = ['L' + elem.split()[-1] for elem in filter_div]
         filter_div = [f"\'{elem}\'" for elem in filter_div]
         filter_values_in = ", ".join(filter_div)
-        if level_div == 'Zona':
-            filter_div_in_str = f"esp.zona IN ({filter_values_in})"
-        elif level_div == 'Alcaldía':
+        if level_div == 'Alcaldía':
             filter_div_in_str = f'esp.alcaldia IN ({filter_values_in})'
         elif level_div == 'Línea':
             filter_div_in_str = f'est.linea IN ({filter_values_in})'
+        elif level_div == 'Zona':
+            filter_div_in_str = f"esp.zona IN ({filter_values_in})"
         print('\n\n\nFILTRO')
         print(filter_div_in_str)
-        
+
         Query = f"""
                 SELECT 
                     TOP {n} final.linea, 
@@ -182,16 +186,14 @@ def query_top_stations_crime_trends(transport: str, level_div: str, filter_div: 
     cursor = conn.cursor()
     cursor.execute(Query)
     data = cursor.fetchall()
-    
+
     columns = [column[0] for column in cursor.description]
     data_ = [tuple(row) for row in data]
-    
+
     cursor.close()
     conn.close()
-    
-    df = pd.DataFrame(data_, columns=columns)
-    
-    return df
+
+    return pd.DataFrame(data_, columns=columns)
 
 def query_top_crimes_historical(transport: str, cve_est: str, radio: float, n: int):
     conn = pyodbc.connect(connectionString)
@@ -213,16 +215,14 @@ def query_top_crimes_historical(transport: str, cve_est: str, radio: float, n: i
     cursor = conn.cursor()
     cursor.execute(Query)
     data = cursor.fetchall()
-    
+
     columns = [column[0] for column in cursor.description]
     data_ = [tuple(row) for row in data]
-    
+
     cursor.close()
     conn.close()
-    
-    df = pd.DataFrame(data_, columns=columns)
-    
-    return df
+
+    return pd.DataFrame(data_, columns=columns)
 
 def query_crimes_exploration_gender(transport: str, cve_est: str, radio: float, weekday: str, crime_var: str):
     conn = pyodbc.connect(connectionString)
@@ -244,16 +244,14 @@ def query_crimes_exploration_gender(transport: str, cve_est: str, radio: float, 
     cursor = conn.cursor()
     cursor.execute(Query)
     data = cursor.fetchall()
-    
+
     columns = [column[0] for column in cursor.description]
     data_ = [tuple(row) for row in data]
-    
+
     cursor.close()
     conn.close()
-    
-    df = pd.DataFrame(data_, columns=columns)
-    
-    return df
+
+    return pd.DataFrame(data_, columns=columns)
 
 def query_crimes_exploration_age_group(transport: str, cve_est: str, radio: float, weekday: str, crime_var: str):
     conn = pyodbc.connect(connectionString)
@@ -288,16 +286,14 @@ def query_crimes_exploration_age_group(transport: str, cve_est: str, radio: floa
     cursor = conn.cursor()
     cursor.execute(Query)
     data = cursor.fetchall()
-    
+
     columns = [column[0] for column in cursor.description]
     data_ = [tuple(row) for row in data]
-    
+
     cursor.close()
     conn.close()
-    
-    df = pd.DataFrame(data_, columns=columns)
-    
-    return df
+
+    return pd.DataFrame(data_, columns=columns)
 
 def query_crimes_exploration_distances(transport: str, cve_est: str, radio: float, weekday: str, crime_var: str):
     conn = pyodbc.connect(connectionString)
@@ -316,16 +312,14 @@ def query_crimes_exploration_distances(transport: str, cve_est: str, radio: floa
     cursor = conn.cursor()
     cursor.execute(Query)
     data = cursor.fetchall()
-    
+
     columns = [column[0] for column in cursor.description]
     data_ = [tuple(row) for row in data]
-    
+
     cursor.close()
     conn.close()
-    
-    df = pd.DataFrame(data_, columns=columns)
-    
-    return df
+
+    return pd.DataFrame(data_, columns=columns)
 
 def query_crimes_part_of_day(transport: str, cve_est: str, radio: float, weekday: str, crime_var: str):
     conn = pyodbc.connect(connectionString)
@@ -348,13 +342,11 @@ def query_crimes_part_of_day(transport: str, cve_est: str, radio: float, weekday
     cursor = conn.cursor()
     cursor.execute(Query)
     data = cursor.fetchall()
-    
+
     columns = [column[0] for column in cursor.description]
     data_ = [tuple(row) for row in data]
-    
+
     cursor.close()
     conn.close()
-    
-    df = pd.DataFrame(data_, columns=columns)
-    
-    return df
+
+    return pd.DataFrame(data_, columns=columns)
