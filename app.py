@@ -94,6 +94,7 @@ def get_monday_week_year(week, year):
     first_day_year = datetime(year, 1, 1)
     monday_first_week = first_day_year - timedelta(days=first_day_year.weekday())
     return monday_first_week + timedelta(weeks=week - 1)
+
 def get_week_date_range(week_number, year):
     start_date = datetime(year, 1, 1)
     days_offset = (7 - start_date.weekday()) % 7
@@ -1844,7 +1845,6 @@ def predictions():
             print('Agrupamiento 3')
             grouped_dataset_id = 3
             columns_input_model = ['semana_mes', 'alcaldia', 'categoria_delito_adaptada', 'semana_1',]
-            columns_weekly_count = ['semana_anio_completa', 'semana_anio', 'anio', 'alcaldia', 'categoria_delito_adaptada', 'conteo']
             if transport == 'STC Metro':
                 regions = ['Azcapotzalco', 'Benito Juárez', 'Coyoacán', 'Cuauhtémoc',
                     'Gustavo A. Madero', 'Iztacalco', 'Iztapalapa', 'Miguel Hidalgo',
@@ -1859,13 +1859,6 @@ def predictions():
                 inputs_model_ls.append([week_month_aux, region, categ_crime_ok])
             input_model_df_partial = pd.DataFrame(inputs_model_ls, columns=columns_input_model[:-1])
             
-            # weekly_crime_counts = load_weekly_crime_counts(transport, grouped_dataset_id)[columns_weekly_count]
-            # weekly_crime_counts = weekly_crime_counts.groupby(columns_weekly_count[:-1])['conteo'].sum().reset_index(name='conteo')
-            # print(weekly_crime_counts)
-            # weekly_crime_counts_filtered = weekly_crime_counts[(weekly_crime_counts['categoria_delito_adaptada'] == categ_crime_ok)].sort_values(by=['anio', 'semana_anio'])
-            # print('\n')
-            # print(weekly_crime_counts_filtered)
-            
             thresholds_pred = load_thresholds_crime_model(transport, grouped_dataset_id)
             threshold_grouped_dataset = thresholds_pred[(thresholds_pred['categ_delito'] == categ_crime_ok)]['percentil'].to_list()[0]
             
@@ -1874,7 +1867,6 @@ def predictions():
             print('Agrupamiento 4')
             grouped_dataset_id = 4
             columns_input_model = ['semana_mes', 'alcaldia', 'categoria_delito_adaptada', 'sexo_victima', 'semana_1',]
-            columns_weekly_count = ['semana_anio_completa', 'semana_anio', 'anio', 'alcaldia', 'categoria_delito_adaptada', 'id_sexo', 'conteo']
             if transport == 'STC Metro':
                 regions = ['Azcapotzalco', 'Benito Juárez', 'Coyoacán', 'Cuauhtémoc',
                     'Gustavo A. Madero', 'Iztacalco', 'Iztapalapa', 'Miguel Hidalgo',
@@ -1889,52 +1881,9 @@ def predictions():
                 inputs_model_ls.append([week_month_aux, region, categ_crime_ok, id_sex, ])
             input_model_df_partial = pd.DataFrame(inputs_model_ls, columns=columns_input_model[:-1])
             
-            # weekly_crime_counts = load_weekly_crime_counts(transport, grouped_dataset_id)[columns_weekly_count]
-            # weekly_crime_counts = weekly_crime_counts.groupby(columns_weekly_count[:-1])['conteo'].sum().reset_index(name='conteo')
-            # print(weekly_crime_counts)
-            # weekly_crime_counts_filtered = weekly_crime_counts[(weekly_crime_counts['categoria_delito_adaptada'] == categ_crime_ok)
-            #                                                    & (weekly_crime_counts['id_sexo'] == id_sex)].sort_values(by=['anio', 'semana_anio'])
-            
             thresholds_pred = load_thresholds_crime_model(transport, grouped_dataset_id)
             threshold_grouped_dataset = thresholds_pred[(thresholds_pred['categ_delito'] == categ_crime_ok) & (thresholds_pred['sexo'] == id_sex)]['percentil'].to_list()[0]
             
-        if level_div == 'Sector policial' and sex == 'Ambos':
-            print('Agrupamiento 6')
-            grouped_dataset_id = 6
-            columns_input_model = ['semana_mes', 'sector', 'categoria_delito_adaptada', 'semana_1',]
-            columns_weekly_count = ['semana_anio_completa', 'semana_anio', 'anio', 'sector', 'categoria_delito_adaptada', 'conteo']
-            if transport == 'STC Metro':
-                regions = ['Abasto-Reforma', 'Alameda', 'Aragón', 'Arenal', 'Asturias',
-                        'Buenavista', 'Centro', 'Churubusco', 'Clavería', 'Congreso',
-                        'Consulado', 'Coyoacán', 'Cuchilla', 'Del Valle', 'Estrella',
-                        'Granjas', 'Hormiga', 'Iztaccíhuatl', 'La Raza', 'Lindavista',
-                        'Merced-Balbuena', 'Mixquic', 'Moctezuma', 'Morelos',
-                        'Narvarte-Álamos', 'Nativitas', 'Nápoles', 'Oasis', 'Pantitlán',
-                        'Plateros', 'Polanco-Castillo', 'Portales', 'Quiroga', 'Roma',
-                        'San Ángel', 'Tacuba', 'Tacubaya', 'Taxqueña', 'Teotongo',
-                        'Tepeyac', 'Tezonco', 'Tlacotal', 'Tlatelolco', 'Universidad',
-                        'Zapotitla', 'Zaragoza', 'Ángel', 'Ticomán']
-            else:
-                pass
-        
-        elif level_div == 'Sector policial' and sex != 'Ambos':
-            print('Agrupamiento 7')
-            grouped_dataset_id = 7
-            columns_input_model = ['semana_mes', 'sector', 'categoria_delito_adaptada', 'sexo_victima', 'semana_1',]
-            columns_weekly_count = ['semana_anio_completa', 'semana_anio', 'anio', 'sector', 'categoria_delito_adaptada', 'id_sexo', 'conteo']
-            if transport == 'STC Metro':
-                regions = ['Abasto-Reforma', 'Alameda', 'Aragón', 'Arenal', 'Asturias',
-                        'Buenavista', 'Centro', 'Churubusco', 'Clavería', 'Congreso',
-                        'Consulado', 'Coyoacán', 'Cuchilla', 'Del Valle', 'Estrella',
-                        'Granjas', 'Hormiga', 'Iztaccíhuatl', 'La Raza', 'Lindavista',
-                        'Merced-Balbuena', 'Mixquic', 'Moctezuma', 'Morelos',
-                        'Narvarte-Álamos', 'Nativitas', 'Nápoles', 'Oasis', 'Pantitlán',
-                        'Plateros', 'Polanco-Castillo', 'Portales', 'Quiroga', 'Roma',
-                        'San Ángel', 'Tacuba', 'Tacubaya', 'Taxqueña', 'Teotongo',
-                        'Tepeyac', 'Tezonco', 'Tlacotal', 'Tlatelolco', 'Universidad',
-                        'Zapotitla', 'Zaragoza', 'Ángel', 'Ticomán']
-            else:
-                pass
         
         print('Resultados')
         
