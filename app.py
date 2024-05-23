@@ -32,6 +32,7 @@ from sklearn.ensemble import RandomForestClassifier
 
 # Datetime
 from datetime import datetime, timedelta
+import pytz
 
 # Constants
 from colors import LINESM, LINESMB, LINESM_aux, LINESMB_aux
@@ -113,6 +114,13 @@ def get_station(df, cve_est, column=None):
     filter = df[df['cve_est'] == cve_est]
     print(filter)
     return filter[column].to_list()[0]
+
+# Config pytz
+cdmx_timezone = pytz.timezone('America/Mexico_City')
+aware_datetime = datetime.now(cdmx_timezone)
+utc_timezone = pytz.timezone('UTC')
+utc_datetime = aware_datetime.astimezone(utc_timezone)
+
 
 # List of default regions and lines
 zones_ls = ["Centro", "Norte", "Sur", "Oriente", "Poniente"]

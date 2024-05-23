@@ -164,7 +164,10 @@ def plot_crime_exploration_age_group(df: pd.DataFrame):
     df = df.sort_values(by=['grupo_quinquenal_inegi'], ascending=False)
     df = df[df['conteo_delitos'] > 0]
     
-    colors = [interpolate_color('#30679e', '#32cd71', i / (len(df) - 1)) for i in range(len(df))]
+    if len(df) > 1:
+        colors = [interpolate_color('#30679e', '#32cd71', i / (len(df) - 1)) for i in range(len(df))]
+    else:
+        colors = ['#30679e']
     
     fig = go.Figure(go.Bar(
         y=df['grupo_quinquenal_inegi'],
