@@ -441,7 +441,7 @@ def plot_crime_trend_stations(datageom, df: pd.DataFrame, transport: str, level_
     #     filter_div = list(region_gdf_cp[level_div].unique())
     
     # dict_colors_percentile = {
-    #     1: '#5bc7da',
+    #     1: '#8fce00',
     #     2: '#4fc261',
     #     3: '#d3a900',
     #     4: '#d35600',
@@ -449,7 +449,7 @@ def plot_crime_trend_stations(datageom, df: pd.DataFrame, transport: str, level_
     # }
     
     dict_colors_percentile = {
-        1: '#5bc7da',
+        1: '#8fce00',
         2: '#ffa200',
         3: 'red',
     }
@@ -1041,7 +1041,7 @@ def plot_transport_stations(datageom, transport: str):
 # Plot crime level risk map
 def plot_predictive_map(datageom, transport: str, unique_values_metric):
     metric = 'valor'
-    
+
     centroids = []
     for index, row in datageom.iterrows():
         multi_polygon = row['geometry']
@@ -1053,7 +1053,7 @@ def plot_predictive_map(datageom, transport: str, unique_values_metric):
             centroids.append(multi_polygon.centroid)
 
     center_geom = MultiPoint(centroids).centroid
-    
+
     fig = go.Figure()
 
     # Useful links to make the figures
@@ -1061,34 +1061,31 @@ def plot_predictive_map(datageom, transport: str, unique_values_metric):
     # https://stackoverflow.com/questions/68709936/how-to-plot-a-shp-file-with-plotly-go-choroplethmapbox
     # https://plotly.com/python-api-reference/generated/plotly.graph_objects.Choroplethmapbox.html
     # https://plotly.com/python-api-reference/generated/plotly.graph_objects.choroplethmapbox.html#plotly.graph_objects.choroplethmapbox.ColorBar
-    
+
     colorscales = [
         ((0.0, '#ff5454'), (1.0, '#ff5454')),
-        ((0.0, '#b0f2f4'), (1.0, '#b0f2f4')),
+        ((0.0, '#fbfd09'), (1.0, '#fbfd09')),
     ]
     colorborders = [
-        '#b21800', '#5bc7da',
+        '#b21800', '#ead61a',
     ]
     markerlinewidths = [
         3, 1
     ]
-    
+
     # Hide colorbar
     # https://community.plotly.com/t/hide-colorbar-from-px-choropleth/34970/13
     # Discrete map
     # https://community.plotly.com/t/discrete-colors-for-choroplethmapbox-with-plotly-graph-objects/37989/2
-    
+
     # CHECK TO HIGHLIGHT CHOROPLET
     # https://towardsdatascience.com/highlighting-click-data-on-plotly-choropleth-map-377e721c5893
-    
+
     # If the entire map is going to be red or blue (high and low risk), we should make a special plot to avoid a bug
     if datageom[metric].value_counts().iloc[0] == len(datageom):
         dfp = datageom
         label_ = datageom[metric].unique()[0]
-        if label_ == 'Riesgo moderado':
-            varaux = 1  
-        else:
-            varaux = 0
+        varaux = 1 if label_ == 'Riesgo moderado' else 0
         fig.add_trace(
             go.Choroplethmapbox(
                     geojson=json.loads(dfp.to_json()), 
@@ -1107,7 +1104,6 @@ def plot_predictive_map(datageom, transport: str, unique_values_metric):
                     showscale=False,
             )
         )
-    # If the map has choroplets from both classes
     else:
         for i, label_ in enumerate(unique_values_metric):
             dfp = datageom[datageom[metric] == label_]
@@ -1129,7 +1125,7 @@ def plot_predictive_map(datageom, transport: str, unique_values_metric):
                         showscale=False,
                 )
             )
-        
+
     fig.update_layout(
         title_text='',
         margin=dict(t=0, l=0, r=0, b=0),
@@ -1463,10 +1459,10 @@ def plot_complementary_predictive_map(datageom, transport: str, region_gdf_aux: 
     
     colorscales = [
         'rgba(255,84,84,0.3)',
-        'rgba(40, 202, 207, 0.3)',
+        'rgba(245, 245, 113, 0.3)',
     ]
     colorborders = [
-        '#b21800', '#5bc7da',
+        '#b21800', '#f5f571',
     ]
     markerlinewidths = [
         2.5, 2.5
@@ -1742,52 +1738,50 @@ def exploration():
                     st.write(" - Comportamiento de la distancia delito-estación")
                     st.write(" - Partes del día más delictivas") 
         
-        if 'selected_id' in st.session_state:
-            if st.session_state.selected_id is not None and st.session_state.selected_id[-1]:
-                last_selected_id = st.session_state.selected_id[-1]
-                if last_selected_id[0]['curveNumber'] >= len(lines_ls[transport]) + 1:
-                    col3, col4 = st.columns([2, 3])
-                    with col3:    
-                        weekday_selected = st.selectbox('Día de la semana', weekdays_queries_ls, index=weekdays_queries_ls.index(weekday))
-                    with col4:    
-                        crime_var_selected = st.selectbox('Variable delito', crime_vars_queries_ls)
-                    
-                    df_crimes_exploration_gender = query_crimes_exploration_gender(transport, cve_est, radio_int, weekday_selected, crime_var_selected)
-                    df_crimes_exploration_age_group = query_crimes_exploration_age_group(transport, cve_est, radio_int, weekday_selected, crime_var_selected)
-                    df_crimes_exploration_distances = query_crimes_exploration_distances(transport, cve_est, radio_int, weekday_selected, crime_var_selected)    
-                    df_crimes_exploration_part_of_day = query_crimes_part_of_day(transport, cve_est, radio_int, weekday_selected, crime_var_selected)
-                    
-                    total_rows_sample = df_crimes_exploration_gender['conteo_delitos'].sum()
-                    
-                    if total_rows_sample > 0:
-                        st.markdown(f"{total_rows_sample} {' carpetas de investigación encontrada' if total_rows_sample == 1 else ' carpetas de investigación encontradas'}") 
-                        col6, col7, col8, col9 = st.columns([2, 2, 3, 2])
-                        with col6:
-                            st.write("##### Comparación de género")
-                            fig = plot_crime_exploration_gender(df_crimes_exploration_gender)
-                            fig.update_layout({"uirevision": "foo"}, overwrite=True, dragmode=False)
-                            st.plotly_chart(fig, use_container_width=True, config={'displayModeBar': False,})
-
-                        with col7:
-                            st.write("##### Distribución de la edad")
-                            fig = plot_crime_exploration_age_group(df_crimes_exploration_age_group)
-                            fig.update_layout({"uirevision": "foo"}, overwrite=True, dragmode=False)
-                            st.plotly_chart(fig, use_container_width=True, config={'displayModeBar': False,})
-                            
-                        with col8:
-                            st.write("##### Comparación de momentos del día")
-                            fig = plot_crime_exploration_day_parts(df_crimes_exploration_part_of_day)
-                            fig.update_layout({"uirevision": "foo"}, overwrite=True, dragmode=False)
-                            st.plotly_chart(fig, use_container_width=True, config={'displayModeBar': False,})
-                            
-                        with col9:
-                            st.write("##### Distancia delito-estación")
-                            fig = plot_crime_exploration_distances(df_crimes_exploration_distances)
-                            fig.update_layout({"uirevision": "foo"}, overwrite=True, dragmode=False)
-                            st.plotly_chart(fig, use_container_width=True, config={'displayModeBar': False,})
-                    else:
-                        st.write('Se encontraron 0 registros coincidentes para los filtros aplicados')
-
+        if 'selected_id' in st.session_state and (st.session_state.selected_id is not None and st.session_state.selected_id[-1]):
+            last_selected_id = st.session_state.selected_id[-1]
+            if last_selected_id[0]['curveNumber'] >= len(lines_ls[transport]) + 1:
+                col3, col4 = st.columns([2, 3])
+                with col3:    
+                    weekday_selected = st.selectbox('Día de la semana', weekdays_queries_ls, index=weekdays_queries_ls.index(weekday))
+                with col4:    
+                    crime_var_selected = st.selectbox('Variable delito', crime_vars_queries_ls)
+                
+                df_crimes_exploration_gender = query_crimes_exploration_gender(transport, cve_est, radio_int, weekday_selected, crime_var_selected)
+                df_crimes_exploration_age_group = query_crimes_exploration_age_group(transport, cve_est, radio_int, weekday_selected, crime_var_selected)
+                df_crimes_exploration_distances = query_crimes_exploration_distances(transport, cve_est, radio_int, weekday_selected, crime_var_selected)    
+                df_crimes_exploration_part_of_day = query_crimes_part_of_day(transport, cve_est, radio_int, weekday_selected, crime_var_selected)
+                
+                total_rows_sample = df_crimes_exploration_gender['conteo_delitos'].sum()
+                
+                if total_rows_sample > 0:
+                    st.markdown(f"{total_rows_sample} {' carpetas de investigación encontrada' if total_rows_sample == 1 else ' carpetas de investigación encontradas'}") 
+                    col6, col7, col8, col9 = st.columns([2, 2, 3, 2])
+                    with col6:
+                        st.write("##### Comparación de género")
+                        fig = plot_crime_exploration_gender(df_crimes_exploration_gender)
+                        fig.update_layout({"uirevision": "foo"}, overwrite=True, dragmode=False)
+                        st.plotly_chart(fig, use_container_width=True, config={'displayModeBar': False,})
+        
+                    with col7:
+                        st.write("##### Distribución de la edad")
+                        fig = plot_crime_exploration_age_group(df_crimes_exploration_age_group)
+                        fig.update_layout({"uirevision": "foo"}, overwrite=True, dragmode=False)
+                        st.plotly_chart(fig, use_container_width=True, config={'displayModeBar': False,})
+                        
+                    with col8:
+                        st.write("##### Comparación de momentos del día")
+                        fig = plot_crime_exploration_day_parts(df_crimes_exploration_part_of_day)
+                        fig.update_layout({"uirevision": "foo"}, overwrite=True, dragmode=False)
+                        st.plotly_chart(fig, use_container_width=True, config={'displayModeBar': False,})
+                        
+                    with col9:
+                        st.write("##### Distancia delito-estación")
+                        fig = plot_crime_exploration_distances(df_crimes_exploration_distances)
+                        fig.update_layout({"uirevision": "foo"}, overwrite=True, dragmode=False)
+                        st.plotly_chart(fig, use_container_width=True, config={'displayModeBar': False,})
+                else:
+                    st.write('Se encontraron 0 registros coincidentes para los filtros aplicados')
 
 # Predictions view
 def predictions():
