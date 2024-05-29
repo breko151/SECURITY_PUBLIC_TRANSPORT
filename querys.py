@@ -61,8 +61,7 @@ def query_top_stations_affluence_trends(transport: str, level_div: str, filter_d
                     JOIN [crimen_equip_urbano_afluencia_metro_metrobus_cdmx].[dbo].[dim_estaciones] AS est ON afl.cve_est = est.cve_est
                     JOIN [crimen_equip_urbano_afluencia_metro_metrobus_cdmx].[dbo].[dim_espacio] AS esp ON esp.id_espacio = est.id_espacio
                     JOIN [crimen_equip_urbano_afluencia_metro_metrobus_cdmx].[dbo].[dim_tiempo] AS tiem ON tiem.id_tiempo = afl.id_tiempo
-                    JOIN [crimen_equip_urbano_afluencia_metro_metrobus_cdmx].[dbo].[dim_sexo_victima] AS sex ON sex.id_sexo = afl.id_sexo
-                    WHERE est.sistema = '{transport}' AND {filter_div_in_str} AND tiem.dia_semana = '{weekday}' AND tiem.semana_anio = '{week_year}' AND sex.sexo_victima = '{sexo}'
+                    WHERE est.sistema = '{transport}' AND {filter_div_in_str} AND tiem.dia_semana = '{weekday}' AND tiem.semana_anio = '{week_year}'
                 ) as view_aflu
                 GROUP BY view_aflu.nombre, view_aflu.linea
                 ORDER BY afluencia_promedio DESC;
