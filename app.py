@@ -1064,10 +1064,10 @@ def plot_predictive_map(datageom, transport: str, unique_values_metric):
 
     colorscales = [
         ((0.0, '#ff5454'), (1.0, '#ff5454')),
-        ((0.0, '#fbfd09'), (1.0, '#fbfd09')),
+        ((0.0, '#ffc862'), (1.0, '#ffc862')),
     ]
     colorborders = [
-        '#b21800', '#ead61a',
+        '#b21800', '#FFA500',
     ]
     markerlinewidths = [
         3, 1
@@ -1596,21 +1596,21 @@ def trends():
 
     with st.container():
         st.header("🔥 Tendencias")
-        col1, col2, col3 = st.columns([1, 1, 3])
+        col1, col2, col3, col4 = st.columns([1, 1, 1, 3])
 
         with col1:
             transport = st.selectbox("Sistema", ["STC Metro", "Metrobús"])
             st.session_state.transport = transport
 
-        with col2:
+        with col3:
             level_div = st.selectbox("Nivel de filtrado", ["Zona", "Alcaldía", "Línea"])
         
-        with col3:
-            sexo = st.selectbox("Sexo", ["Hombre", "Mujer"])
+        with col2:
+            sex = st.selectbox("Sexo", ["Ambos", "Femenino", "Masculino",])
 
         filter_div = []
         region_column = ""
-        with col3:
+        with col4:
             if level_div == 'Zona':
                 filter_div = st.multiselect("Filtrado", zones_ls, placeholder='Selecciona zonas')
                 region_column = 'zona'
@@ -1635,8 +1635,8 @@ def trends():
         # Make SQL queries
         n = 10
         radio_int = 540 if transport == 'STC Metro' else 270
-        df_top_stations_affluence_trends = query_top_stations_affluence_trends(transport, level_div, filter_div, sexo, weekday, week_year, n)
-        df_top_stations_crime_trends = query_top_stations_crime_trends(transport, level_div, filter_div,sexo , weekday, week_year, radio_int, 1000)
+        df_top_stations_affluence_trends = query_top_stations_affluence_trends(transport, level_div, filter_div, weekday, week_year, n)
+        df_top_stations_crime_trends = query_top_stations_crime_trends(transport, level_div, filter_div, sex, weekday, week_year, radio_int, 1000)
         df_top_stations_crime_trends_aux = df_top_stations_crime_trends.head(n)
 
         col3, col4 = st.columns([2, 2])
