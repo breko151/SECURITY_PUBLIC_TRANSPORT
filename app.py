@@ -1459,10 +1459,11 @@ def plot_complementary_predictive_map(datageom, transport: str, region_gdf_aux: 
     
     colorscales = [
         'rgba(255,84,84,0.3)',
-        'rgba(245, 245, 113, 0.3)',
+        'rgba(255, 165, 0, 0.3)',
+
     ]
     colorborders = [
-        '#b21800', '#f5f571',
+        '#b21800', '#FFA500',
     ]
     markerlinewidths = [
         2.5, 2.5
