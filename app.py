@@ -1603,6 +1603,9 @@ def trends():
 
         with col2:
             level_div = st.selectbox("Nivel de filtrado", ["Zona", "Alcaldía", "Línea"])
+        
+        with col3:
+            sexo = st.selectbox("Sexo", ["Hombre", "Mujer"])
 
         filter_div = []
         region_column = ""
@@ -1631,8 +1634,8 @@ def trends():
         # Make SQL queries
         n = 10
         radio_int = 540 if transport == 'STC Metro' else 270
-        df_top_stations_affluence_trends = query_top_stations_affluence_trends(transport, level_div, filter_div, weekday, week_year, n)
-        df_top_stations_crime_trends = query_top_stations_crime_trends(transport, level_div, filter_div, weekday, week_year, radio_int, 1000)
+        df_top_stations_affluence_trends = query_top_stations_affluence_trends(transport, level_div, filter_div, sexo, weekday, week_year, n)
+        df_top_stations_crime_trends = query_top_stations_crime_trends(transport, level_div, filter_div,sexo , weekday, week_year, radio_int, 1000)
         df_top_stations_crime_trends_aux = df_top_stations_crime_trends.head(n)
 
         col3, col4 = st.columns([2, 2])
