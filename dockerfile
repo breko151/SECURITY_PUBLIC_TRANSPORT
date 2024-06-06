@@ -14,7 +14,9 @@ RUN apt-get update && \
     gcc \
     g++ \
     curl \
-    gnupg && \
+    gnupg \
+    certbot \
+    openssl && \
     curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - && \
     curl https://packages.microsoft.com/config/debian/10/prod.list > /etc/apt/sources.list.d/mssql-release.list && \
     apt-get update && \
@@ -35,8 +37,12 @@ RUN pip install --upgrade pip && \
 # Copy the entire application directory into the container
 COPY . /app/
 
+# Obtain SSL certificates using Certbot
+RUN certbot certonly --standalone --non-interactive --agree-tos -m josvapstg@gmail.com -d metrosegurocdmx.cloud
+
 # Expose the Streamlit default port
 EXPOSE 80
+EXPOSE 443
 
-# Run the Streamlit app
-CMD ["streamlit", "run", "app.py"]
+# Run the Streamlit app with SSL
+CMD ["streamlit", "run", "app.py", "--server.port=443", "--server.enableCORS=false", "--server.enableXsrfProtection=false", "--server.headless=true", "--server.sslCertFile=/etc/letsencrypt/live/metrosegurocdmx.cloud/fullchain.pem", "--server.sslKeyFile=/etc/letsencrypt/live/metrosegurocdmx.cloud/privkey.pem"]
