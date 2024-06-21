@@ -1983,9 +1983,13 @@ with streamlit_analytics.track(unsafe_password=f'{PASSWORD}'):
                         
                         with st.expander("Estaciones afectadas", expanded=False):
                             if region_column == 'CVE_MUN':
-                                df_stations_metro_aux = df_stations_metro[(df_stations_metro['alcaldia'] == region_name)]
+                                if transport == 'Metrobús':
+                                    df_stations_metro_aux = df_stations_metrobus[(df_stations_metrobus['alcaldia'] == region_name)]
+                                else:
+                                    df_stations_metro_aux = df_stations_metro[(df_stations_metro['alcaldia'] == region_name)]
                             else:
                                 df_stations_metro_aux = df_stations_metro[(df_stations_metro['sector'] == region_name)]
+                                
                             
                             # Stations within the region
                             lines = df_stations_metro_aux['linea'].unique()
