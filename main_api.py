@@ -15,16 +15,16 @@ app = Flask(__name__)
 def load_models_once(func):
     def wrapper(*args, **kwargs):
         if not hasattr(app, 'crime_metro_model_1'):
-            with open('./models_trained/final/clf_crime_metro_dataset_{}_wm_2_mas_perc.pkl'.format(3), 'rb') as file:
+            with open('./models/models_trained/final/clf_crime_metro_dataset_{}_wm_2_mas_perc.pkl'.format(3), 'rb') as file:
                 app.crime_metro_model_1 = pickle.load(file)
         if not hasattr(app, 'crime_metro_model_2'):
-            with open('./models_trained/final/clf_crime_metro_dataset_{}_wm_2_mas_perc.pkl'.format(4), 'rb') as file:
+            with open('./models/models_trained/final/clf_crime_metro_dataset_{}_wm_2_mas_perc.pkl'.format(4), 'rb') as file:
                 app.crime_metro_model_2 = pickle.load(file)
         if not hasattr(app, 'crime_metrobus_model_1'):
-            with open('./models_trained/final/clf_crime_metrobus_dataset_{}_wm_2_mas_perc.pkl'.format(3), 'rb') as file:
+            with open('./models/models_trained/final/clf_crime_metrobus_dataset_{}_wm_2_mas_perc.pkl'.format(3), 'rb') as file:
                 app.crime_metrobus_model_1 = pickle.load(file)
         if not hasattr(app, 'crime_metrobus_model_2'):
-            with open('./models_trained/final/clf_crime_metrobus_dataset_{}_wm_2_mas_perc.pkl'.format(4), 'rb') as file:
+            with open('./models/models_trained/final/clf_crime_metrobus_dataset_{}_wm_2_mas_perc.pkl'.format(4), 'rb') as file:
                 app.crime_metrobus_model_2 = pickle.load(file)
             
         return func(*args, **kwargs)
@@ -36,9 +36,9 @@ def load_models_once(func):
 # Load of affluence forecasting values
 def load_afflu_forecast_munic_values(transport: str):
     if transport == 'STC Metro':
-        df = pd.read_csv('./predictions_sarima/predicciones_afluencia_alcaldia_semana_metro.csv')
+        df = pd.read_csv('./data/predictions_sarima/predicciones_afluencia_alcaldia_semana_metro.csv')
     else:
-        df = pd.read_csv('./predictions_sarima/predicciones_afluencia_alcaldia_semana_metrobus_final.csv')
+        df = pd.read_csv('./data/predictions_sarima/predicciones_afluencia_alcaldia_semana_metrobus_final.csv')
 
     return df
 

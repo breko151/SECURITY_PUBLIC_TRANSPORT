@@ -1,0 +1,11 @@
+Model: DecisionTree (max_depth=10)
+Test Accuracy: 0.8361
+
+              precision    recall  f1-score   support
+
+        High       0.83      0.80      0.82      1898
+         Low       0.84      0.86      0.85      2221
+
+    accuracy                           0.84      4119
+   macro avg       0.84      0.83      0.83      4119
+weighted avg       0.84      0.84      0.84      4119

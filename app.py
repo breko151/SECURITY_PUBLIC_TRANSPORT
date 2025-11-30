@@ -43,11 +43,11 @@ load_dotenv()
 PASSWORD = os.getenv('PASSWORD')
 
 # Constants
-from colors import LINESM, LINESMB, LINESM_aux, LINESMB_aux
+from src.colors import LINESM, LINESMB, LINESM_aux, LINESMB_aux
 
 # Auxiliar proper modules
-from plots import plot_top_stations_affluence_trends, plot_top_stations_crime_trends, plot_top_crime_station, plot_crime_exploration_gender, plot_crime_exploration_age_group, plot_crime_exploration_distances, plot_crime_exploration_day_parts
-from querys import query_top_stations_affluence_trends, query_top_stations_crime_trends, query_top_crimes_historical, query_crimes_exploration_gender, query_crimes_exploration_age_group, query_crimes_exploration_distances, query_crimes_part_of_day
+from src.plots import plot_top_stations_affluence_trends, plot_top_stations_crime_trends, plot_top_crime_station, plot_crime_exploration_gender, plot_crime_exploration_age_group, plot_crime_exploration_distances, plot_crime_exploration_day_parts
+from src.querys import query_top_stations_affluence_trends, query_top_stations_crime_trends, query_top_crimes_historical, query_crimes_exploration_gender, query_crimes_exploration_age_group, query_crimes_exploration_distances, query_crimes_part_of_day
 
 # Extras
 import warnings
@@ -239,39 +239,39 @@ with streamlit_analytics.track(unsafe_password=f'{PASSWORD}'):
 
     # Dictionaries to load point images of stations
     POINTSM = {
-        'L1': './images/circulos/STCMetro_L1.png',
-        'L2': './images/circulos/STCMetro_L2.png',
-        'L3': './images/circulos/STCMetro_L3.png',
-        'L4': './images/circulos/STCMetro_L4.png',
-        'L5': './images/circulos/STCMetro_L5.png',
-        'L6': './images/circulos/STCMetro_L6.png',
-        'L7': './images/circulos/STCMetro_L7.png',
-        'L8': './images/circulos/STCMetro_L8.png',
-        'L9': './images/circulos/STCMetro_L9.png',
-        'LA': './images/circulos/STCMetro_LA.png',
-        'LB': './images/circulos/STCMetro_LB.png',
-        'L12': './images/circulos/STCMetro_L12.png',
+        'L1': './assets/images/circulos/STCMetro_L1.png',
+        'L2': './assets/images/circulos/STCMetro_L2.png',
+        'L3': './assets/images/circulos/STCMetro_L3.png',
+        'L4': './assets/images/circulos/STCMetro_L4.png',
+        'L5': './assets/images/circulos/STCMetro_L5.png',
+        'L6': './assets/images/circulos/STCMetro_L6.png',
+        'L7': './assets/images/circulos/STCMetro_L7.png',
+        'L8': './assets/images/circulos/STCMetro_L8.png',
+        'L9': './assets/images/circulos/STCMetro_L9.png',
+        'LA': './assets/images/circulos/STCMetro_LA.png',
+        'LB': './assets/images/circulos/STCMetro_LB.png',
+        'L12': './assets/images/circulos/STCMetro_L12.png',
     }
 
     POINTSMB = {
-        'L1': './images/circulos/MB_L1.png',
-        'L2': './images/circulos/MB_L2.png',
-        'L3': './images/circulos/MB_L3.png',
-        'L4': './images/circulos/MB_L4.png',
-        'L5': './images/circulos/MB_L5.png',
-        'L6': './images/circulos/MB_L6.png',
-        'L7': './images/circulos/MB_L7.png',
+        'L1': './assets/images/circulos/MB_L1.png',
+        'L2': './assets/images/circulos/MB_L2.png',
+        'L3': './assets/images/circulos/MB_L3.png',
+        'L4': './assets/images/circulos/MB_L4.png',
+        'L5': './assets/images/circulos/MB_L5.png',
+        'L6': './assets/images/circulos/MB_L6.png',
+        'L7': './assets/images/circulos/MB_L7.png',
     }
 
     # Geodata
-    df_stations = pd.read_csv("./fact_constellation_schema/dim_estaciones_espacio_ok.csv")
+    df_stations = pd.read_csv("./data/fact_constellation_schema/dim_estaciones_espacio_ok.csv")
     df_stations['cve_mun_inegi'] = df_stations['cve_mun_inegi'].astype(str).str.zfill(3)
-    metro_lines = gpd.read_file('./shapefiles/metro/STC_Metro_lineas_utm14n_repr.shp', index=False)
-    mb_lines = gpd.read_file('./shapefiles/mb/Metrobus_lineas_utm14n_repr.shp', index=False)
-    zones_gdf = gpd.read_file('./shapefiles/zonas/zonas_geo.shp', index=False)
-    munics_gdf = gpd.read_file('./shapefiles/alcaldias/alcaldias_geo.shp', index=False)
-    police_sectors_gdf = gpd.read_file('./shapefiles/cuadrantes/sectores_agrupados_ssc.shp', index=False)
-    lineas_cdmx = gpd.read_file('./images/cdmx.json', encoding='utf-8')
+    metro_lines = gpd.read_file('./data/shapefiles/metro/STC_Metro_lineas_utm14n_repr.shp', index=False)
+    mb_lines = gpd.read_file('./data/shapefiles/mb/Metrobus_lineas_utm14n_repr.shp', index=False)
+    zones_gdf = gpd.read_file('./data/shapefiles/zonas/zonas_geo.shp', index=False)
+    munics_gdf = gpd.read_file('./data/shapefiles/alcaldias/alcaldias_geo.shp', index=False)
+    police_sectors_gdf = gpd.read_file('./data/shapefiles/cuadrantes/sectores_agrupados_ssc.shp', index=False)
+    lineas_cdmx = gpd.read_file('./assets/images/cdmx.json', encoding='utf-8')
     lineas_cdmx_json = lineas_cdmx.to_json()
 
     # Adjusts to geodata
@@ -293,27 +293,27 @@ with streamlit_analytics.track(unsafe_password=f'{PASSWORD}'):
     week_month = week_of_month(today_)
 
     # Load of images to display at dashboard without st.image()
-    image_home_logo_url = "./images/MapaCDMX.png"
+    image_home_logo_url = "./assets/images/MapaCDMX.png"
     with open(image_home_logo_url, "rb") as file_image_home:
         contents = file_image_home.read()
         data_url_image_home = base64.b64encode(contents).decode("utf-8")
-    metro_logo_url = "./images/logo_metro.png"
+    metro_logo_url = "./assets/images/logo_metro.png"
     with open(metro_logo_url, "rb") as file_metro_logo:
         contents = file_metro_logo.read()
         data_url_metro_logo = base64.b64encode(contents).decode("utf-8")
-    metrobus_logo_url = "./images/logo_metrobus.png"
+    metrobus_logo_url = "./assets/images/logo_metrobus.png"
     file_metrobus_logo = open(metrobus_logo_url, "rb")
     contents = file_metrobus_logo.read()
     data_url_metrobus_logo = base64.b64encode(contents).decode("utf-8")
     file_metrobus_logo.close()
 
-    metro_map_url = "./images/MAPA_METRO.png"
+    metro_map_url = "./assets/images/MAPA_METRO.png"
     file_metro_map = open(metro_map_url, "rb")
     contents = file_metro_map.read()
     data_url_metro_map = base64.b64encode(contents).decode("utf-8")
     file_metro_map.close()
 
-    metrobus_map_url = "./images/MAPA_METROBUS.png"
+    metrobus_map_url = "./assets/images/MAPA_METROBUS.png"
     file_metrobus_map = open(metrobus_map_url, "rb")
     contents = file_metrobus_map.read()
     data_url_metrobus_map = base64.b64encode(contents).decode("utf-8")
@@ -327,10 +327,10 @@ with streamlit_analytics.track(unsafe_password=f'{PASSWORD}'):
     @st.cache_resource
     def load_crime_model(transport: str, grouped_dataset_id: int):
         if transport == 'STC Metro':
-            with open('./models_trained/final/clf_crime_metro_dataset_{}_wm_2_mas_perc.pkl'.format(grouped_dataset_id), 'rb') as file:
+            with open('./models/models_trained/final/clf_crime_metro_dataset_{}_wm_2_mas_perc.pkl'.format(grouped_dataset_id), 'rb') as file:
                 loaded_pipeline = pickle.load(file)
         else:
-            with open('./models_trained/final/clf_crime_metrobus_dataset_{}_wm_2_mas_perc.pkl'.format(grouped_dataset_id), 'rb') as file:
+            with open('./models/models_trained/final/clf_crime_metrobus_dataset_{}_wm_2_mas_perc.pkl'.format(grouped_dataset_id), 'rb') as file:
                 loaded_pipeline = pickle.load(file)
         
         return loaded_pipeline
@@ -340,13 +340,13 @@ with streamlit_analytics.track(unsafe_password=f'{PASSWORD}'):
     def load_afflu_forecast_values(transport: str, grouped_dataset_id: int):
         if transport == 'STC Metro':
             if grouped_dataset_id in {3, 4}:
-                df = pd.read_csv('./predictions_sarima/predicciones_afluencia_alcaldia_semana_metro.csv')
+                df = pd.read_csv('./data/predictions_sarima/predicciones_afluencia_alcaldia_semana_metro.csv')
             elif grouped_dataset_id in {6, 7}:
-                df = pd.read_csv('./predictions_sarima/predicciones_afluencia_sector_policial_semana_metro.csv')
+                df = pd.read_csv('./data/predictions_sarima/predicciones_afluencia_sector_policial_semana_metro.csv')
         elif grouped_dataset_id in {3, 4}:
-            df = pd.read_csv('./predictions_sarima/predicciones_afluencia_alcaldia_semana_metrobus_final.csv')
+            df = pd.read_csv('./data/predictions_sarima/predicciones_afluencia_alcaldia_semana_metrobus_final.csv')
         elif grouped_dataset_id in {6, 7}:
-            df = pd.read_csv('./predictions_sarima/predicciones_afluencia_sector_policial_semana_metrobus.csv')
+            df = pd.read_csv('./data/predictions_sarima/predicciones_afluencia_sector_policial_semana_metrobus.csv')
 
         return df
 
@@ -355,11 +355,11 @@ with streamlit_analytics.track(unsafe_password=f'{PASSWORD}'):
     def load_weekly_crime_counts(transport: str, grouped_dataset_id: int):
         if transport == 'STC Metro':
             df = pd.read_csv(
-                f'./datasets_aux/test/carpetas_afluencia_metro_grupo_{grouped_dataset_id}_wm_final_red.csv'
+                f'./data/datasets_aux/test/carpetas_afluencia_metro_grupo_{grouped_dataset_id}_wm_final_red.csv'
             )
         else:
             df = pd.read_csv(
-                f'./datasets_aux/test/carpetas_afluencia_metrobus_grupo_{grouped_dataset_id}_wm_final_red.csv'
+                f'./data/datasets_aux/test/carpetas_afluencia_metrobus_grupo_{grouped_dataset_id}_wm_final_red.csv'
             )
 
         df['semana_anio_completa'] = df['anio'].astype(str) + ' - s' + df['semana_anio'].astype(str)
@@ -370,9 +370,9 @@ with streamlit_analytics.track(unsafe_password=f'{PASSWORD}'):
     @st.cache_resource
     def load_thresholds_crime_model(transport: str, grouped_dataset_id: int):
         if transport == 'STC Metro':
-            df = pd.read_csv('./datasets_aux/test/rangos_dataset_grupo_{}_2_mas_perc.csv'.format(grouped_dataset_id))
+            df = pd.read_csv('./data/datasets_aux/test/rangos_dataset_grupo_{}_2_mas_perc.csv'.format(grouped_dataset_id))
         else:
-            df = pd.read_csv('./datasets_aux/test/rangos_dataset_grupo_{}_2_mas_perc_mb.csv'.format(grouped_dataset_id))
+            df = pd.read_csv('./data/datasets_aux/test/rangos_dataset_grupo_{}_2_mas_perc_mb.csv'.format(grouped_dataset_id))
         
         return df
 
@@ -1533,7 +1533,7 @@ with streamlit_analytics.track(unsafe_password=f'{PASSWORD}'):
         st.markdown('<br>', unsafe_allow_html=True,)
         col_1, col_mid, col_2 = st.columns([0.30, 0.05, 0.65])
         with col_1:
-            st.image(r'./images/MapaCDMX.png',  use_column_width=True, output_format='PNG')
+            st.image(r'./assets/images/MapaCDMX.png',  use_container_width=True, output_format='PNG')
         with col_2:
             st.subheader("La delincuencia en el transporte público de la Ciudad de México")
             st.markdown(r'<div style="text-align: justify;">El transporte público es un elemento esencial en la vida cotidiana de las personas. En particular, para la Ciudad de México el STC Metro y Metrobús son los medios de transporte más utilizados, por lo que, es importante garantizar la seguridad y satisfacción de los usuarios. Sin embargo, debido al crecimiento en la red de transporte público, se ha generado una alta concentración de personas en las instalaciones de ambos medios de transporte, lo que ha propiciado un aumento en la incidencia delictiva.</div><br>', unsafe_allow_html=True,)
@@ -1566,7 +1566,7 @@ with streamlit_analytics.track(unsafe_password=f'{PASSWORD}'):
                 #    f'<div style="{center_css}"><img src="data:image/gif;base64,{data_url_metro_map}" alt="Imagen home" width=600 ></div>',
                 #    unsafe_allow_html=True,
                 #)
-                st.image(r'./images/MAPA_METRO.png', use_column_width=True, output_format='PNG')
+                st.image(r'./assets/images/MAPA_METRO.png', use_container_width=True, output_format='PNG')
         elif level_div == "Metrobús":
             col_1, col_mid, col_2 = st.columns([0.45, 0.05, 0.45])
             with col_1:
@@ -1586,7 +1586,7 @@ with streamlit_analytics.track(unsafe_password=f'{PASSWORD}'):
                 #    r'<div style="{}"><img src="data:image/gif;base64,{}" alt="Imagen home" width=600 ></div>'.format(center_css, data_url_metrobus_map),
                 #    unsafe_allow_html=True,
                 #)
-                st.image(r'./images/MAPA_METROBUS.png', use_column_width=True, output_format='PNG')
+                st.image(r'./assets/images/MAPA_METROBUS.png', use_container_width=True, output_format='PNG')
         
 
     # Metro view.
@@ -2034,33 +2034,33 @@ with streamlit_analytics.track(unsafe_password=f'{PASSWORD}'):
         """
         <style>
             /* Estilo para los botones del sidebar */
-            section[data-testid="stSidebar"] div.stButton button {
+            [data-testid="stSidebar"] div.stButton button {
                 background-color: transparent;
                 border: none;
-                width: 200px;
+                width: 100%;
                 color: black;
                 transition: background-color 0.3s ease, color 0.3s ease;
             }
 
             /* Estilo para el botón seleccionado */
-            section[data-testid="stSidebar"] div.stButton button:active {
+            [data-testid="stSidebar"] div.stButton button:active {
                 background-color: #f0f0f080;
                 color: black;
                 box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             }
-            section[data-testid="stSidebar"] div.stButton button:focus {
+            [data-testid="stSidebar"] div.stButton button:focus {
                 background-color: #f0f0f080;
                 color: black;
                 box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             }
-            section[data-testid="stSidebar"] div.stButton button:hover {
+            [data-testid="stSidebar"] div.stButton button:hover {
                 /* background-color: #f0f0f0; */
                 color: white;
                 box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             }
 
             /* Alineación horizontal de los elementos del div con data-testid="stVerticalBlock" */
-            section[data-testid="stSidebar"] div[data-testid="stVerticalBlock"] {
+            [data-testid="stSidebar"] div[data-testid="stVerticalBlock"] {
                 text-align: center;
             }
         </style>
@@ -2072,7 +2072,7 @@ with streamlit_analytics.track(unsafe_password=f'{PASSWORD}'):
     st.markdown(
         """
         <script>
-            const buttons = document.querySelectorAll('section[data-testid="stSidebar"] div.stButton button');
+            const buttons = document.querySelectorAll('[data-testid="stSidebar"] div.stButton button');
 
             buttons.forEach(button => {
                 button.addEventListener('click', () => {
@@ -2083,7 +2083,7 @@ with streamlit_analytics.track(unsafe_password=f'{PASSWORD}'):
 
             // Evitar que los botones pierdan el estado activo al hacer clic en otro lugar de la página
             document.addEventListener('click', (event) => {
-                if (!event.target.closest('section[data-testid="stSidebar"]')) {
+                if (!event.target.closest('[data-testid="stSidebar"]')) {
                     buttons.forEach(btn => btn.classList.remove('active'));
                 }
             });

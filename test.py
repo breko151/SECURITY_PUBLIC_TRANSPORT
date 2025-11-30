@@ -2,7 +2,7 @@
 import streamlit as st
 import base64
 
-image_home_logo_url = "./images/MapaCDMX.png"
+image_home_logo_url = "./assets/images/MapaCDMX.png"
 file_image_home = open(image_home_logo_url, "rb")
 contents = file_image_home.read()
 center_css = """
@@ -29,7 +29,7 @@ def home():
     st.title("¡Bienvenido a tu transporte seguro!\n")
     col_1, col_2 = st.columns([0.40, 0.60])
     with col_1:
-        st.image(r'./images/MapaCDMX.png')
+        st.image(r'./assets/images/MapaCDMX.png')
         # st.markdown(
         #     r'<div style="{}"><img src="data:image/gif;base64,{}" alt="Imagen home" width=200 ></div>'.format(center_css, data_url_image_home),
         #     unsafe_allow_html=True,
@@ -61,7 +61,7 @@ def home():
                         - Domingos y días festivos: 7:00-0:00 horas.
                         """)
         with col_2:
-            st.image(r'./images/MAPA_METRO.png')
+            st.image(r'./assets/images/MAPA_METRO.png')
     elif level_div == "Metrobús":
         col_1, col_2 = st.columns([0.50, 0.50])
         with col_1:
@@ -77,7 +77,7 @@ def home():
                         - Domigos y días festivos: 5:00-0:00 horas.
                         """)
         with col_2:
-            st.image(r'./images/MAPA_METROBUS.png')
+            st.image(r'./assets/images/MAPA_METROBUS.png')
 with st.sidebar: 
     st.title("Menú")
 home()
