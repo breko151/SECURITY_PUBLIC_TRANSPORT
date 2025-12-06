@@ -1,0 +1,462 @@
+cve_est,id_espacio,sistema,tipo,nivel_circulacion_transporte,linea,anio_apertura,num_estacion,nombre,cantidad_transbordos_metro,cantidad_transbordos_metrobus,zona,alcaldia,cve_mun_inegi,sector,id_sector_ssc,longitud,latitud
+MB0102,1,Metrobús,Transbordo,Nivel de suelo,L1,2005,2,Deportivo 18 de Marzo,2,2,Norte,Gustavo A. Madero,5,Tepeyac,328.0,-99.1245316988,19.4862853793
+MB0103,2,Metrobús,Intermedia,Nivel de suelo,L1,2005,3,Euzkaro,0,0,Norte,Gustavo A. Madero,5,Lindavista,600.0,-99.1276322339,19.4825191017
+MB0104,3,Metrobús,Intermedia,Nivel de suelo,L1,2005,4,Potrero,1,0,Norte,Gustavo A. Madero,5,Lindavista,600.0,-99.1324682384,19.4766384713
+MB0105,4,Metrobús,Transbordo,Nivel de suelo,L1,2005,5,La Raza,2,1,Norte,Gustavo A. Madero,5,Lindavista,597.0,-99.1389866641,19.4687000501
+MB0106,5,Metrobús,Transbordo,Nivel de suelo,L1,2005,6,Circuito,0,0,Centro,Cuauhtémoc,15,Tlatelolco,547.0,-99.1440067682,19.4626127667
+MB0107,6,Metrobús,Intermedia,Nivel de suelo,L1,2005,7,San Simón,0,0,Centro,Cuauhtémoc,15,Tlatelolco,547.0,-99.1464243451,19.459632536
+MB0108,7,Metrobús,Intermedia,Nivel de suelo,L1,2005,8,Manuel González,0,0,Centro,Cuauhtémoc,15,Tlatelolco,6.0,-99.1493885158,19.4567355629
+MB0109,8,Metrobús,Transbordo,Nivel de suelo,L1,2005,9,Buenavista,1,2,Centro,Cuauhtémoc,15,Buenavista,555.0,-99.1531306653,19.4468379515
+MB0110,9,Metrobús,Intermedia,Nivel de suelo,L1,2005,10,El Chopo,0,0,Centro,Cuauhtémoc,15,Buenavista,292.0,-99.1544111338,19.4433450826
+MB0111,10,Metrobús,Intermedia,Nivel de suelo,L1,2005,11,Revolución,1,0,Centro,Cuauhtémoc,15,Buenavista,556.0,-99.1554103798,19.440352788
+MB0112,11,Metrobús,Transbordo,Nivel de suelo,L1,2005,12,Plaza de la República,0,0,Centro,Cuauhtémoc,15,Ángel,561.0,-99.1573187419,19.4360459667
+MB0113,12,Metrobús,Transbordo,Nivel de suelo,L1,2005,13,Reforma,0,0,Centro,Cuauhtémoc,15,Ángel,561.0,-99.1587145097,19.4328991003
+MB0114,13,Metrobús,Transbordo,Nivel de suelo,L1,2005,14,Hamburgo,0,0,Centro,Cuauhtémoc,15,Ángel,307.0,-99.1612354179,19.4275244085
+MB0115,14,Metrobús,Terminal,Nivel de suelo,L1,2005,15,Glorieta Insurgentes,1,0,Centro,Cuauhtémoc,15,Ángel,12.0,-99.1628838166,19.4237205293
+MB0116,15,Metrobús,Intermedia,Nivel de suelo,L1,2005,16,Durango,0,0,Centro,Cuauhtémoc,15,Roma,346.0,-99.1640556295,19.419932752
+MB0117,16,Metrobús,Intermedia,Nivel de suelo,L1,2005,17,Álvaro Obregón,0,0,Centro,Cuauhtémoc,15,Roma,259.0,-99.1650558163,19.4165509918
+MB0118,17,Metrobús,Intermedia,Nivel de suelo,L1,2005,18,Sonora,0,0,Centro,Cuauhtémoc,15,Roma,259.0,-99.1661242193,19.4132719254
+MB0119,18,Metrobús,Intermedia,Nivel de suelo,L1,2005,19,Campeche,0,0,Centro,Cuauhtémoc,15,Roma,520.0,-99.1672655932,19.4097687539
+MB0120,19,Metrobús,Intermedia,Nivel de suelo,L1,2005,20,Chilpancingo,1,0,Centro,Cuauhtémoc,15,Roma,520.0,-99.168304861,19.4065788331
+MB0121,20,Metrobús,Transbordo,Nivel de suelo,L1,2005,21,Nuevo León,0,0,Centro,Cuauhtémoc,15,Roma,347.0,-99.1697838557,19.402043182
+MB0122,21,Metrobús,Transbordo,Nivel de suelo,L1,2005,22,La Piedad,0,0,Centro,Benito Juárez,14,Del Valle,81.0,-99.1711112024,19.3979703379
+MB0123,22,Metrobús,Transbordo,Nivel de suelo,L1,2005,23,Polifórum,0,0,Centro,Benito Juárez,14,Nápoles,452.0,-99.1726250186,19.3932992033
+MB0124,23,Metrobús,Transbordo,Nivel de suelo,L1,2005,24,Nápoles,0,0,Centro,Benito Juárez,14,Nápoles,176.0,-99.1737944115,19.3896906524
+MB0125,24,Metrobús,Transbordo,Nivel de suelo,L1,2005,25,Colonia del Valle,0,0,Centro,Benito Juárez,14,Nápoles,90.0,-99.1750920705,19.3856861027
+MB0126,25,Metrobús,Intermedia,Nivel de suelo,L1,2005,26,Ciudad de los Deportes,0,0,Centro,Benito Juárez,14,Nápoles,93.0,-99.1761401613,19.3824515658
+MB0127,26,Metrobús,Intermedia,Nivel de suelo,L1,2005,27,Parque Hundido,0,0,Centro,Benito Juárez,14,Nápoles,93.0,-99.1770684027,19.3795867868
+MB0128,27,Metrobús,Intermedia,Nivel de suelo,L1,2005,28,Félix Cuevas,1,0,Centro,Benito Juárez,14,Nápoles,93.0,-99.1787965276,19.3742530951
+MB0129,28,Metrobús,Intermedia,Nivel de suelo,L1,2005,29,Río Churubusco,0,0,Centro,Benito Juárez,14,Del Valle,85.0,-99.180569811,19.3687796513
+MB0130,29,Metrobús,Intermedia,Nivel de suelo,L1,2005,30,Teatro de los Insurgentes,0,0,Centro,Benito Juárez,14,Nápoles,178.0,-99.1818252003,19.3649263909
+MB0131,30,Metrobús,Intermedia,Nivel de suelo,L1,2005,31,José María Velasco,0,0,Poniente,Álvaro Obregón,10,San Ángel,748.0,-99.182849775,19.3617589895
+MB0132,31,Metrobús,Intermedia,Nivel de suelo,L1,2005,32,Francia,0,0,Poniente,Álvaro Obregón,10,San Ángel,748.0,-99.1839115563,19.3584764304
+MB0133,32,Metrobús,Intermedia,Nivel de suelo,L1,2005,33,Olivo,0,0,Poniente,Álvaro Obregón,10,San Ángel,748.0,-99.1851566483,19.3546269824
+MB0134,33,Metrobús,Intermedia,Nivel de suelo,L1,2005,34,Altavista,0,0,Poniente,Álvaro Obregón,10,San Ángel,748.0,-99.186356402,19.3509038494
+MB0135,34,Metrobús,Intermedia,Nivel de suelo,L1,2005,35,La Bombilla,0,0,Poniente,Álvaro Obregón,10,San Ángel,749.0,-99.1877262179,19.3468185139
+MB0136,35,Metrobús,Terminal,Nivel de suelo,L1,2005,36,Doctor Gálvez,0,0,Poniente,Álvaro Obregón,10,San Ángel,461.0,-99.1900369636,19.3407072141
+MB0137,36,Metrobús,Intermedia,Nivel de suelo,L1,2008,37,Ciudad Universitaria,0,0,Sur,Coyoacán,3,Universidad,354.0,-99.1884729508,19.3229473642
+MB0138,37,Metrobús,Intermedia,Nivel de suelo,L1,2008,38,Centro Cultural Universitario,0,0,Sur,Coyoacán,3,Universidad,280.0,-99.1875269526,19.315162167
+MB0139,38,Metrobús,Intermedia,Nivel de suelo,L1,2008,39,Perisur,0,0,Sur,Coyoacán,3,Universidad,280.0,-99.1861266975,19.3041096321
+MB0140,39,Metrobús,Intermedia,Nivel de suelo,L1,2008,40,Villa Olímpica,0,0,Sur,Tlalpan,12,Fuente,413.0,-99.1855148121,19.2990917644
+MB0141,40,Metrobús,Intermedia,Nivel de suelo,L1,2008,41,Corregidora,0,0,Sur,Tlalpan,12,Fuente,137.0,-99.1810317319,19.2940700847
+MB0142,41,Metrobús,Intermedia,Nivel de suelo,L1,2008,42,Ayuntamiento,0,0,Sur,Tlalpan,12,Huipulco-Hospitales,412.0,-99.1775366903,19.292595464
+MB0143,42,Metrobús,Intermedia,Nivel de suelo,L1,2008,43,Fuentes Brotantes,0,0,Sur,Tlalpan,12,Huipulco-Hospitales,412.0,-99.1745975716,19.2881035878
+MB0144,43,Metrobús,Intermedia,Nivel de suelo,L1,2008,44,Santa Úrsula,0,0,Sur,Tlalpan,12,Fuente,495.0,-99.1753010746,19.2832627642
+MB0145,44,Metrobús,Intermedia,Nivel de suelo,L1,2008,45,La Joya,0,0,Sur,Tlalpan,12,Fuente,495.0,-99.1699925731,19.2803221337
+MB0146,45,Metrobús,Terminal,Nivel de suelo,L1,2008,46,El Caminero,0,0,Sur,Tlalpan,12,Fuente,495.0,-99.1690776517,19.2793137711
+MB0201,46,Metrobús,Terminal,Nivel de suelo,L2,2008,1,Tacubaya,3,0,Poniente,Miguel Hidalgo,16,Tacubaya,755.0,-99.1870077633,19.4019947604
+MB0202,47,Metrobús,Intermedia,Nivel de suelo,L2,2008,2,Parque Lira,0,0,Poniente,Miguel Hidalgo,16,Tacubaya,116.0,-99.1891043635,19.4077931728
+MB0203,48,Metrobús,Intermedia,Nivel de suelo,L2,2008,3,Antonio Maceo,0,0,Poniente,Miguel Hidalgo,16,Tacubaya,397.0,-99.1859008658,19.4048746246
+MB0204,49,Metrobús,Intermedia,Nivel de suelo,L2,2008,4,De la Salle,0,0,Poniente,Miguel Hidalgo,16,Tacubaya,112.0,-99.1835088487,19.4075895489
+MB0205,50,Metrobús,Intermedia,Nivel de suelo,L2,2008,5,Patriotismo,1,0,Centro,Cuauhtémoc,15,Roma,831.0,-99.1773714812,19.4055667645
+MB0206,51,Metrobús,Intermedia,Nivel de suelo,L2,2008,6,Escandón,0,0,Centro,Cuauhtémoc,15,Roma,17.0,-99.173828899,19.4044098518
+MB0207,52,Metrobús,Transbordo,Nivel de suelo,L2,2008,7,Nuevo León,0,0,Centro,Cuauhtémoc,15,Roma,17.0,-99.1704079341,19.4035006746
+MB0208,53,Metrobús,Intermedia,Nivel de suelo,L2,2008,8,Viaducto,0,0,Centro,Cuauhtémoc,15,Roma,347.0,-99.1680933404,19.4013145435
+MB0209,54,Metrobús,Intermedia,Nivel de suelo,L2,2008,9,Amores,0,0,Centro,Benito Juárez,14,Del Valle,645.0,-99.1638157476,19.3968783578
+MB0210,55,Metrobús,Terminal / Transbordo,Nivel de suelo,L2,2008,10,Etiopía,1,1,Centro,Benito Juárez,14,Narvarte-Álamos,239.0,-99.1550015233,19.3958411345
+MB0211,56,Metrobús,Intermedia,Nivel de suelo,L2,2008,11,Doctor Vértiz,0,0,Centro,Benito Juárez,14,Narvarte-Álamos,239.0,-99.1517076791,19.39560756
+MB0212,57,Metrobús,Intermedia,Nivel de suelo,L2,2008,12,Centro SCOP,0,0,Centro,Benito Juárez,14,Narvarte-Álamos,813.0,-99.1467556804,19.395248035
+MB0213,58,Metrobús,Intermedia,Nivel de suelo,L2,2008,13,Álamos,0,0,Centro,Benito Juárez,14,Narvarte-Álamos,509.0,-99.1429427969,19.3947530969
+MB0214,59,Metrobús,Intermedia,Nivel de suelo,L2,2008,14,Xola,1,0,Centro,Benito Juárez,14,Narvarte-Álamos,240.0,-99.1402513707,19.3943650491
+MB0215,60,Metrobús,Intermedia,Nivel de suelo,L2,2008,15,Las Américas,0,0,Centro,Benito Juárez,14,Nativitas,488.0,-99.1343490841,19.3934594547
+MB0216,61,Metrobús,Intermedia,Nivel de suelo,L2,2008,16,Andrés Molina,0,0,Oriente,Iztacalco,6,Iztaccíhuatl,321.0,-99.1297001049,19.3976774344
+MB0217,62,Metrobús,Intermedia,Nivel de suelo,L2,2008,17,La Viga,0,0,Oriente,Iztacalco,6,Iztaccíhuatl,321.0,-99.1245623068,19.3980646198
+MB0218,63,Metrobús,Intermedia,Nivel de suelo,L2,2008,18,Coyuya,0,0,Oriente,Iztacalco,6,Iztaccíhuatl,582.0,-99.1167822551,19.3982833854
+MB0219,64,Metrobús,Transbordo,Nivel de suelo,L2,2008,19,Metro Coyuya,1,1,Oriente,Iztacalco,6,Iztaccíhuatl,582.0,-99.1134651673,19.3983294161
+MB0220,65,Metrobús,Intermedia,Nivel de suelo,L2,2008,20,Canela,0,0,Oriente,Iztacalco,6,Tlacotal,778.0,-99.1093377598,19.3978486577
+MB0221,66,Metrobús,Intermedia,Nivel de suelo,L2,2008,21,Tlacotal,0,0,Oriente,Iztacalco,6,Tlacotal,778.0,-99.1039110605,19.3972190805
+MB0222,67,Metrobús,Intermedia,Nivel de suelo,L2,2008,22,Goma,0,0,Oriente,Iztacalco,6,Tlacotal,779.0,-99.1000071986,19.3968907456
+MB0223,68,Metrobús,Intermedia,Nivel de suelo,L2,2008,23,Iztacalco,0,0,Oriente,Iztacalco,6,Tlacotal,434.0,-99.0959575586,19.3965470639
+MB0224,69,Metrobús,Intermedia,Nivel de suelo,L2,2008,24,UPIICSA,0,0,Oriente,Iztacalco,6,Tlacotal,48.0,-99.0903921272,19.3939350274
+MB0225,70,Metrobús,Intermedia,Nivel de suelo,L2,2008,25,El Rodeo,0,0,Oriente,Iztacalco,6,Pantitlán,103.0,-99.0870802443,19.3916613194
+MB0226,71,Metrobús,Intermedia,Nivel de suelo,L2,2008,26,Río Tecolutla,0,0,Oriente,Iztapalapa,7,Abasto-Reforma,158.0,-99.0831500156,19.3890564481
+MB0227,72,Metrobús,Intermedia,Nivel de suelo,L2,2008,27,Río Mayo,0,0,Oriente,Iztapalapa,7,Abasto-Reforma,158.0,-99.0800235676,19.3869618059
+MB0228,73,Metrobús,Intermedia,Nivel de suelo,L2,2008,28,Rojo Gómez,0,0,Oriente,Iztapalapa,7,Abasto-Reforma,158.0,-99.0763665133,19.3845089441
+MB0229,74,Metrobús,Intermedia,Nivel de suelo,L2,2008,29,Río Frío,0,0,Oriente,Iztacalco,6,Pantitlán,126.0,-99.0742809576,19.3876284055
+MB0230,75,Metrobús,Intermedia,Nivel de suelo,L2,2008,30,Del Moral,0,0,Oriente,Iztapalapa,7,Abasto-Reforma,467.0,-99.0709202513,19.3841971768
+MB0231,76,Metrobús,Intermedia,Nivel de suelo,L2,2008,31,Leyes de Reforma,0,0,Oriente,Iztacalco,6,Pantitlán,698.0,-99.0658196193,19.3834701585
+MB0232,77,Metrobús,Intermedia,Nivel de suelo,L2,2008,32,CCH Oriente,0,0,Oriente,Iztacalco,6,Pantitlán,698.0,-99.0607918477,19.3833269651
+MB0233,78,Metrobús,Intermedia,Nivel de suelo,L2,2008,33,Constitución de Apatzingán,0,0,Oriente,Iztacalco,6,Pantitlán,698.0,-99.0598482188,19.3890312064
+MB0234,79,Metrobús,Intermedia,Nivel de suelo,L2,2008,34,Canal de San Juan,0,0,Oriente,Iztapalapa,7,Oasis,207.0,-99.0565475202,19.3967112238
+MB0235,80,Metrobús,Intermedia,Nivel de suelo,L2,2008,35,General Antonio de León,0,0,Oriente,Iztapalapa,7,Oasis,472.0,-99.0517338136,19.3853813016
+MB0236,81,Metrobús,Intermedia,Nivel de suelo,L2,2008,36,Nicolás Bravo,0,0,Oriente,Iztapalapa,7,Oasis,472.0,-99.0509253201,19.3934954172
+MB0237,82,Metrobús,Terminal,Nivel de suelo,L2,2008,37,Tepalcates,1,0,Oriente,Iztapalapa,7,Oasis,147.0,-99.0476125924,19.3907678616
+MB0301,83,Metrobús,Terminal,Nivel de suelo,L3,2011,1,Tenayuca,0,0,Norte,Gustavo A. Madero,5,Ticomán,345.0,-99.170111358,19.5286169824
+MB0302,84,Metrobús,Intermedia,Nivel de suelo,L3,2011,2,San José de la Escalera,0,0,Norte,Gustavo A. Madero,5,Ticomán,344.0,-99.1655553483,19.5227187694
+MB0303,85,Metrobús,Intermedia,Nivel de suelo,L3,2011,3,Progreso Nacional,0,0,Norte,Gustavo A. Madero,5,Ticomán,345.0,-99.1637719721,19.5196884339
+MB0304,86,Metrobús,Intermedia,Nivel de suelo,L3,2011,4,Tres Anegas,0,0,Norte,Gustavo A. Madero,5,Ticomán,330.0,-99.1619328301,19.5155054383
+MB0305,87,Metrobús,Intermedia,Nivel de suelo,L3,2011,5,Júpiter,0,0,Norte,Gustavo A. Madero,5,Ticomán,43.0,-99.1592357568,19.5086141115
+MB0306,88,Metrobús,Intermedia,Nivel de suelo,L3,2011,6,La Patera,0,0,Norte,Gustavo A. Madero,5,Ticomán,43.0,-99.1572666684,19.5036636418
+MB0307,89,Metrobús,Intermedia,Nivel de suelo,L3,2011,7,Poniente 146,0,0,Norte,Gustavo A. Madero,5,Lindavista,596.0,-99.155884664,19.4999860835
+MB0308,90,Metrobús,Transbordo,Nivel de suelo,L3,2011,8,Montevideo,0,0,Norte,Azcapotzalco,2,La Raza,185.0,-99.1544567539,19.4961058084
+MB0309,91,Metrobús,Intermedia,Nivel de suelo,L3,2011,9,Poniente 134,0,0,Norte,Gustavo A. Madero,5,Lindavista,596.0,-99.1531706131,19.4926875051
+MB0310,92,Metrobús,Intermedia,Nivel de suelo,L3,2011,10,Poniente 128,0,0,Norte,Gustavo A. Madero,5,Lindavista,331.0,-99.1519556606,19.4895459266
+MB0311,93,Metrobús,Intermedia,Nivel de suelo,L3,2011,11,Magdalena de las Salinas,0,0,Norte,Azcapotzalco,2,La Raza,186.0,-99.1498594838,19.4838815251
+MB0312,94,Metrobús,Intermedia,Nivel de suelo,L3,2011,12,Coltongo,0,0,Norte,Azcapotzalco,2,La Raza,186.0,-99.1483274174,19.4798514291
+MB0313,95,Metrobús,Intermedia,Nivel de suelo,L3,2011,13,Cuitláhuac,0,0,Norte,Gustavo A. Madero,5,Lindavista,46.0,-99.1461604033,19.4741506741
+MB0314,96,Metrobús,Intermedia,Nivel de suelo,L3,2011,14,Héroe de Nacozari,0,0,Norte,Gustavo A. Madero,5,Lindavista,597.0,-99.1450385303,19.4711622984
+MB0315,97,Metrobús,Intermedia,Nivel de suelo,L3,2011,15,Hospital La Raza,0,0,Norte,Azcapotzalco,2,La Raza,459.0,-99.1438464714,19.467990085
+MB0316,98,Metrobús,Terminal / Transbordo,Nivel de suelo,L3,2011,16,La Raza,2,1,Norte,Gustavo A. Madero,5,Lindavista,597.0,-99.140951977,19.4673257071
+MB0317,99,Metrobús,Transbordo,Nivel de suelo,L3,2011,17,Circuito,0,0,Centro,Cuauhtémoc,15,Tlatelolco,547.0,-99.144062408,19.4632925988
+MB0318,100,Metrobús,Intermedia,Nivel de suelo,L3,2011,18,Tolnáhuac,0,0,Centro,Cuauhtémoc,15,Tlatelolco,3.0,-99.1440643447,19.4598898018
+MB0319,101,Metrobús,Intermedia,Nivel de suelo,L3,2011,19,Tlatelolco,0,0,Centro,Cuauhtémoc,15,Tlatelolco,290.0,-99.1450455865,19.455559397
+MB0320,102,Metrobús,Intermedia,Nivel de suelo,L3,2011,20,Ricardo Flores Magón,0,0,Centro,Cuauhtémoc,15,Buenavista,555.0,-99.1459043139,19.4517818288
+MB0321,103,Metrobús,Intermedia,Nivel de suelo,L3,2011,21,Guerrero,2,0,Centro,Cuauhtémoc,15,Buenavista,558.0,-99.1472120355,19.4460287813
+MB0322,104,Metrobús,Terminal,Nivel de suelo,L3,2011,22,Buenavista,1,2,Centro,Cuauhtémoc,15,Buenavista,556.0,-99.1519969852,19.4461265233
+MB0323,105,Metrobús,Intermedia,Nivel de suelo,L3,2011,23,Mina,0,0,Centro,Cuauhtémoc,15,Buenavista,295.0,-99.1485468002,19.4405842382
+MB0324,106,Metrobús,Transbordo,Nivel de suelo,L3,2011,24,Hidalgo,2,2,Centro,Cuauhtémoc,15,Alameda,564.0,-99.147213543,19.436005784
+MB0325,107,Metrobús,Transbordo,Nivel de suelo,L3,2011,25,Juárez,1,1,Centro,Cuauhtémoc,15,Alameda,304.0,-99.1480322627,19.4312903691
+MB0326,108,Metrobús,Terminal,Nivel de suelo,L3,2011,26,Balderas,2,0,Centro,Cuauhtémoc,15,Alameda,562.0,-99.1487392096,19.4280658233
+MB0327,109,Metrobús,Intermedia,Nivel de suelo,L3,2011,27,Cuauhtémoc,1,0,Centro,Cuauhtémoc,15,Asturias,760.0,-99.1537015683,19.4249591434
+MB0328,110,Metrobús,Intermedia,Nivel de suelo,L3,2011,28,Jardín Pushkin,0,0,Centro,Cuauhtémoc,15,Asturias,762.0,-99.1540836447,19.4203986896
+MB0329,111,Metrobús,Intermedia,Nivel de suelo,L3,2011,29,Hospital General,1,0,Centro,Cuauhtémoc,15,Asturias,63.0,-99.1545590214,19.4144360194
+MB0330,112,Metrobús,Intermedia,Nivel de suelo,L3,2011,30,Doctor Márquez,0,0,Centro,Cuauhtémoc,15,Asturias,764.0,-99.1548449938,19.4111113933
+MB0331,113,Metrobús,Intermedia,Nivel de suelo,L3,2011,31,Centro Médico,2,0,Centro,Cuauhtémoc,15,Asturias,764.0,-99.1551266783,19.4072732306
+MB0332,114,Metrobús,Intermedia,Nivel de suelo,L3,2011,32,Obrero Mundial,0,0,Centro,Benito Juárez,14,Narvarte-Álamos,508.0,-99.1556023093,19.4010601791
+MB0333,115,Metrobús,Transbordo,Nivel de suelo,L3,2011,33,Etiopía,1,1,Centro,Benito Juárez,14,Narvarte-Álamos,239.0,-99.1559024551,19.3969968861
+MB0334,116,Metrobús,Intermedia,Nivel de suelo,L3,2021,34,Luz Saviñón,0,0,Centro,Benito Juárez,14,Narvarte-Álamos,241.0,-99.1563460467,19.3915929933
+MB0335,117,Metrobús,Intermedia,Nivel de suelo,L3,2021,35,Eugenia,1,0,Centro,Benito Juárez,14,Narvarte-Álamos,361.0,-99.157227117,19.3859538009
+MB0336,118,Metrobús,Intermedia,Nivel de suelo,L3,2021,36,División del Norte,1,0,Centro,Benito Juárez,14,Narvarte-Álamos,815.0,-99.1587436978,19.3805052596
+MB0337,119,Metrobús,Intermedia,Nivel de suelo,L3,2021,37,Miguel Laurent,0,0,Centro,Benito Juárez,14,Portales,654.0,-99.16022982,19.3748368272
+MB0338,120,Metrobús,Terminal,Nivel de suelo,L3,2021,38,Pueblo Santa Cruz Atoyac,0,0,Centro,Benito Juárez,14,Portales,798.0,-99.1610088122,19.3715692775
+MB0401,121,Metrobús,Terminal / Transbordo,Nivel de suelo,L4,2012,1,Buenavista,1,2,Centro,Cuauhtémoc,15,Buenavista,556.0,-99.152271,19.444863
+MB0402,122,Metrobús,Intermedia,Nivel de suelo,L4,2012,2,Delegación Cuauhtémoc,0,0,Centro,Cuauhtémoc,15,Buenavista,556.0,-99.152435,19.442365
+MB0403,123,Metrobús,Intermedia,Nivel de suelo,L4,0,3,México Tenochtitlan,0,0,Centro,Cuauhtémoc,15,Buenavista,556.0,-99.1533630001,19.438833
+MB0404,124,Metrobús,Intermedia,Nivel de suelo,L4,2012,4,Museo San Carlos,0,0,Centro,Cuauhtémoc,15,Buenavista,295.0,-99.150693,19.43825
+MB0405,125,Metrobús,Transbordo,Nivel de suelo,L4,2012,5,Hidalgo,2,2,Centro,Cuauhtémoc,15,Alameda,564.0,-99.146181,19.437289
+MB0406,126,Metrobús,Intermedia,Nivel de suelo,L4,2012,6,Bellas Artes,2,0,Centro,Cuauhtémoc,15,Buenavista,565.0,-99.141769,19.436406
+MB0407,127,Metrobús,Intermedia,Nivel de suelo,L4,2012,7,Teatro Blanquita,0,0,Centro,Cuauhtémoc,15,Centro,194.0,-99.1395289997,19.4385320005
+MB0408,128,Metrobús,Intermedia,Nivel de suelo,L4,2012,8,República de Chile,0,0,Centro,Cuauhtémoc,15,Centro,194.0,-99.1354604999,19.4379245005
+MB0409,129,Metrobús,Intermedia,Nivel de suelo,L4,2012,9,República de Argentina,0,0,Centro,Cuauhtémoc,15,Centro,758.0,-99.1315964999,19.4373810004
+MB0410,130,Metrobús,Intermedia,Nivel de suelo,L4,2012,10,Teatro del Pueblo,0,0,Centro,Cuauhtémoc,15,Centro,300.0,-99.1273320001,19.4368095002
+MB0411,131,Metrobús,Intermedia,Nivel de suelo,L4,2012,11,Mixcalco,0,0,Oriente,Venustiano Carranza,17,Congreso,570.0,-99.1237845,19.4363405004
+MB0412,132,Metrobús,Intermedia,Nivel de suelo,L4,2012,12,Ferrocarril de Cintura,0,0,Oriente,Venustiano Carranza,17,Congreso,570.0,-99.1212115002,19.4360710004
+MB0413,133,Metrobús,Intermedia,Nivel de suelo,L4,2012,13,Morelos,0,0,Oriente,Venustiano Carranza,17,Congreso,570.0,-99.118623,19.4358005004
+MB0414,134,Metrobús,Transbordo,Nivel de suelo,L4,2012,14,Archivo General de la Nación,0,0,Oriente,Venustiano Carranza,17,Congreso,572.0,-99.1148969997,19.4351655002
+MB0418,135,Metrobús,Intermedia,Nivel de suelo,L4,2012,18,Plaza de la República,0,0,Centro,Cuauhtémoc,15,Ángel,11.0,-99.1540600001,19.436966
+MB0419,136,Metrobús,Transbordo,Nivel de suelo,L4,2012,19,Glorieta de Colón,0,0,Centro,Cuauhtémoc,15,Ángel,11.0,-99.1534515002,19.4345865
+MB0420,137,Metrobús,Intermedia,Nivel de suelo,L4,0,20,Defensoría Pública,0,0,Centro,Cuauhtémoc,15,Ángel,303.0,-99.1508204998,19.4332350001
+MB0421,138,Metrobús,Intermedia,Nivel de suelo,L4,2012,21,Vocacional 5,0,0,Centro,Cuauhtémoc,15,Alameda,304.0,-99.1505844998,19.4316725004
+MB0422,139,Metrobús,Transbordo,Nivel de suelo,L4,2012,22,Juárez,1,1,Centro,Cuauhtémoc,15,Alameda,304.0,-99.1480655,19.4312825003
+MB0423,140,Metrobús,Intermedia,Nivel de suelo,L4,0,23,Mercados San Juan,0,0,Centro,Cuauhtémoc,15,Alameda,305.0,-99.1441014997,19.4306895008
+MB0424,141,Metrobús,Intermedia,Nivel de suelo,L4,0,24,Eje Central,0,0,Centro,Cuauhtémoc,15,Alameda,305.0,-99.1413629999,19.4303190009
+MB0425,142,Metrobús,Intermedia,Nivel de suelo,L4,2012,25,El Salvador,0,0,Centro,Cuauhtémoc,15,Alameda,559.0,-99.1389779997,19.4299725005
+MB0426,143,Metrobús,Intermedia,Nivel de suelo,L4,2012,26,Isabel la Católica,0,0,Centro,Cuauhtémoc,15,Alameda,559.0,-99.1367975,19.4296540001
+MB0427,144,Metrobús,Intermedia,Nivel de suelo,L4,2012,27,Museo de la Ciudad,0,0,Centro,Cuauhtémoc,15,Alameda,757.0,-99.1328898,19.4290292
+MB0428,145,Metrobús,Intermedia,Nivel de suelo,L4,2012,28,Pino Suárez,2,0,Centro,Cuauhtémoc,15,Centro,464.0,-99.132782,19.426661
+MB0430,146,Metrobús,Intermedia,Nivel de suelo,L4,2012,30,Las Cruces Sur,0,0,Centro,Cuauhtémoc,15,Centro,464.0,-99.129918,19.426155
+MB0432,147,Metrobús,Intermedia,Nivel de suelo,L4,0,32,La Merced,1,0,Centro,Cuauhtémoc,15,Centro,756.0,-99.1259158,19.4256392
+MB0433,148,Metrobús,Intermedia,Nivel de suelo,L4,2012,33,Mercado de Sonora,0,0,Oriente,Venustiano Carranza,17,Congreso,571.0,-99.123411,19.423241
+MB0434,149,Metrobús,Intermedia,Nivel de suelo,L4,2012,34,Cecilio Robelo,0,0,Oriente,Venustiano Carranza,17,Congreso,267.0,-99.1194570004,19.4253285005
+MB0435,150,Metrobús,Intermedia,Nivel de suelo,L4,2012,35,Eduardo Molina,0,0,Oriente,Venustiano Carranza,17,Congreso,267.0,-99.116228,19.427177
+MB0436,151,Metrobús,Intermedia,Nivel de suelo,L4,2012,36,Hospital Balbuena,0,0,Oriente,Venustiano Carranza,17,Congreso,267.0,-99.116153,19.425098
+MB0437,152,Metrobús,Transbordo,Nivel de suelo,L4,2012,37,Moctezuma,1,1,Oriente,Venustiano Carranza,17,Congreso,573.0,-99.111979,19.426894
+MB0438,153,Metrobús,Terminal,Nivel de suelo,L4,2021,38,Pantitlán,4,0,Oriente,Venustiano Carranza,17,Arenal,55.0,-99.0734542,19.4170652
+MB0439,154,Metrobús,Intermedia,Nivel de suelo,L4,2022,39,Calle 6,0,0,Oriente,Venustiano Carranza,17,Arenal,337.0,-99.0583981,19.4211477
+MB0440,155,Metrobús,Terminal,Nivel de suelo,L4,2022,40,Alameda Oriente,0,0,Oriente,Venustiano Carranza,17,Arenal,53.0,-99.0532703,19.4307516
+MB0441,156,Metrobús,Terminal,Nivel de suelo,L4,0,41,Terminal 1 - Aeropuerto,0,0,Oriente,Venustiano Carranza,17,Moctezuma,427.0,-99.083666,19.435307
+MB0442,157,Metrobús,Terminal,Nivel de suelo,L4,0,42,Terminal 2 - Aeropuerto,0,0,Oriente,Venustiano Carranza,17,Arenal,55.0,-99.07725,19.421476
+MB0443,158,Metrobús,Terminal,Nivel de suelo,L4,0,43,Terminal San Lázaro,2,1,Oriente,Venustiano Carranza,17,Congreso,573.0,-99.1152994999,19.4310135
+MB0501,159,Metrobús,Terminal,Nivel de suelo,L5,2013,1,Río de Los Remedios,0,0,Norte,Gustavo A. Madero,5,Quiroga,327.0,-99.0859345004,19.5071114901
+MB0502,160,Metrobús,Intermedia,Nivel de suelo,L5,2013,2,314 Memorial New's Divine,0,0,Norte,Gustavo A. Madero,5,Quiroga,327.0,-99.0887282816,19.5006062151
+MB0503,161,Metrobús,Intermedia,Nivel de suelo,L5,2013,3,5 de Mayo,0,0,Norte,Gustavo A. Madero,5,Pradera,341.0,-99.0901776144,19.4970901586
+MB0504,162,Metrobús,Intermedia,Nivel de suelo,L5,2013,4,Vasco de Quiroga,0,0,Norte,Gustavo A. Madero,5,Pradera,341.0,-99.0917827341,19.4932960201
+MB0505,163,Metrobús,Intermedia,Nivel de suelo,L5,2013,5,El Coyol,0,0,Norte,Gustavo A. Madero,5,Pradera,607.0,-99.094175999,19.4875378844
+MB0506,164,Metrobús,Intermedia,Nivel de suelo,L5,2013,6,Preparatoria 3,0,0,Norte,Gustavo A. Madero,5,Quiroga,155.0,-99.0960093028,19.4833621325
+MB0507,165,Metrobús,Transbordo,Nivel de suelo,L5,2013,7,San Juan de Aragón,0,0,Norte,Gustavo A. Madero,5,Quiroga,155.0,-99.0975064596,19.479868546
+MB0508,166,Metrobús,Intermedia,Nivel de suelo,L5,2013,8,Río de Guadalupe,0,0,Norte,Gustavo A. Madero,5,Cuchilla,24.0,-99.0991165223,19.4760275854
+MB0509,167,Metrobús,Intermedia,Nivel de suelo,L5,2013,9,Talismán,0,0,Norte,Gustavo A. Madero,5,Cuchilla,24.0,-99.1012429439,19.4710172363
+MB0510,168,Metrobús,Intermedia,Nivel de suelo,L5,2013,10,Victoria,0,0,Norte,Gustavo A. Madero,5,Cuchilla,220.0,-99.102797337,19.4673415245
+MB0511,169,Metrobús,Intermedia,Nivel de suelo,L5,2013,11,Oriente 101,0,0,Norte,Gustavo A. Madero,5,Cuchilla,787.0,-99.1054860526,19.4609748144
+MB0512,170,Metrobús,Intermedia,Nivel de suelo,L5,2013,12,Río Santa Coleta,0,0,Norte,Gustavo A. Madero,5,Cuchilla,787.0,-99.1074929162,19.4560585811
+MB0513,171,Metrobús,Intermedia,Nivel de suelo,L5,2013,13,Río Consulado,0,0,Norte,Gustavo A. Madero,5,Cuchilla,787.0,-99.108446516,19.4536648468
+MB0514,172,Metrobús,Intermedia,Nivel de suelo,L5,2013,14,Canal del Norte,0,0,Oriente,Venustiano Carranza,17,Consulado,324.0,-99.1103571516,19.4496863888
+MB0515,173,Metrobús,Intermedia,Nivel de suelo,L5,2013,15,Deportivo Eduardo Molina,0,0,Oriente,Venustiano Carranza,17,Consulado,32.0,-99.1121754533,19.4446991608
+MB0516,174,Metrobús,Intermedia,Nivel de suelo,L5,2013,16,Mercado Morelos,0,0,Oriente,Venustiano Carranza,17,Consulado,32.0,-99.1134396164,19.4413242787
+MB0518,175,Metrobús,Terminal / Transbordo,Nivel de suelo,L5,2013,18,Terminal San Lázaro,2,1,Oriente,Venustiano Carranza,17,Congreso,573.0,-99.1152760809,19.4308224554
+MB0519,176,Metrobús,Transbordo,Nivel de suelo,L5,2020,19,Moctezuma,1,1,Oriente,Venustiano Carranza,17,Merced-Balbuena,35.0,-99.1114740856,19.4255857937
+MB0520,177,Metrobús,Intermedia,Nivel de suelo,L5,2020,20,Venustiano Carranza,0,0,Oriente,Venustiano Carranza,17,Merced-Balbuena,529.0,-99.1122187198,19.4183741049
+MB0521,178,Metrobús,Intermedia,Nivel de suelo,L5,2020,21,Avenida del Taller,0,0,Oriente,Venustiano Carranza,17,Merced-Balbuena,36.0,-99.1127823495,19.4129354908
+MB0522,179,Metrobús,Intermedia,Nivel de suelo,L5,2020,22,Mixiuhca,1,0,Oriente,Venustiano Carranza,17,Merced-Balbuena,22.0,-99.1133270891,19.4078660145
+MB0523,180,Metrobús,Intermedia,Nivel de suelo,L5,2020,23,Hospital General Troncoso,0,0,Oriente,Iztacalco,6,Tlacotal,778.0,-99.1135696346,19.4054561966
+MB0524,181,Metrobús,Transbordo,Nivel de suelo,L5,2020,24,Metro Coyuya,1,1,Oriente,Iztacalco,6,Iztaccíhuatl,582.0,-99.1135336974,19.3993903237
+MB0525,182,Metrobús,Intermedia,Nivel de suelo,L5,2020,25,Recreo,0,0,Oriente,Iztacalco,6,Iztaccíhuatl,30.0,-99.1136103188,19.3938511859
+MB0526,183,Metrobús,Intermedia,Nivel de suelo,L5,2020,26,Oriente 116,0,0,Oriente,Iztacalco,6,Tlacotal,51.0,-99.1126579289,19.3902645045
+MB0527,184,Metrobús,Intermedia,Nivel de suelo,L5,2020,27,Colegio de Bachilleres 3,0,0,Oriente,Iztacalco,6,Iztaccíhuatl,29.0,-99.111661915,19.3863239204
+MB0528,185,Metrobús,Intermedia,Nivel de suelo,L5,2020,28,Canal Apatlaco,0,0,Oriente,Iztacalco,6,Iztaccíhuatl,28.0,-99.1108887673,19.3828869836
+MB0529,186,Metrobús,Intermedia,Nivel de suelo,L5,2020,29,Apatlaco,1,0,Oriente,Iztapalapa,7,Granjas,160.0,-99.1090729283,19.3780578865
+MB0530,187,Metrobús,Intermedia,Nivel de suelo,L5,2020,30,Aculco,1,0,Oriente,Iztapalapa,7,Churubusco,356.0,-99.1079750955,19.3748751179
+MB0531,188,Metrobús,Intermedia,Nivel de suelo,L5,2020,31,Churubusco Oriente,0,0,Oriente,Iztapalapa,7,Granjas,160.0,-99.1078606384,19.3715946455
+MB0532,189,Metrobús,Intermedia,Nivel de suelo,L5,2020,32,Escuadrón 201,1,0,Oriente,Iztapalapa,7,Churubusco,623.0,-99.1091921634,19.3660430833
+MB0533,190,Metrobús,Intermedia,Nivel de suelo,L5,2020,33,Atanasio G. Sarabia,0,0,Oriente,Iztapalapa,7,Churubusco,477.0,-99.1102837848,19.3612573396
+MB0534,191,Metrobús,Intermedia,Nivel de suelo,L5,2020,34,Ermita Iztapalapa,0,0,Oriente,Iztapalapa,7,Granjas,440.0,-99.1113358138,19.3566282978
+MB0535,192,Metrobús,Intermedia,Nivel de suelo,L5,2020,35,Ganaderos,0,0,Oriente,Iztapalapa,7,Granjas,206.0,-99.1109177512,19.3515751513
+MB0536,193,Metrobús,Intermedia,Nivel de suelo,L5,2020,36,Pueblo de los Reyes,0,0,Oriente,Iztapalapa,7,Granjas,161.0,-99.1113411511,19.3479781791
+MB0537,194,Metrobús,Intermedia,Nivel de suelo,L5,2020,37,Barrio San Antonio,0,0,Oriente,Iztapalapa,7,Granjas,161.0,-99.1124363936,19.3431262502
+MB0538,195,Metrobús,Intermedia,Nivel de suelo,L5,2020,38,Calzada Taxqueña,0,0,Oriente,Iztapalapa,7,Granjas,161.0,-99.1129965035,19.3387554856
+MB0539,196,Metrobús,Intermedia,Nivel de suelo,L5,2020,39,Cafetales,0,0,Sur,Coyoacán,3,Culhuacán,726.0,-99.1131493568,19.3337244519
+MB0540,197,Metrobús,Intermedia,Nivel de suelo,L5,2020,40,ESIME Culhuacán,0,0,Sur,Coyoacán,3,Culhuacán,726.0,-99.1135367579,19.3292111999
+MB0541,198,Metrobús,Intermedia,Nivel de suelo,L5,2020,41,Manuela Sáenz,0,0,Sur,Coyoacán,3,Culhuacán,726.0,-99.1139664675,19.324206883
+MB0542,199,Metrobús,Intermedia,Nivel de suelo,L5,2020,42,La Virgen,0,0,Sur,Coyoacán,3,Culhuacán,663.0,-99.113623132,19.3206753161
+MB0543,200,Metrobús,Intermedia,Nivel de suelo,L5,2020,43,Tepetlapa,0,0,Sur,Coyoacán,3,Culhuacán,663.0,-99.111626946,19.3163419915
+MB0544,201,Metrobús,Intermedia,Nivel de suelo,L5,2020,44,Las Bombas,0,0,Sur,Coyoacán,3,Culhuacán,448.0,-99.1106701608,19.3118384227
+MB0545,202,Metrobús,Intermedia,Nivel de suelo,L5,2021,45,Vista Hermosa,0,0,Sur,Coyoacán,3,Culhuacán,730.0,-99.1117913495,19.3068124509
+MB0546,203,Metrobús,Intermedia,Nivel de suelo,L5,2021,46,Calzada del Hueso,0,0,Sur,Coyoacán,3,Culhuacán,729.0,-99.1133455703,19.3015719407
+MB0547,204,Metrobús,Intermedia,Nivel de suelo,L5,2021,47,Cañaverales,0,0,Sur,Tlalpan,12,Coapa,635.0,-99.1144727033,19.2955451271
+MB0548,205,Metrobús,Intermedia,Nivel de suelo,L5,2021,48,Muyuguarda,0,0,Sur,Xochimilco,13,Tepepan,272.0,-99.1155411005,19.2850594088
+MB0549,206,Metrobús,Intermedia,Nivel de suelo,L5,2021,49,Circuito Cuemanco,0,0,Sur,Xochimilco,13,Tepepan,272.0,-99.1166930592,19.2814068957
+MB0550,207,Metrobús,Intermedia,Nivel de suelo,L5,2021,50,DIF Xochimilco,0,0,Sur,Xochimilco,13,Tepepan,272.0,-99.1176615916,19.2781910357
+MB0551,208,Metrobús,Terminal,Nivel de suelo,L5,2021,51,Preparatoria 1,0,0,Sur,Xochimilco,13,La Noria,842.0,-99.1207959232,19.2733739973
+MB0601,209,Metrobús,Terminal,Nivel de suelo,L6,2016,1,El Rosario,2,0,Norte,Azcapotzalco,2,Hormiga,118.0,-99.199545672,19.5071663128
+MB0602,210,Metrobús,Intermedia,Nivel de suelo,L6,2016,2,Colegio de Bachilleres 1,0,0,Norte,Azcapotzalco,2,Hormiga,689.0,-99.1973145798,19.5116371152
+MB0603,211,Metrobús,Intermedia,Nivel de suelo,L6,2016,3,De Las Culturas,0,0,Norte,Azcapotzalco,2,Hormiga,122.0,-99.1926053407,19.5109448165
+MB0604,212,Metrobús,Intermedia,Nivel de suelo,L6,2016,4,Ferrocarriles Nacionales,0,0,Norte,Azcapotzalco,2,Hormiga,122.0,-99.1885976473,19.5048734782
+MB0605,213,Metrobús,Intermedia,Nivel de suelo,L6,2016,5,UAM-Azcapotzalco,0,0,Norte,Azcapotzalco,2,Hormiga,122.0,-99.1839872358,19.5040086723
+MB0606,214,Metrobús,Intermedia,Nivel de suelo,L6,2016,6,Tecnoparque,0,0,Norte,Azcapotzalco,2,Hormiga,688.0,-99.178876312,19.502473143
+MB0607,215,Metrobús,Intermedia,Nivel de suelo,L6,2016,7,Norte 59,0,0,Norte,Azcapotzalco,2,La Raza,185.0,-99.1655539166,19.4976218227
+MB0608,216,Metrobús,Intermedia,Nivel de suelo,L6,2016,8,Norte 45,0,0,Norte,Azcapotzalco,2,La Raza,185.0,-99.1597480696,19.4963468224
+MB0609,217,Metrobús,Transbordo,Nivel de suelo,L6,2016,9,Montevideo,0,0,Norte,Gustavo A. Madero,5,Lindavista,596.0,-99.1530594776,19.494875469
+MB0610,218,Metrobús,Intermedia,Nivel de suelo,L6,2016,10,Lindavista-Vallejo,0,0,Norte,Gustavo A. Madero,5,Lindavista,596.0,-99.1480386983,19.4937757668
+MB0611,219,Metrobús,Intermedia,Nivel de suelo,L6,2016,11,Instituto del Petróleo,2,0,Norte,Gustavo A. Madero,5,Lindavista,332.0,-99.1451709015,19.4931461201
+MB0612,220,Metrobús,Intermedia,Nivel de suelo,L6,2016,12,San Bartolo,0,0,Norte,Gustavo A. Madero,5,Lindavista,333.0,-99.1391108955,19.4919641288
+MB0613,221,Metrobús,Terminal,Nivel de suelo,L6,2016,13,Instituto Politécnico Nacional,0,0,Norte,Gustavo A. Madero,5,Lindavista,601.0,-99.1326542311,19.4904318399
+MB0614,222,Metrobús,Intermedia,Nivel de suelo,L6,2016,14,Riobamba,0,0,Norte,Gustavo A. Madero,5,Lindavista,47.0,-99.127899181,19.488650997
+MB0615,223,Metrobús,Transbordo,Nivel de suelo,L6,2016,15,Deportivo 18 de Marzo,2,2,Norte,Gustavo A. Madero,5,Tepeyac,328.0,-99.1223980915,19.4866016533
+MB0616,224,Metrobús,Intermedia,Nivel de suelo,L6,2016,16,La Villa,0,0,Norte,Gustavo A. Madero,5,Tepeyac,328.0,-99.119604425,19.4854276331
+MB0617,225,Metrobús,Transbordo,Nivel de suelo,L6,2016,17,De Los Misterios,0,0,Norte,Gustavo A. Madero,5,Quiroga,587.0,-99.1179452889,19.487207159
+MB0618,226,Metrobús,Transbordo,Nivel de suelo,L6,2016,18,Hospital Infantil La Villa,0,0,Norte,Gustavo A. Madero,5,Quiroga,587.0,-99.1147038107,19.4880355846
+MB0619,227,Metrobús,Transbordo,Nivel de suelo,L6,2016,19,Delegación Gustavo A. Madero,0,0,Norte,Gustavo A. Madero,5,Quiroga,432.0,-99.1123443083,19.4838905899
+MB0620,228,Metrobús,Intermedia,Nivel de suelo,L6,2016,20,Martín Carrera,2,0,Norte,Gustavo A. Madero,5,Quiroga,155.0,-99.1053351139,19.4820384429
+MB0621,229,Metrobús,Intermedia,Nivel de suelo,L6,2016,21,Hospital General La Villa,0,0,Norte,Gustavo A. Madero,5,Quiroga,155.0,-99.1011883272,19.4803680265
+MB0622,230,Metrobús,Transbordo,Nivel de suelo,L6,2016,22,San Juan de Aragón,0,0,Norte,Gustavo A. Madero,5,Pradera,607.0,-99.0971741138,19.4787594359
+MB0623,231,Metrobús,Intermedia,Nivel de suelo,L6,2016,23,Gran Canal,0,0,Norte,Gustavo A. Madero,5,Pradera,607.0,-99.0929331963,19.4770947566
+MB0624,232,Metrobús,Intermedia,Nivel de suelo,L6,2016,24,Casas Alemán,0,0,Norte,Gustavo A. Madero,5,Aragón,221.0,-99.0883668835,19.4743215112
+MB0625,233,Metrobús,Intermedia,Nivel de suelo,L6,2016,25,Pueblo San Juan de Aragón,0,0,Norte,Gustavo A. Madero,5,Aragón,221.0,-99.0863611451,19.4710049865
+MB0626,234,Metrobús,Intermedia,Nivel de suelo,L6,2016,26,Loreto Fabela,0,0,Norte,Gustavo A. Madero,5,Aragón,221.0,-99.0809818741,19.4673977285
+MB0627,235,Metrobús,Intermedia,Nivel de suelo,L6,2016,27,482,0,0,Norte,Gustavo A. Madero,5,Aragón,732.0,-99.0755257907,19.4668640649
+MB0628,236,Metrobús,Intermedia,Nivel de suelo,L6,2016,28,414,0,0,Norte,Gustavo A. Madero,5,Aragón,732.0,-99.0715999716,19.4684349269
+MB0629,237,Metrobús,Intermedia,Nivel de suelo,L6,2016,29,416 Poniente,0,0,Norte,Gustavo A. Madero,5,Aragón,221.0,-99.0793796663,19.4725191342
+MB0630,238,Metrobús,Intermedia,Nivel de suelo,L6,2016,30,416 Oriente,0,0,Norte,Gustavo A. Madero,5,Aragón,732.0,-99.0709115739,19.4711389685
+MB0631,239,Metrobús,Intermedia,Nivel de suelo,L6,2016,31,Deportivo Los Galeana,0,0,Norte,Gustavo A. Madero,5,Pradera,58.0,-99.078046865,19.4784609849
+MB0632,240,Metrobús,Intermedia,Nivel de suelo,L6,2016,32,Ampliación Providencia,0,0,Norte,Gustavo A. Madero,5,Pradera,609.0,-99.0752984164,19.4798469817
+MB0633,241,Metrobús,Intermedia,Nivel de suelo,L6,2016,33,Volcán de Fuego,0,0,Norte,Gustavo A. Madero,5,Pradera,609.0,-99.0725218417,19.4769690225
+MB0634,242,Metrobús,Intermedia,Nivel de suelo,L6,2016,34,La Pradera,0,0,Norte,Gustavo A. Madero,5,Aragón,449.0,-99.0686730633,19.473133546
+MB0635,243,Metrobús,Intermedia,Nivel de suelo,L6,2016,35,Colegio de Bachilleres 9,0,0,Norte,Gustavo A. Madero,5,Pradera,57.0,-99.0650015663,19.4697954318
+MB0636,244,Metrobús,Intermedia,Nivel de suelo,L6,2016,36,Francisco Morazán,0,0,Norte,Gustavo A. Madero,5,Aragón,449.0,-99.0618344542,19.4670482771
+MB0637,245,Metrobús,Terminal,Nivel de suelo,L6,2016,37,Villa de Aragón,1,0,Norte,Gustavo A. Madero,5,Aragón,449.0,-99.0595175391,19.4649217285
+MB0701,246,Metrobús,Terminal / Transbordo,Nivel de suelo,L7,2018,1,Indios Verdes,1,2,Norte,Gustavo A. Madero,5,Lindavista,334.0,-99.1210126591,19.4930399181
+MB0702,247,Metrobús,Terminal / Transbordo,Nivel de suelo,L7,2018,2,Hospital Infantil La Villa,0,0,Norte,Gustavo A. Madero,5,Quiroga,587.0,-99.1137844649,19.4872784548
+MB0703,248,Metrobús,Transbordo,Nivel de suelo,L7,2018,3,De Los Misterios,0,0,Norte,Gustavo A. Madero,5,Quiroga,587.0,-99.1179228347,19.4869919891
+MB0704,249,Metrobús,Transbordo,Nivel de suelo,L7,2018,4,Delegación Gustavo A. Madero,0,0,Norte,Gustavo A. Madero,5,Quiroga,587.0,-99.1139280451,19.4835477444
+MB0705,250,Metrobús,Intermedia,Nivel de suelo,L7,2018,5,Garrido,0,0,Norte,Gustavo A. Madero,5,Tepeyac,328.0,-99.1193497035,19.4832482073
+MB0706,251,Metrobús,Intermedia,Nivel de suelo,L7,2018,6,Avenida Talismán,0,0,Norte,Gustavo A. Madero,5,Tepeyac,588.0,-99.1210784936,19.478675139
+MB0707,252,Metrobús,Intermedia,Nivel de suelo,L7,2018,7,Necaxa,0,0,Norte,Gustavo A. Madero,5,Tepeyac,588.0,-99.1223181691,19.475375762
+MB0708,253,Metrobús,Intermedia,Nivel de suelo,L7,2018,8,Excélsior,0,0,Norte,Gustavo A. Madero,5,Tepeyac,592.0,-99.1238860077,19.4711943824
+MB0709,254,Metrobús,Intermedia,Nivel de suelo,L7,2018,9,Robles Domínguez,0,0,Norte,Gustavo A. Madero,5,Tepeyac,590.0,-99.1251776641,19.467758226
+MB0710,255,Metrobús,Intermedia,Nivel de suelo,L7,2018,10,Clave,0,0,Norte,Gustavo A. Madero,5,Tepeyac,590.0,-99.1263471796,19.464646687
+MB0711,256,Metrobús,Intermedia,Nivel de suelo,L7,2018,11,Misterios,1,0,Norte,Gustavo A. Madero,5,Tepeyac,590.0,-99.1274380638,19.4617545272
+MB0712,257,Metrobús,Intermedia,Nivel de suelo,L7,2018,12,Mercado Beethoven,0,0,Centro,Cuauhtémoc,15,Tlatelolco,550.0,-99.1291252223,19.457325465
+MB0713,258,Metrobús,Intermedia,Nivel de suelo,L7,2018,13,Peralvillo,0,0,Centro,Cuauhtémoc,15,Tlatelolco,550.0,-99.1308624235,19.4531189777
+MB0714,259,Metrobús,Intermedia,Nivel de suelo,L7,2018,14,Tres Culturas,0,0,Centro,Cuauhtémoc,15,Morelos,810.0,-99.1328269776,19.4506023381
+MB0715,260,Metrobús,Intermedia,Nivel de suelo,L7,2018,15,Glorieta Cuitláhuac,0,0,Centro,Cuauhtémoc,15,Morelos,195.0,-99.1356317531,19.4473766669
+MB0716,261,Metrobús,Intermedia,Nivel de suelo,L7,2018,16,Garibaldi,2,0,Centro,Cuauhtémoc,15,Buenavista,298.0,-99.1389717441,19.4443912925
+MB0717,262,Metrobús,Intermedia,Nivel de suelo,L7,2018,17,Glorieta Violeta,0,0,Centro,Cuauhtémoc,15,Buenavista,557.0,-99.143264027,19.4404822685
+MB0718,263,Metrobús,Transbordo,Nivel de suelo,L7,2018,18,Hidalgo,2,2,Centro,Cuauhtémoc,15,Alameda,564.0,-99.1468028634,19.4372939575
+MB0719,264,Metrobús,Intermedia,Nivel de suelo,L7,2018,19,El Caballito,0,0,Centro,Cuauhtémoc,15,Alameda,564.0,-99.1495001699,19.4355905131
+MB0720,265,Metrobús,Transbordo,Nivel de suelo,L7,2018,20,Glorieta de Colón,0,0,Centro,Cuauhtémoc,15,Ángel,303.0,-99.1533364037,19.4337582755
+MB0721,266,Metrobús,Intermedia,Nivel de suelo,L7,2018,21,París,0,0,Centro,Cuauhtémoc,15,Ángel,302.0,-99.155969579,19.4325029294
+MB0722,267,Metrobús,Transbordo,Nivel de suelo,L7,2018,22,Reforma,0,0,Centro,Cuauhtémoc,15,Ángel,302.0,-99.1586284131,19.4312527661
+MB0723,268,Metrobús,Transbordo,Nivel de suelo,L7,2018,23,Hamburgo,0,0,Centro,Cuauhtémoc,15,Ángel,752.0,-99.1620518986,19.4296350608
+MB0724,269,Metrobús,Intermedia,Nivel de suelo,L7,2018,24,La Palma,0,0,Centro,Cuauhtémoc,15,Ángel,752.0,-99.1649744696,19.4282602729
+MB0725,270,Metrobús,Intermedia,Nivel de suelo,L7,2018,25,El Ángel,0,0,Centro,Cuauhtémoc,15,Ángel,308.0,-99.1685813879,19.4265664303
+MB0726,271,Metrobús,Intermedia,Nivel de suelo,L7,2018,26,La Diana,0,0,Centro,Cuauhtémoc,15,Ángel,14.0,-99.1716479536,19.4251358993
+MB0727,272,Metrobús,Intermedia,Nivel de suelo,L7,2018,27,Chapultepec,1,0,Centro,Cuauhtémoc,15,Ángel,309.0,-99.1742888631,19.4238916722
+MB0728,273,Metrobús,Intermedia,Nivel de suelo,L7,2018,28,Gandhi,0,0,Poniente,Miguel Hidalgo,16,Polanco-Castillo,683.0,-99.1804353389,19.4239995645
+MB0729,274,Metrobús,Intermedia,Nivel de suelo,L7,2018,29,Antropología,0,0,Poniente,Miguel Hidalgo,16,Polanco-Castillo,189.0,-99.1849248138,19.4246886892
+MB0730,275,Metrobús,Intermedia,Nivel de suelo,L7,2018,30,Auditorio,1,0,Poniente,Miguel Hidalgo,16,Polanco-Castillo,188.0,-99.194200661,19.4260943506
+MB0731,276,Metrobús,Terminal,Nivel de suelo,L7,2018,31,Campo Marte,0,0,Poniente,Miguel Hidalgo,16,Polanco-Castillo,188.0,-99.1993595569,19.4268865297
+STC0101,277,STC Metro,Terminal / Transbordo,Nivel elevado,L1,1984,1,Pantitlán,3,1,Oriente,Venustiano Carranza,17,Arenal,55.0,-99.074735727,19.4163340856
+STC0102,278,STC Metro,Intermedia,Subterráneo,L1,1969,2,Zaragoza,0,0,Oriente,Venustiano Carranza,17,Arenal,605.0,-99.0822888118,19.4119204559
+STC0103,279,STC Metro,Intermedia,Subterráneo,L1,1969,3,Gómez Farías,0,0,Oriente,Venustiano Carranza,17,Zaragoza,201.0,-99.0902103917,19.4164784569
+STC0104,280,STC Metro,Intermedia,Subterráneo,L1,1969,4,Boulevard Puerto Aéreo,0,0,Oriente,Venustiano Carranza,17,Zaragoza,530.0,-99.0962587324,19.4199419649
+STC0105,281,STC Metro,Intermedia,Subterráneo,L1,1969,5,Balbuena,0,0,Oriente,Venustiano Carranza,17,Merced-Balbuena,325.0,-99.102774364,19.4233553356
+STC0106,282,STC Metro,Intermedia,Subterráneo,L1,1969,6,Moctezuma,0,2,Oriente,Venustiano Carranza,17,Merced-Balbuena,584.0,-99.1097992691,19.4268543467
+STC0107,283,STC Metro,Transbordo,Subterráneo,L1,1969,7,San Lázaro,1,2,Oriente,Venustiano Carranza,17,Congreso,573.0,-99.1142609524,19.4300588496
+STC0108,284,STC Metro,Transbordo,Subterráneo,L1,1969,8,Candelaria,0,0,Oriente,Venustiano Carranza,17,Congreso,311.0,-99.1209095501,19.4295401407
+STC0109,285,STC Metro,Intermedia,Subterráneo,L1,1969,9,Merced,0,1,Oriente,Venustiano Carranza,17,Congreso,571.0,-99.1250254185,19.4254875716
+STC0110,286,STC Metro,Transbordo,Subterráneo,L1,1969,10,Pino Suárez,1,1,Centro,Cuauhtémoc,15,Centro,464.0,-99.132638612,19.4259234951
+STC0111,287,STC Metro,Intermedia,Subterráneo,L1,1969,11,Isabel la Católica,0,0,Centro,Cuauhtémoc,15,Alameda,559.0,-99.1378304565,19.4263935118
+STC0112,288,STC Metro,Transbordo,Subterráneo,L1,1969,12,Salto del Agua,0,0,Centro,Cuauhtémoc,15,Alameda,305.0,-99.1434062939,19.4269481897
+STC0113,289,STC Metro,Transbordo,Subterráneo,L1,1969,13,Balderas,1,1,Centro,Cuauhtémoc,15,Asturias,760.0,-99.1494811514,19.4269978761
+STC0114,290,STC Metro,Intermedia,Subterráneo,L1,1969,14,Cuauhtémoc,0,1,Centro,Cuauhtémoc,15,Ángel,303.0,-99.1545979513,19.4256611111
+STC0115,291,STC Metro,Intermedia,Subterráneo,L1,1969,15,Insurgentes,0,1,Centro,Cuauhtémoc,15,Ángel,12.0,-99.1632888795,19.4236518006
+STC0116,292,STC Metro,Intermedia,Subterráneo,L1,1969,16,Sevilla,0,0,Centro,Cuauhtémoc,15,Ángel,13.0,-99.1711190739,19.4218499159
+STC0117,293,STC Metro,Intermedia,Subterráneo,L1,1969,17,Chapultepec,0,1,Centro,Cuauhtémoc,15,Ángel,13.0,-99.1764167316,19.420746295
+STC0118,294,STC Metro,Intermedia,Subterráneo,L1,1970,18,Juanacatlán,0,0,Poniente,Miguel Hidalgo,16,Tacubaya,271.0,-99.1819838295,19.4129516425
+STC0119,295,STC Metro,Transbordo,Subterráneo,L1,1970,19,Tacubaya,2,1,Poniente,Miguel Hidalgo,16,Tacubaya,755.0,-99.1876365263,19.4025138023
+STC0120,296,STC Metro,Terminal,Nivel de suelo,L1,1972,20,Observatorio,0,0,Poniente,Álvaro Obregón,10,Plateros,166.0,-99.200404746,19.3982823757
+STC0201,297,STC Metro,Terminal,Subterráneo,L2,1984,1,Cuatro Caminos,0,0,Poniente,Miguel Hidalgo,16,Tacuba,456.0,-99.2158424897,19.4595932085
+STC0202,298,STC Metro,Intermedia,Subterráneo,L2,1984,2,Panteones,0,0,Poniente,Miguel Hidalgo,16,Tacuba,458.0,-99.2029491295,19.4586385608
+STC0203,299,STC Metro,Transbordo,Subterráneo,L2,1970,3,Tacuba,0,0,Poniente,Miguel Hidalgo,16,Tacuba,253.0,-99.1882309344,19.4593760107
+STC0204,300,STC Metro,Intermedia,Subterráneo,L2,1970,4,Cuitláhuac,0,0,Poniente,Miguel Hidalgo,16,Tacuba,253.0,-99.1814957679,19.4572538897
+STC0205,301,STC Metro,Intermedia,Subterráneo,L2,1970,5,Popotla,0,0,Poniente,Miguel Hidalgo,16,Tacuba,109.0,-99.1754938143,19.4529092198
+STC0206,302,STC Metro,Intermedia,Subterráneo,L2,1970,6,Colegio Militar,0,0,Poniente,Miguel Hidalgo,16,Tacuba,666.0,-99.1717792333,19.449273555
+STC0207,303,STC Metro,Intermedia,Subterráneo,L2,1970,7,Normal,0,0,Poniente,Miguel Hidalgo,16,Tacuba,106.0,-99.1672740374,19.4445577055
+STC0208,304,STC Metro,Intermedia,Subterráneo,L2,1970,8,San Cosme,0,0,Centro,Cuauhtémoc,15,Buenavista,554.0,-99.1606620728,19.4419042544
+STC0209,305,STC Metro,Intermedia,Subterráneo,L2,1970,9,Revolución,0,1,Centro,Cuauhtémoc,15,Buenavista,556.0,-99.1542278257,19.4392271791
+STC0210,306,STC Metro,Transbordo,Subterráneo,L2,1970,10,Hidalgo,1,3,Centro,Cuauhtémoc,15,Buenavista,557.0,-99.1472234055,19.4375467479
+STC0211,307,STC Metro,Transbordo,Subterráneo,L2,1970,11,Bellas Artes,1,1,Centro,Cuauhtémoc,15,Buenavista,565.0,-99.1416136374,19.4363777559
+STC0212,308,STC Metro,Intermedia,Subterráneo,L2,1970,12,Allende,0,0,Centro,Cuauhtémoc,15,Alameda,506.0,-99.1368678402,19.4355580033
+STC0213,309,STC Metro,Intermedia,Subterráneo,L2,1970,13,Zócalo/Tenochtitlan,0,0,Centro,Cuauhtémoc,15,Alameda,759.0,-99.1322510733,19.432501911
+STC0214,310,STC Metro,Transbordo,Subterráneo,L2,1970,14,Pino Suárez,1,1,Centro,Cuauhtémoc,15,Centro,464.0,-99.1329418267,19.4243847117
+STC0215,311,STC Metro,Intermedia,Nivel de suelo,L2,1970,15,San Antonio Abad,0,0,Centro,Cuauhtémoc,15,Asturias,59.0,-99.1345398742,19.4160216471
+STC0216,312,STC Metro,Transbordo,Nivel de suelo,L2,1970,16,Chabacano,0,0,Centro,Cuauhtémoc,15,Asturias,610.0,-99.1356181173,19.4091798693
+STC0217,313,STC Metro,Intermedia,Nivel de suelo,L2,1970,17,Viaducto,0,0,Centro,Benito Juárez,14,Narvarte-Álamos,240.0,-99.1368995925,19.400868658
+STC0218,314,STC Metro,Intermedia,Nivel de suelo,L2,1970,18,Xola,0,1,Centro,Benito Juárez,14,Narvarte-Álamos,240.0,-99.1378081793,19.39521051
+STC0219,315,STC Metro,Intermedia,Nivel de suelo,L2,1970,19,Villa de Cortés,0,0,Centro,Benito Juárez,14,Narvarte-Álamos,242.0,-99.1389591662,19.3875817758
+STC0220,316,STC Metro,Intermedia,Nivel de suelo,L2,1970,20,Nativitas,0,0,Centro,Benito Juárez,14,Narvarte-Álamos,628.0,-99.1401878897,19.3795327609
+STC0221,317,STC Metro,Intermedia,Nivel de suelo,L2,1970,21,Portales,0,0,Centro,Benito Juárez,14,Nativitas,87.0,-99.1415735549,19.3699248387
+STC0222,318,STC Metro,Transbordo,Nivel de suelo,L2,1970,22,Ermita,0,0,Centro,Benito Juárez,14,Nativitas,795.0,-99.1429037615,19.3619792998
+STC0223,319,STC Metro,Intermedia,Nivel de suelo,L2,1970,23,General Anaya,0,0,Sur,Coyoacán,3,Coyoacán,640.0,-99.145006363,19.3532359149
+STC0224,320,STC Metro,Terminal,Nivel de suelo,L2,1970,24,Tasqueña,0,0,Sur,Coyoacán,3,Taxqueña,379.0,-99.1395327764,19.3437570983
+STC0301,321,STC Metro,Terminal,Nivel de suelo,L3,1979,1,Indios Verdes,0,3,Norte,Gustavo A. Madero,5,Lindavista,334.0,-99.1195099383,19.4953376186
+STC0302,322,STC Metro,Transbordo,Nivel de suelo,L3,1979,2,Deportivo 18 de Marzo,1,3,Norte,Gustavo A. Madero,5,Tepeyac,328.0,-99.1254979171,19.4851141513
+STC0303,323,STC Metro,Intermedia,Nivel de suelo,L3,1979,3,Potrero,0,1,Norte,Gustavo A. Madero,5,Lindavista,600.0,-99.132013683,19.4771920115
+STC0304,324,STC Metro,Transbordo,Subterráneo,L3,1978,4,La Raza,1,2,Norte,Gustavo A. Madero,5,Lindavista,597.0,-99.1395062302,19.4688801338
+STC0305,325,STC Metro,Intermedia,Subterráneo,L3,1970,5,Tlatelolco,0,0,Centro,Cuauhtémoc,15,Tlatelolco,290.0,-99.1431330841,19.4550581428
+STC0306,326,STC Metro,Transbordo,Subterráneo,L3,1970,6,Guerrero,1,1,Centro,Cuauhtémoc,15,Buenavista,7.0,-99.1451933441,19.4447263348
+STC0307,327,STC Metro,Transbordo,Subterráneo,L3,1970,7,Hidalgo,1,3,Centro,Cuauhtémoc,15,Ángel,11.0,-99.1467827213,19.4373823923
+STC0308,328,STC Metro,Intermedia,Subterráneo,L3,1970,8,Juárez,0,2,Centro,Cuauhtémoc,15,Alameda,304.0,-99.1476833058,19.4332503465
+STC0309,329,STC Metro,Transbordo,Subterráneo,L3,1970,9,Balderas,1,1,Centro,Cuauhtémoc,15,Asturias,760.0,-99.14906048,19.4264800934
+STC0310,330,STC Metro,Intermedia,Subterráneo,L3,1970,10,Niños Héroes/Poder Judicial CDMX,0,0,Centro,Cuauhtémoc,15,Asturias,762.0,-99.1503642652,19.4194843102
+STC0311,331,STC Metro,Intermedia,Subterráneo,L3,1970,11,Hospital General,0,1,Centro,Cuauhtémoc,15,Asturias,63.0,-99.1532453618,19.4137587536
+STC0312,332,STC Metro,Transbordo,Subterráneo,L3,1980,12,Centro Médico,1,1,Centro,Cuauhtémoc,15,Asturias,764.0,-99.1551346895,19.4074531474
+STC0313,333,STC Metro,Intermedia,Subterráneo,L3,1980,13,Etiopía/Plaza de la Transparencia,0,2,Centro,Benito Juárez,14,Narvarte-Álamos,239.0,-99.1560314153,19.3959205316
+STC0314,334,STC Metro,Intermedia,Subterráneo,L3,1980,14,Eugenia,0,1,Centro,Benito Juárez,14,Narvarte-Álamos,361.0,-99.1572045976,19.3861685181
+STC0315,335,STC Metro,Intermedia,Subterráneo,L3,1980,15,División del Norte,0,1,Centro,Benito Juárez,14,Del Valle,372.0,-99.1594791658,19.3791844354
+STC0316,336,STC Metro,Transbordo,Subterráneo,L3,1980,16,Zapata,0,0,Centro,Benito Juárez,14,Del Valle,648.0,-99.1645102977,19.3711917866
+STC0317,337,STC Metro,Intermedia,Subterráneo,L3,1983,17,Coyoacán,0,0,Centro,Benito Juárez,14,Portales,88.0,-99.1708615273,19.3613590774
+STC0318,338,STC Metro,Intermedia,Subterráneo,L3,1983,18,Viveros/Derechos Humanos,0,0,Poniente,Álvaro Obregón,10,San Ángel,460.0,-99.1760010861,19.3534590245
+STC0319,339,STC Metro,Intermedia,Subterráneo,L3,1983,19,Miguel Ángel de Quevedo,0,0,Sur,Coyoacán,3,Universidad,64.0,-99.1807566556,19.3462518331
+STC0320,340,STC Metro,Intermedia,Subterráneo,L3,1983,20,Copilco,0,0,Sur,Coyoacán,3,Universidad,619.0,-99.1769735952,19.3360992748
+STC0321,341,STC Metro,Terminal,Nivel de suelo,L3,1983,21,Universidad,0,0,Sur,Coyoacán,3,Universidad,619.0,-99.1739384556,19.3243534829
+STC0401,342,STC Metro,Terminal / Transbordo,Nivel elevado,L4,1982,1,Santa Anita,0,0,Oriente,Iztacalco,6,Iztaccíhuatl,582.0,-99.1216956043,19.4028915727
+STC0402,343,STC Metro,Transbordo,Nivel elevado,L4,1982,2,Jamaica,0,0,Oriente,Venustiano Carranza,17,Merced-Balbuena,37.0,-99.1217435881,19.4109150604
+STC0403,344,STC Metro,Intermedia,Nivel elevado,L4,1982,3,Fray Servando,0,0,Oriente,Venustiano Carranza,17,Merced-Balbuena,27.0,-99.1205334529,19.4215902669
+STC0404,345,STC Metro,Transbordo,Nivel de suelo,L4,1981,4,Candelaria,0,0,Oriente,Venustiano Carranza,17,Congreso,573.0,-99.1194262858,19.4287642237
+STC0405,346,STC Metro,Transbordo,Nivel elevado,L4,1981,5,Morelos,0,0,Oriente,Venustiano Carranza,17,Consulado,583.0,-99.1181521225,19.4396641649
+STC0406,347,STC Metro,Intermedia,Nivel elevado,L4,1981,6,Canal del Norte,0,0,Oriente,Venustiano Carranza,17,Consulado,32.0,-99.1161330508,19.448945008
+STC0407,348,STC Metro,Transbordo,Nivel elevado,L4,1981,7,Consulado,0,0,Norte,Gustavo A. Madero,5,Cuchilla,579.0,-99.1139038485,19.4580181992
+STC0408,349,STC Metro,Intermedia,Nivel elevado,L4,1981,8,Bondojito,0,0,Norte,Gustavo A. Madero,5,Cuchilla,579.0,-99.1119767785,19.4646312013
+STC0409,350,STC Metro,Intermedia,Nivel elevado,L4,1981,9,Talismán,0,0,Norte,Gustavo A. Madero,5,Cuchilla,24.0,-99.1080122386,19.4743583149
+STC0410,351,STC Metro,Terminal / Transbordo,Nivel de suelo,L4,1981,10,Martín Carrera,1,1,Norte,Gustavo A. Madero,5,Quiroga,432.0,-99.1043694775,19.4850441447
+STC0501,352,STC Metro,Terminal,Nivel de suelo,L5,1982,1,Politécnico,0,0,Norte,Gustavo A. Madero,5,Ticomán,43.0,-99.1492059926,19.5006786987
+STC0502,353,STC Metro,Transbordo,Nivel de suelo,L5,1982,2,Instituto del Petróleo,1,1,Norte,Gustavo A. Madero,5,Lindavista,332.0,-99.1447097491,19.4893393093
+STC0503,354,STC Metro,Intermedia,Nivel de suelo,L5,1982,3,Autobuses del Norte,0,0,Norte,Gustavo A. Madero,5,Lindavista,598.0,-99.1406507386,19.4790708959
+STC0504,355,STC Metro,Transbordo,Nivel de suelo,L5,1982,4,La Raza,1,2,Norte,Gustavo A. Madero,5,Tepeyac,329.0,-99.1365156505,19.4696664706
+STC0505,356,STC Metro,Intermedia,Subterráneo,L5,1982,5,Misterios,0,1,Norte,Gustavo A. Madero,5,Tepeyac,590.0,-99.1302395703,19.4631121957
+STC0506,357,STC Metro,Intermedia,Subterráneo,L5,1982,6,Valle Gómez,0,0,Norte,Gustavo A. Madero,5,Cuchilla,579.0,-99.1194909907,19.4588721398
+STC0507,358,STC Metro,Transbordo,Nivel de suelo,L5,1981,7,Consulado,0,0,Norte,Gustavo A. Madero,5,Cuchilla,787.0,-99.1135362315,19.455135875
+STC0508,359,STC Metro,Intermedia,Nivel de suelo,L5,1981,8,Eduardo Molina,0,0,Norte,Gustavo A. Madero,5,Cuchilla,320.0,-99.1052996985,19.4513975138
+STC0509,360,STC Metro,Intermedia,Nivel de suelo,L5,1981,9,Aragón,0,0,Norte,Gustavo A. Madero,5,Aragón,483.0,-99.0962051538,19.4512575884
+STC0510,361,STC Metro,Transbordo,Nivel de suelo,L5,1981,10,Oceanía,0,0,Oriente,Venustiano Carranza,17,Moctezuma,428.0,-99.0868729241,19.4450204861
+STC0511,362,STC Metro,Intermedia,Subterráneo,L5,1981,11,Terminal Aérea,0,0,Oriente,Venustiano Carranza,17,Moctezuma,154.0,-99.0880762374,19.4342651018
+STC0512,363,STC Metro,Intermedia,Subterráneo,L5,1981,12,Hangares,0,0,Oriente,Venustiano Carranza,17,Zaragoza,201.0,-99.0881337746,19.4243499079
+STC0513,364,STC Metro,Terminal / Transbordo,Nivel de suelo,L5,1981,13,Pantitlán,3,1,Oriente,Venustiano Carranza,17,Arenal,56.0,-99.0743288081,19.4151047735
+STC0601,365,STC Metro,Terminal / Transbordo,Nivel de suelo,L6,1983,1,El Rosario,1,1,Norte,Azcapotzalco,2,Hormiga,118.0,-99.1997698162,19.5046301436
+STC0602,366,STC Metro,Intermedia,Subterráneo,L6,1983,2,Tezozómoc,0,0,Norte,Azcapotzalco,2,Hormiga,685.0,-99.196022987,19.4948951641
+STC0603,367,STC Metro,Intermedia,Subterráneo,L6,1983,3,UAM-Azcapotzalco,0,0,Norte,Azcapotzalco,2,Hormiga,401.0,-99.1862673088,19.4909081429
+STC0604,368,STC Metro,Intermedia,Subterráneo,L6,1983,4,Ferrería/Arena Ciudad de México,0,0,Norte,Azcapotzalco,2,Hormiga,687.0,-99.1741516826,19.4906734291
+STC0605,369,STC Metro,Intermedia,Subterráneo,L6,1983,5,Norte 45,0,0,Norte,Azcapotzalco,2,La Raza,186.0,-99.1629903541,19.4886714135
+STC0606,370,STC Metro,Intermedia,Subterráneo,L6,1983,6,Vallejo,0,0,Norte,Azcapotzalco,2,La Raza,186.0,-99.1560043095,19.4898477869
+STC0607,371,STC Metro,Transbordo,Subterráneo,L6,1983,7,Instituto del Petróleo,1,1,Norte,Gustavo A. Madero,5,Lindavista,596.0,-99.1481259988,19.4910442314
+STC0608,372,STC Metro,Intermedia,Subterráneo,L6,1986,8,Lindavista,0,0,Norte,Gustavo A. Madero,5,Lindavista,602.0,-99.1350714179,19.4881129878
+STC0609,373,STC Metro,Transbordo,Subterráneo,L6,1986,9,Deportivo 18 de Marzo,1,3,Norte,Gustavo A. Madero,5,Tepeyac,328.0,-99.1253036587,19.4834820173
+STC0610,374,STC Metro,Intermedia,Subterráneo,L6,1986,10,La Villa/Basílica,0,0,Norte,Gustavo A. Madero,5,Tepeyac,328.0,-99.1183692619,19.4817358083
+STC0611,375,STC Metro,Terminal / Transbordo,Nivel de suelo,L6,1986,11,Martín Carrera,1,1,Norte,Gustavo A. Madero,5,Quiroga,432.0,-99.1074753127,19.4829388215
+STC0701,376,STC Metro,Terminal / Transbordo,Nivel de suelo,L7,1988,1,El Rosario,1,1,Norte,Azcapotzalco,2,Hormiga,118.0,-99.2001158653,19.5047378744
+STC0702,377,STC Metro,Intermedia,Subterráneo,L7,1988,2,Aquiles Serdán,0,0,Norte,Azcapotzalco,2,Clavería,403.0,-99.1953523273,19.4906401428
+STC0703,378,STC Metro,Intermedia,Subterráneo,L7,1988,3,Camarones,0,0,Norte,Azcapotzalco,2,Clavería,691.0,-99.1900375715,19.4791115427
+STC0704,379,STC Metro,Intermedia,Subterráneo,L7,1988,4,Refinería,0,0,Norte,Azcapotzalco,2,Clavería,694.0,-99.1905055273,19.4694728943
+STC0705,380,STC Metro,Transbordo,Subterráneo,L7,1984,5,Tacuba,0,0,Poniente,Miguel Hidalgo,16,Tacuba,255.0,-99.1871690042,19.4582347588
+STC0706,381,STC Metro,Intermedia,Subterráneo,L7,1984,6,San Joaquín,0,0,Poniente,Miguel Hidalgo,16,Tacuba,515.0,-99.1917669641,19.4450075397
+STC0707,382,STC Metro,Intermedia,Subterráneo,L7,1984,7,Polanco,0,0,Poniente,Miguel Hidalgo,16,Polanco-Castillo,680.0,-99.1909251081,19.4335531356
+STC0708,383,STC Metro,Intermedia,Subterráneo,L7,1984,8,Auditorio,0,1,Poniente,Miguel Hidalgo,16,Polanco-Castillo,188.0,-99.1920289044,19.4257638255
+STC0709,384,STC Metro,Intermedia,Subterráneo,L7,1985,9,Constituyentes,0,0,Poniente,Miguel Hidalgo,16,Tacubaya,116.0,-99.1913518554,19.4117708662
+STC0710,385,STC Metro,Transbordo,Subterráneo,L7,1985,10,Tacubaya,2,1,Poniente,Miguel Hidalgo,16,Tacubaya,755.0,-99.186754459,19.4021902183
+STC0711,386,STC Metro,Intermedia,Subterráneo,L7,1985,11,San Pedro de los Pinos,0,0,Centro,Benito Juárez,14,Nápoles,175.0,-99.1858059348,19.3914917728
+STC0712,387,STC Metro,Intermedia,Subterráneo,L7,1985,12,San Antonio,0,0,Centro,Benito Juárez,14,Nápoles,92.0,-99.1866135528,19.3843376703
+STC0713,388,STC Metro,Transbordo,Subterráneo,L7,1985,13,Mixcoac,0,0,Centro,Benito Juárez,14,Nápoles,92.0,-99.1875824155,19.3762565017
+STC0714,389,STC Metro,Terminal,Subterráneo,L7,1985,14,Barranca del Muerto,0,0,Poniente,Álvaro Obregón,10,San Ángel,748.0,-99.1892637069,19.3615015633
+STC0801,390,STC Metro,Terminal / Transbordo,Subterráneo,L8,1994,1,Garibaldi/Lagunilla,1,1,Centro,Cuauhtémoc,15,Morelos,195.0,-99.1390044127,19.4440012885
+STC0802,391,STC Metro,Transbordo,Subterráneo,L8,1994,2,Bellas Artes,1,1,Centro,Cuauhtémoc,15,Buenavista,565.0,-99.1404207278,19.4370129122
+STC0803,392,STC Metro,Intermedia,Subterráneo,L8,1994,3,San Juan de Letrán,0,0,Centro,Cuauhtémoc,15,Alameda,506.0,-99.1412506105,19.431580449
+STC0804,393,STC Metro,Transbordo,Subterráneo,L8,1994,4,Salto del Agua,0,0,Centro,Cuauhtémoc,15,Alameda,559.0,-99.1418517465,19.4277182977
+STC0805,394,STC Metro,Intermedia,Subterráneo,L8,1994,5,Doctores,0,0,Centro,Cuauhtémoc,15,Asturias,611.0,-99.1431894087,19.4215456116
+STC0806,395,STC Metro,Intermedia,Subterráneo,L8,1994,6,Obrera,0,0,Centro,Cuauhtémoc,15,Asturias,351.0,-99.1440379637,19.4132403762
+STC0807,396,STC Metro,Transbordo,Subterráneo,L8,1994,7,Chabacano,0,0,Centro,Cuauhtémoc,15,Asturias,610.0,-99.1337513353,19.4102074911
+STC0808,397,STC Metro,Intermedia,Subterráneo,L8,1994,8,La Viga,0,0,Centro,Cuauhtémoc,15,Asturias,350.0,-99.1262690625,19.4067094344
+STC0809,398,STC Metro,Transbordo,Subterráneo,L8,1994,9,Santa Anita,0,0,Oriente,Iztacalco,6,Iztaccíhuatl,582.0,-99.1206572397,19.4041234343
+STC0810,399,STC Metro,Intermedia,Nivel de suelo,L8,1994,10,Coyuya,0,2,Oriente,Iztacalco,6,Iztaccíhuatl,30.0,-99.1134804312,19.3983028957
+STC0811,400,STC Metro,Intermedia,Nivel de suelo,L8,1994,11,Iztacalco,0,0,Oriente,Iztacalco,6,Iztaccíhuatl,29.0,-99.1121117309,19.3882887575
+STC0812,401,STC Metro,Intermedia,Nivel de suelo,L8,1994,12,Apatlaco,0,1,Oriente,Iztapalapa,7,Granjas,160.0,-99.1094901464,19.3790998138
+STC0813,402,STC Metro,Intermedia,Nivel de suelo,L8,1994,13,Aculco,0,1,Oriente,Iztapalapa,7,Churubusco,69.0,-99.1077035934,19.3732114106
+STC0814,403,STC Metro,Intermedia,Subterráneo,L8,1994,14,Escuadrón 201,0,1,Oriente,Iztapalapa,7,Churubusco,623.0,-99.1094849843,19.3648364116
+STC0815,404,STC Metro,Transbordo,Subterráneo,L8,1994,15,Atlalilco,0,0,Oriente,Iztapalapa,7,Granjas,205.0,-99.10130943,19.3560844837
+STC0816,405,STC Metro,Intermedia,Subterráneo,L8,1994,16,Iztapalapa,0,0,Oriente,Iztapalapa,7,Abasto-Reforma,159.0,-99.0934490767,19.3578249372
+STC0817,406,STC Metro,Intermedia,Subterráneo,L8,1994,17,Cerro de la Estrella,0,0,Oriente,Iztapalapa,7,Estrella,480.0,-99.0856160765,19.3560478725
+STC0818,407,STC Metro,Intermedia,Subterráneo,L8,1994,18,UAM-I,0,0,Oriente,Iztapalapa,7,Estrella,211.0,-99.0748174189,19.3510561669
+STC0819,408,STC Metro,Terminal,Nivel de suelo,L8,1994,19,Constitución de 1917,0,0,Oriente,Iztapalapa,7,Tezonco,511.0,-99.0637988499,19.3459684059
+STC0901,409,STC Metro,Terminal / Transbordo,Nivel elevado,L9,1987,1,Pantitlán,3,1,Oriente,Iztacalco,6,Pantitlán,52.0,-99.0722053449,19.4153511689
+STC0902,410,STC Metro,Intermedia,Nivel elevado,L9,1987,2,Puebla,0,0,Oriente,Iztacalco,6,Tlacotal,49.0,-99.0823858797,19.407192143
+STC0903,411,STC Metro,Intermedia,Nivel elevado,L9,1987,3,Ciudad Deportiva,0,0,Oriente,Iztacalco,6,Tlacotal,49.0,-99.0912519464,19.4084339822
+STC0904,412,STC Metro,Intermedia,Subterráneo,L9,1987,4,Velódromo,0,0,Oriente,Venustiano Carranza,17,Merced-Balbuena,22.0,-99.1031577122,19.4085392864
+STC0905,413,STC Metro,Intermedia,Subterráneo,L9,1987,5,Mixiuhca,0,1,Oriente,Venustiano Carranza,17,Merced-Balbuena,22.0,-99.1129684768,19.4083714402
+STC0906,414,STC Metro,Transbordo,Subterráneo,L9,1987,6,Jamaica,0,0,Oriente,Venustiano Carranza,17,Merced-Balbuena,37.0,-99.1223497602,19.4091031279
+STC0907,415,STC Metro,Transbordo,Subterráneo,L9,1987,7,Chabacano,0,0,Centro,Cuauhtémoc,15,Asturias,610.0,-99.133972992,19.4085145345
+STC0908,416,STC Metro,Intermedia,Subterráneo,L9,1987,8,Lázaro Cárdenas,0,0,Centro,Cuauhtémoc,15,Asturias,62.0,-99.1446282629,19.4072182738
+STC0909,417,STC Metro,Transbordo,Subterráneo,L9,1987,9,Centro Médico,1,1,Centro,Cuauhtémoc,15,Roma,196.0,-99.1560279392,19.4065613533
+STC0910,418,STC Metro,Intermedia,Subterráneo,L9,1988,10,Chilpancingo,0,1,Centro,Cuauhtémoc,15,Roma,520.0,-99.1685193642,19.4059298588
+STC0911,419,STC Metro,Intermedia,Subterráneo,L9,1988,11,Patriotismo,0,1,Centro,Cuauhtémoc,15,Roma,831.0,-99.1789225975,19.4061089929
+STC0912,420,STC Metro,Terminal / Transbordo,Subterráneo,L9,1988,12,Tacubaya,2,1,Poniente,Miguel Hidalgo,16,Tacubaya,755.0,-99.187761091,19.4014605799
+STC1201,421,STC Metro,Terminal,Nivel elevado,L12,2012,1,Tláhuac,0,0,Oriente,Tláhuac,11,Mixquic,224.0,-99.0141983244,19.2860222773
+STC1202,422,STC Metro,Intermedia,Nivel elevado,L12,2012,2,Tlaltenco,0,0,Oriente,Tláhuac,11,Mixquic,224.0,-99.0240307466,19.2943533791
+STC1203,423,STC Metro,Intermedia,Nivel elevado,L12,2012,3,Zapotitlán,0,0,Oriente,Tláhuac,11,Zapotitla,803.0,-99.03430689,19.2966555865
+STC1204,424,STC Metro,Intermedia,Nivel elevado,L12,2012,4,Nopalera,0,0,Oriente,Tláhuac,11,Zapotitla,232.0,-99.0459928689,19.2999573049
+STC1205,425,STC Metro,Intermedia,Nivel elevado,L12,2012,5,Olivos,0,0,Oriente,Tláhuac,11,Zapotitla,500.0,-99.059511495,19.304321996
+STC1206,426,STC Metro,Intermedia,Nivel elevado,L12,2012,6,Tezonco,0,0,Oriente,Iztapalapa,7,Tezonco,817.0,-99.0652702637,19.3063088255
+STC1207,427,STC Metro,Intermedia,Nivel elevado,L12,2012,7,Periférico Oriente,0,0,Oriente,Iztapalapa,7,Tezonco,70.0,-99.0745057508,19.3176115685
+STC1208,428,STC Metro,Intermedia,Nivel elevado,L12,2012,8,Calle 11,0,0,Oriente,Iztapalapa,7,Estrella,210.0,-99.0858728644,19.3204711519
+STC1209,429,STC Metro,Intermedia,Nivel elevado,L12,2012,9,Lomas Estrella,0,0,Oriente,Iztapalapa,7,Estrella,772.0,-99.0957504815,19.3221488563
+STC1210,430,STC Metro,Intermedia,Nivel elevado,L12,2012,10,San Andrés Tomatlán,0,0,Oriente,Iztapalapa,7,Estrella,774.0,-99.1045158609,19.3281454795
+STC1211,431,STC Metro,Intermedia,Nivel elevado,L12,2012,11,Culhuacán,0,0,Oriente,Iztapalapa,7,Granjas,768.0,-99.1089587452,19.3368456111
+STC1212,432,STC Metro,Transbordo,Subterráneo,L12,2012,12,Atlalilco,0,0,Oriente,Iztapalapa,7,Granjas,206.0,-99.1062431654,19.3527541728
+STC1213,433,STC Metro,Intermedia,Subterráneo,L12,2012,13,Mexicaltzingo,0,0,Sur,Coyoacán,3,Taxqueña,378.0,-99.1231432322,19.3577625361
+STC1214,434,STC Metro,Transbordo,Subterráneo,L12,2012,14,Ermita,0,0,Centro,Benito Juárez,14,Nativitas,795.0,-99.1416313631,19.359823503
+STC1215,435,STC Metro,Intermedia,Subterráneo,L12,2012,15,Eje Central,0,0,Centro,Benito Juárez,14,Portales,799.0,-99.1514233615,19.3613412379
+STC1216,436,STC Metro,Intermedia,Subterráneo,L12,2012,16,Parque de los Venados,0,0,Centro,Benito Juárez,14,Portales,798.0,-99.158717719,19.370658835
+STC1217,437,STC Metro,Transbordo,Subterráneo,L12,2012,17,Zapata,0,0,Centro,Benito Juárez,14,Del Valle,648.0,-99.1655993156,19.3708453016
+STC1218,438,STC Metro,Intermedia,Subterráneo,L12,2012,18,Hospital 20 de Noviembre,0,0,Centro,Benito Juárez,14,Del Valle,651.0,-99.1708844628,19.372013377
+STC1219,439,STC Metro,Intermedia,Subterráneo,L12,2012,19,Insurgentes Sur,0,1,Centro,Benito Juárez,14,Del Valle,85.0,-99.1782501293,19.3735534702
+STC1220,440,STC Metro,Terminal / Transbordo,Subterráneo,L12,2012,20,Mixcoac,0,0,Centro,Benito Juárez,14,Nápoles,177.0,-99.1867305011,19.3756988234
+STCLA01,441,STC Metro,Terminal / Transbordo,Subterráneo,LA,1991,1,Pantitlán,3,1,Oriente,Iztacalco,6,Pantitlán,52.0,-99.0719229372,19.4152975245
+STCLA02,442,STC Metro,Intermedia,Nivel de suelo,LA,1991,2,Agrícola Oriental,0,0,Oriente,Iztacalco,6,Pantitlán,215.0,-99.0695664643,19.4046188959
+STCLA03,443,STC Metro,Intermedia,Nivel de suelo,LA,1991,3,Canal de San Juan,0,0,Oriente,Iztacalco,6,Pantitlán,783.0,-99.0594228007,19.3987629312
+STCLA04,444,STC Metro,Intermedia,Nivel de suelo,LA,1991,4,Tepalcates,0,1,Oriente,Iztapalapa,7,Oasis,147.0,-99.0463293974,19.391276495
+STCLA05,445,STC Metro,Intermedia,Nivel de suelo,LA,1991,5,Guelatao,0,0,Oriente,Iztapalapa,7,Oasis,150.0,-99.0356596007,19.3851538875
+STCLA06,446,STC Metro,Intermedia,Nivel de suelo,LA,1991,6,Peñón Viejo,0,0,Oriente,Iztapalapa,7,Oasis,476.0,-99.0170548364,19.3733050518
+STCLA07,447,STC Metro,Intermedia,Nivel de suelo,LA,1991,7,Acatitla,0,0,Oriente,Iztapalapa,7,Teotongo,287.0,-99.0056727169,19.3647173904
+STCLA08,448,STC Metro,Intermedia,Nivel de suelo,LA,1991,8,Santa Marta,0,0,Oriente,Iztapalapa,7,Oasis,262.0,-98.9951783232,19.3603050474
+STCLB01,449,STC Metro,Terminal,Subterráneo,LB,1999,1,Buenavista,0,3,Centro,Cuauhtémoc,15,Buenavista,556.0,-99.1523513774,19.4461859034
+STCLB02,450,STC Metro,Transbordo,Subterráneo,LB,1999,2,Guerrero,1,1,Centro,Cuauhtémoc,15,Buenavista,558.0,-99.1461387274,19.4451448325
+STCLB03,451,STC Metro,Transbordo,Subterráneo,LB,1999,3,Garibaldi/Lagunilla,1,1,Centro,Cuauhtémoc,15,Centro,194.0,-99.1378656649,19.4438896321
+STCLB04,452,STC Metro,Intermedia,Subterráneo,LB,1999,4,Lagunilla,0,0,Centro,Cuauhtémoc,15,Centro,758.0,-99.1302304292,19.4432200418
+STCLB05,453,STC Metro,Intermedia,Subterráneo,LB,1999,5,Tepito,0,0,Centro,Cuauhtémoc,15,Centro,299.0,-99.1240674403,19.4427893913
+STCLB06,454,STC Metro,Transbordo,Subterráneo,LB,1999,6,Morelos,0,0,Oriente,Venustiano Carranza,17,Congreso,570.0,-99.119568767,19.4391666273
+STCLB07,455,STC Metro,Transbordo,Nivel elevado,LB,1999,7,San Lázaro,1,2,Oriente,Venustiano Carranza,17,Congreso,573.0,-99.1129609727,19.4323709346
+STCLB08,456,STC Metro,Intermedia,Nivel elevado,LB,1999,8,Ricardo Flores Magón,0,0,Oriente,Venustiano Carranza,17,Moctezuma,423.0,-99.1037087412,19.4365653734
+STCLB09,457,STC Metro,Intermedia,Nivel elevado,LB,1999,9,Romero Rubio,0,0,Oriente,Venustiano Carranza,17,Moctezuma,424.0,-99.0942016747,19.4408353542
+STCLB10,458,STC Metro,Transbordo,Nivel elevado,LB,1999,10,Oceanía,0,0,Oriente,Venustiano Carranza,17,Moctezuma,428.0,-99.0872173257,19.445694827
+STCLB11,459,STC Metro,Intermedia,Nivel de suelo,LB,1999,11,Deportivo Oceanía,0,0,Norte,Gustavo A. Madero,5,Aragón,450.0,-99.0793342307,19.4510110973
+STCLB12,460,STC Metro,Intermedia,Nivel de suelo,LB,1999,12,Bosque de Aragón,0,0,Norte,Gustavo A. Madero,5,Aragón,450.0,-99.069288696,19.458094773
+STCLB13,461,STC Metro,Intermedia,Nivel de suelo,LB,1999,13,Villa de Aragón,0,1,Norte,Gustavo A. Madero,5,Aragón,733.0,-99.0613819669,19.4616707919

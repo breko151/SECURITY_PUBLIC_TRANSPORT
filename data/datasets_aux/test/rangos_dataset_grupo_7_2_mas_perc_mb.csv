@@ -1,0 +1,13 @@
+group_dataset,categ_delito,sexo,percentil,minimo,maximo
+7,Delitos sexuales,0,0.0,0.0,5.0
+7,Delitos sexuales,1,0.0,0.0,10.0
+7,Fraude,0,0.0,0.0,16.0
+7,Fraude,1,0.0,0.0,16.0
+7,Lesiones,0,0.0,0.0,10.0
+7,Lesiones,1,0.0,0.0,8.0
+7,Robo a transeúnte y pasajero en transporte público,0,1.0,0.0,50.0
+7,Robo a transeúnte y pasajero en transporte público,1,0.0,0.0,24.0
+7,Robo de vehículo y autopartes,0,0.0,0.0,12.0
+7,Robo de vehículo y autopartes,1,0.0,0.0,7.0
+7,Amenazas,0,0.0,0.0,13.0
+7,Amenazas,1,0.0,0.0,29.0

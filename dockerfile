@@ -46,4 +46,4 @@ COPY . /app/
 EXPOSE 8501
 
 # Command to run the Streamlit app
-CMD ["streamlit", "run", "app.py", "--server.port=8501", "--server.enableCORS=false", "--server.enableXsrfProtection=false", "--server.sslCertFile=/etc/letsencrypt/live/metrosegurocdmx.cloud/fullchain.pem", "--server.sslKeyFile=/etc/letsencrypt/live/metrosegurocdmx.cloud/privkey.pem"]
+CMD ["streamlit", "run", "Inicio.py", "--server.port=8501", "--server.address=0.0.0.0"]
