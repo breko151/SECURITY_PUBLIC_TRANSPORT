@@ -28,10 +28,6 @@ from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier
 
 
-# Data visualization.
-# import seaborn as sns
-# import matplotlib.pyplot as plt
-
 # Datetime
 from datetime import datetime, timedelta
 import pytz
@@ -43,7 +39,7 @@ load_dotenv()
 PASSWORD = os.getenv('PASSWORD')
 
 # Constants
-from src.colors import LINESM, LINESMB, LINESM_aux, LINESMB_aux
+from src.colors import LINESM, LINESMB, LINESM_aux
 
 # Auxiliar proper modules
 from src.plots import plot_top_stations_affluence_trends, plot_top_stations_crime_trends, plot_top_crime_station, plot_crime_exploration_gender, plot_crime_exploration_age_group, plot_crime_exploration_distances, plot_crime_exploration_day_parts
@@ -1562,10 +1558,6 @@ with streamlit_analytics.track(unsafe_password=f'{PASSWORD}'):
                             - Domingos y días festivos: 7:00-0:00 horas.
                             """)
             with col_2:
-                #st.markdown(
-                #    f'<div style="{center_css}"><img src="data:image/gif;base64,{data_url_metro_map}" alt="Imagen home" width=600 ></div>',
-                #    unsafe_allow_html=True,
-                #)
                 st.image(r'./assets/images/MAPA_METRO.png', use_container_width=True, output_format='PNG')
         elif level_div == "Metrobús":
             col_1, col_mid, col_2 = st.columns([0.45, 0.05, 0.45])
@@ -1582,10 +1574,6 @@ with streamlit_analytics.track(unsafe_password=f'{PASSWORD}'):
                             - Domingos y días festivos: 5:00-0:00 horas.
                             """)
             with col_2:
-                #st.markdown(
-                #    r'<div style="{}"><img src="data:image/gif;base64,{}" alt="Imagen home" width=600 ></div>'.format(center_css, data_url_metrobus_map),
-                #    unsafe_allow_html=True,
-                #)
                 st.image(r'./assets/images/MAPA_METROBUS.png', use_container_width=True, output_format='PNG')
         
 
