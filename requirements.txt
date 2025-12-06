@@ -11,3 +11,4 @@ streamlit-plotly-events
 streamlit_folium
 python-dotenv
 streamlit-analytics2
+flask

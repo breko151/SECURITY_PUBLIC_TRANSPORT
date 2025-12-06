@@ -1,6 +1,7 @@
 # Bibliotecas
 import duckdb
 import pandas as pd
+import streamlit as st
 from pathlib import Path
 
 # Configuración de la base de datos
@@ -17,6 +18,7 @@ PARTS_OF_DAY = {
 def get_connection():
     return duckdb.connect(str(DB_PATH), read_only=True)
 
+@st.cache_data(ttl=3600, show_spinner=False)
 def query_top_stations_affluence_trends(transport: str, level_div: str, filter_div: list, weekday: str, week_year: str, n: int):
     conn = get_connection()
     
@@ -39,19 +41,18 @@ def query_top_stations_affluence_trends(transport: str, level_div: str, filter_d
                 """
         params.append(n)
     else:
+        valid_levels = {'Alcaldía': 'esp.alcaldia', 'Línea': 'est.linea', 'Zona': 'esp.zona'}
+        if level_div not in valid_levels:
+             raise ValueError(f"Invalid level_div: {level_div}. Must be one of {list(valid_levels.keys())}")
+
         if level_div == 'Línea':
             filter_div = ['L' + elem.split()[-1] for elem in filter_div]
         
         # Create placeholders for IN clause
         placeholders = ', '.join(['?'] * len(filter_div))
         
-        filter_clause = ""
-        if level_div == 'Alcaldía':
-            filter_clause = f'esp.alcaldia IN ({placeholders})'
-        elif level_div == 'Línea':
-            filter_clause = f'est.linea IN ({placeholders})'
-        elif level_div == 'Zona':
-            filter_clause = f'esp.zona IN ({placeholders})'
+        column = valid_levels[level_div]
+        filter_clause = f'{column} IN ({placeholders})'
         
         # Insert filter parameters before weekday/week_year
         # Current params: [transport, weekday, week_year]
@@ -79,6 +80,7 @@ def query_top_stations_affluence_trends(transport: str, level_div: str, filter_d
     return df
 
 
+@st.cache_data(ttl=3600, show_spinner=False)
 def query_top_stations_crime_trends(transport: str, level_div: str, filter_div: list, sex: str, weekday: str, week_year: str, radio: float, n: int):
     conn = get_connection()
 
@@ -88,17 +90,17 @@ def query_top_stations_crime_trends(transport: str, level_div: str, filter_div: 
     # Filter logic
     filter_clause = ""
     if filter_div:
+        valid_levels = {'Alcaldía': 'esp.alcaldia', 'Línea': 'est.linea', 'Zona': 'esp.zona'}
+        if level_div not in valid_levels:
+             raise ValueError(f"Invalid level_div: {level_div}. Must be one of {list(valid_levels.keys())}")
+
         if level_div == 'Línea':
             filter_div = ['L' + elem.split()[-1] for elem in filter_div]
         
         placeholders = ', '.join(['?'] * len(filter_div))
         
-        if level_div == 'Alcaldía':
-            filter_clause = f'AND esp.alcaldia IN ({placeholders})'
-        elif level_div == 'Línea':
-            filter_clause = f'AND est.linea IN ({placeholders})'
-        elif level_div == 'Zona':
-            filter_clause = f'AND esp.zona IN ({placeholders})'
+        column = valid_levels[level_div]
+        filter_clause = f'AND {column} IN ({placeholders})'
             
         params.extend(filter_div)
 
@@ -201,6 +203,7 @@ def query_top_stations_crime_trends(transport: str, level_div: str, filter_div: 
     conn.close()
     return df
 
+@st.cache_data(ttl=3600, show_spinner=False)
 def query_top_crimes_historical(transport: str, cve_est: str, radio: float, n: int):
     conn = get_connection()
     Query = """
@@ -223,6 +226,7 @@ def query_top_crimes_historical(transport: str, cve_est: str, radio: float, n: i
     conn.close()
     return df
 
+@st.cache_data(ttl=3600, show_spinner=False)
 def query_crimes_exploration_gender(transport: str, cve_est: str, radio: float, weekday: str, crime_var: str):
     conn = get_connection()
     Query = """
@@ -244,6 +248,7 @@ def query_crimes_exploration_gender(transport: str, cve_est: str, radio: float, 
     conn.close()
     return df
 
+@st.cache_data(ttl=3600, show_spinner=False)
 def query_crimes_exploration_age_group(transport: str, cve_est: str, radio: float, weekday: str, crime_var: str):
     conn = get_connection()
     Query = """
@@ -278,6 +283,7 @@ def query_crimes_exploration_age_group(transport: str, cve_est: str, radio: floa
     conn.close()
     return df
 
+@st.cache_data(ttl=3600, show_spinner=False)
 def query_crimes_exploration_distances(transport: str, cve_est: str, radio: float, weekday: str, crime_var: str):
     conn = get_connection()
     Query = """
@@ -296,6 +302,7 @@ def query_crimes_exploration_distances(transport: str, cve_est: str, radio: floa
     conn.close()
     return df
 
+@st.cache_data(ttl=3600, show_spinner=False)
 def query_crimes_part_of_day(transport: str, cve_est: str, radio: float, weekday: str, crime_var: str):
     conn = get_connection()
     

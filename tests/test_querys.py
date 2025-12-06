@@ -203,3 +203,27 @@ def test_query_crimes_part_of_day(valid_station_id):
     
     # Sort order validation
     assert df['conteo_delitos'].is_monotonic_decreasing
+
+def test_query_invalid_level_div():
+    with pytest.raises(ValueError, match='Invalid level_div'):
+        query_top_stations_affluence_trends(
+            transport=TRANSPORT,
+            level_div='InvalidLevel',
+            filter_div=['SomeFilter'],
+            weekday=WEEKDAY,
+            week_year=WEEK_YEAR,
+            n=N
+        )
+
+    with pytest.raises(ValueError, match='Invalid level_div'):
+        query_top_stations_crime_trends(
+            transport=TRANSPORT,
+            level_div='InvalidLevel',
+            filter_div=['SomeFilter'],
+            sex='Ambos',
+            weekday=WEEKDAY,
+            week_year=WEEK_YEAR,
+            radio=RADIO,
+            n=N
+        )
+
